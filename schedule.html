@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Climbing Qualification Schedule Planner</title>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  padding: 24px;
+  background: #f4f5f7;
+  color: #1a1a2e;
+  min-height: 100vh;
+}
+body.drag-over::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  border: 4px dashed #3b82f6;
+  background: rgba(59,130,246,0.04);
+  pointer-events: none;
+}
+.section {
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px 24px 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.section-header {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #6b7280;
+  margin-bottom: 14px;
+  font-weight: 600;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Data status */
+.data-status {
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+}
+.data-status.loaded {
+  background: #f0fdf4;
+  border-color: #bbf7d0;
+  color: #166534;
+}
+.data-status.empty {
+  background: #fefce8;
+  border-color: #fde68a;
+  color: #92400e;
+}
+.data-status.error {
+  background: #fef2f2;
+  border-color: #fecaca;
+  color: #991b1b;
+}
+
+/* Pool */
+.pool {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  min-height: 52px;
+}
+.pool-item {
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: grab;
+  user-select: none;
+  transition: box-shadow 0.15s, transform 0.15s;
+  font-weight: 500;
+}
+.pool-item:active { cursor: grabbing; }
+.pool-item.m {
+  background: #e8f0fe;
+  border: 1px solid #a8c7fa;
+  color: #1a56db;
+}
+.pool-item.w {
+  background: #fde8ef;
+  border: 1px solid #f9a8c3;
+  color: #c81e3e;
+}
+.pool-item.sortable-chosen { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+/* Cleaning break */
+.pool-item.cleaning, .route-item.cleaning {
+  background: #fef9c3;
+  border: 1px solid #facc15;
+  color: #854d0e;
+}
+.pool-item.cleaning { font-size: 11px; text-transform: uppercase; letter-spacing: 0.03em; }
+.schedule-group-header {
+  font-weight: 700;
+  padding: 3px 4px;
+  margin-top: 4px;
+  border-bottom: 1px solid #d1d5db;
+  background: #f3f4f6;
+  white-space: pre;
+}
+.schedule-cleaning {
+  text-align: center;
+  color: #9ca3af;
+  font-size: 10px;
+  padding: 4px 0;
+  border-top: 1px dashed #d1d5db;
+  border-bottom: 1px dashed #d1d5db;
+  margin: 2px 0;
+  font-family: 'Courier New', Courier, monospace;
+  white-space: pre;
+}
+
+/* Routes & Schedule shared */
+.scroll-area {
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.columns-row {
+  display: flex;
+  gap: 12px;
+  min-width: max-content;
+}
+.column {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+.column-header {
+  font-weight: 600;
+  font-size: 14px;
+  padding: 8px 0;
+  border-bottom: 2px solid #e5e7eb;
+  margin-bottom: 8px;
+  text-align: center;
+  color: #374151;
+}
+.route-column-list {
+  min-height: 260px;
+  background: #f9fafb;
+  border-radius: 6px;
+  padding: 6px;
+  border: 2px dashed #e5e7eb;
+  transition: background 0.15s, border-color 0.15s;
+  flex: 1;
+}
+.route-column-list.sortable-drag-active { border-color: #3b82f6; background: #eff6ff; }
+.route-column-list:empty::after {
+  content: 'drop here';
+  display: block;
+  text-align: center;
+  color: #9ca3af;
+  font-size: 12px;
+  padding-top: 100px;
+  pointer-events: none;
+}
+.route-item {
+  padding: 8px 12px;
+  margin: 4px 0;
+  border-radius: 5px;
+  font-size: 13px;
+  cursor: grab;
+  font-weight: 500;
+  transition: box-shadow 0.15s, transform 0.15s;
+}
+.route-item:active { cursor: grabbing; }
+.route-item.m {
+  background: #e8f0fe;
+  border: 1px solid #a8c7fa;
+  color: #1a56db;
+}
+.route-item.w {
+  background: #fde8ef;
+  border: 1px solid #f9a8c3;
+  color: #c81e3e;
+}
+.route-item.sortable-chosen { transform: scale(1.04); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+.route-item.sortable-ghost { opacity: 0.35; }
+
+/* Schedule columns */
+.schedule-column-list {
+  min-height: 100px;
+  background: #fafafa;
+  border-radius: 6px;
+  padding: 6px;
+  border: 1px solid #e5e7eb;
+  flex: 1;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-y: auto;
+  max-height: 500px;
+}
+.schedule-row {
+  white-space: pre;
+  padding: 1px 4px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.schedule-row:last-child { border-bottom: none; }
+
+/* Button */
+.btn-sm {
+  font-size: 12px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  border: 1px solid #d1d5db;
+  background: #fff;
+  color: #374151;
+  cursor: pointer;
+  font-weight: 500;
+}
+.btn-sm:hover { background: #f3f4f6; }
+.btn-sm:disabled { opacity: 0.4; cursor: default; }
+
+/* Count badge */
+.count-badge {
+  font-size: 11px;
+  color: #9ca3af;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  body { padding: 12px; }
+  .section { padding: 16px; }
+  .column { width: 140px; }
+}
+
+/* Print */
+@media print {
+  body { background: #fff; padding: 0; }
+  .section { box-shadow: none; border-radius: 0; padding: 0; margin-bottom: 0; }
+  .section-header .btn-sm { display: none; }
+  #dataStatus { display: none; }
+  .add-cleaning-wrap { display: none; }
+  body > div:not(:last-of-type) { display: none; }
+  .schedule-column-list { max-height: none; overflow: visible; border: none; }
+  .count-badge { display: none; }
+  @page { margin: 10mm; }
+}
+</style>
+</head>
+<body>
+
+<!-- Section 1: Pool -->
+<div class="section">
+  <div class="section-header">
+    <span>Groups</span>
+    <span style="display:flex;align-items:center;gap:10px;">
+      <button class="btn-sm" id="addCleaningBtn">+ Cleaning Break</button>
+      <span class="data-status empty" id="dataStatus">Drop athletes.json here</span>
+    </span>
+  </div>
+  <div id="pool" class="pool"></div>
+</div>
+
+<!-- Section 2: Routes -->
+<div class="section">
+  <div class="section-header">Routes</div>
+  <div class="scroll-area">
+    <div class="columns-row" id="routeColumns"></div>
+  </div>
+</div>
+
+<!-- Section 3: Schedule -->
+<div class="section">
+  <div class="section-header">
+    <span>Schedule</span>
+    <span style="display:flex;align-items:center;gap:6px;">
+      <button class="btn-sm" id="printBtn">Print</button>
+      <button class="btn-sm" id="regenerateBtn" disabled>Regenerate</button>
+    </span>
+  </div>
+  <div class="scroll-area">
+    <div class="columns-row" id="scheduleColumns"></div>
+  </div>
+</div>
+
+<script>
+const ROUTE_LABELS = ['A','B','C','D','E','F','G','H','I','J'];
+
+const poolEl = document.getElementById('pool');
+const routeColsEl = document.getElementById('routeColumns');
+const scheduleColsEl = document.getElementById('scheduleColumns');
+const regenBtn = document.getElementById('regenerateBtn');
+const dataStatus = document.getElementById('dataStatus');
+const addCleaningBtn = document.getElementById('addCleaningBtn');
+
+let cleaningId = 0;
+let lookup = {};
+const BIB_WIDTH = 3;
+let namePad = 1;
+let dataLoaded = false;
+
+addCleaningBtn.addEventListener('click', function() {
+  cleaningId++;
+  const el = document.createElement('div');
+  el.className = 'pool-item cleaning';
+  el.textContent = 'CLN-' + cleaningId;
+  poolEl.appendChild(el);
+});
+
+// ---- Build route columns (structure is fixed before data loads) ----
+ROUTE_LABELS.forEach(label => {
+  const col = document.createElement('div');
+  col.className = 'column';
+  col.innerHTML = '<div class="column-header">' + label + '</div><div class="route-column-list" data-route="' + label + '"></div>';
+  routeColsEl.appendChild(col);
+});
+
+// ---- Build schedule columns ----
+ROUTE_LABELS.forEach(label => {
+  const col = document.createElement('div');
+  col.className = 'column';
+  col.innerHTML = '<div class="column-header">' + label + '<span class="count-badge" id="count-' + label + '">0</span></div><div class="schedule-column-list" data-route="' + label + '"></div>';
+  scheduleColsEl.appendChild(col);
+});
+
+// ---- Initialise from parsed JSON ----
+function loadData(athletes) {
+  lookup = {};
+  athletes.forEach(a => {
+    const key = a.group + '|' + a.route;
+    if (!lookup[key]) lookup[key] = [];
+    lookup[key].push(a);
+  });
+  Object.values(lookup).forEach(list => list.sort((a, b) => a.order - b.order));
+
+  // bib width is hardcoded to BIB_WIDTH
+  namePad = Math.max(...athletes.map(a => a.name.length));
+
+  const groupSet = new Set(athletes.map(a => a.group));
+  const groups = Array.from(groupSet).sort();
+  poolEl.innerHTML = '';
+  groups.forEach(g => {
+    const gender = g.startsWith('M') ? 'm' : 'w';
+    [1, 2].forEach(r => {
+      const el = document.createElement('div');
+      el.className = 'pool-item ' + gender;
+      const count = lookup[g + '|' + r] ? lookup[g + '|' + r].length : 0;
+      el.textContent = g + '-R' + r + ' (' + count + ')';
+      poolEl.appendChild(el);
+    });
+  });
+
+  dataLoaded = true;
+  regenBtn.disabled = false;
+  dataStatus.textContent = 'Loaded ' + groups.length + ' groups, ' + athletes.length + ' athletes';
+  dataStatus.className = 'data-status loaded';
+  generateSchedule();
+}
+
+// ---- Drag-and-drop JSON loading ----
+document.addEventListener('dragover', function(e) {
+  if (e.dataTransfer.types.includes('Files')) {
+    e.preventDefault();
+    document.body.classList.add('drag-over');
+  }
+});
+document.addEventListener('dragleave', function(e) {
+  if (!e.relatedTarget || e.relatedTarget.nodeName === 'HTML') {
+    document.body.classList.remove('drag-over');
+  }
+});
+document.addEventListener('drop', function(e) {
+  e.preventDefault();
+  document.body.classList.remove('drag-over');
+  const file = Array.from(e.dataTransfer.files).find(f => f.name.endsWith('.json'));
+  if (!file) {
+    dataStatus.textContent = 'Please drop a .json file.';
+    dataStatus.className = 'data-status error';
+    return;
+  }
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      const arr = Array.isArray(data) ? data : data.athletes;
+      if (!Array.isArray(arr) || arr.length === 0 || !arr[0].group) {
+        throw new Error('Invalid format — expected array of {bib,name,country,order,group,route}');
+      }
+      loadData(arr);
+    } catch (err) {
+      dataStatus.textContent = 'Error: ' + err.message;
+      dataStatus.className = 'data-status error';
+    }
+  };
+  reader.readAsText(file);
+});
+
+// ---- Format athlete row ----
+function formatAthlete(a) {
+  return String(a.bib).padStart(BIB_WIDTH, '0') + '  ' + a.name.padEnd(namePad) + ' | ' + a.country;
+}
+
+// ---- Parse group and route from item text (e.g. "M-rp1-R1") ----
+function parseItem(text) {
+  const base = text.replace(/ \(.+$/, '');
+  const m = base.match(/^(.+)-R(\d)$/);
+  if (!m) return null;
+  return { group: m[1], route: parseInt(m[2]) };
+}
+
+// ---- Format time ----
+function formatTime(mins) {
+  const h = Math.floor(mins / 60);
+  const m = mins % 60;
+  return String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+}
+
+// ---- Generate schedule ----
+function generateSchedule() {
+  if (!dataLoaded) return;
+  const routeCols = document.querySelectorAll('.route-column-list');
+  const scheduleCols = document.querySelectorAll('.schedule-column-list');
+
+  routeCols.forEach((routeCol, idx) => {
+    const schedCol = scheduleCols[idx];
+    schedCol.innerHTML = '';
+    let currentTime = 9 * 60;
+    let totalAthletes = 0;
+
+    Array.from(routeCol.children).forEach(item => {
+      if (item.classList.contains('cleaning')) {
+        const sep = document.createElement('div');
+        sep.className = 'schedule-cleaning';
+        sep.textContent = '--- CLEANING --- ' + formatTime(currentTime);
+        schedCol.appendChild(sep);
+        currentTime += 15;
+        return;
+      }
+      const parsed = parseItem(item.textContent);
+      if (!parsed) return;
+      const key = parsed.group + '|' + parsed.route;
+      const athletes = lookup[key];
+      if (!athletes) return;
+
+      const header = document.createElement('div');
+      header.className = 'schedule-group-header';
+      header.textContent = item.textContent + '  ' + formatTime(currentTime);
+      schedCol.appendChild(header);
+
+      athletes.forEach(a => {
+        const row = document.createElement('div');
+        row.className = 'schedule-row';
+        row.textContent = formatAthlete(a);
+        schedCol.appendChild(row);
+        totalAthletes++;
+        currentTime += 5;
+      });
+    });
+
+    const label = ROUTE_LABELS[idx];
+    const badge = document.getElementById('count-' + label);
+    if (badge) badge.textContent = totalAthletes;
+  });
+}
+
+// ---- SortableJS ----
+const colLists = document.querySelectorAll('.route-column-list');
+
+Sortable.create(poolEl, {
+  group: { name: 'routes', pull: true, put: true },
+  sort: false,
+  animation: 150,
+  onStart: function() { addDragActiveClass(); },
+  onEnd: function() {
+    removeDragActiveClass();
+    generateSchedule();
+  },
+});
+
+colLists.forEach(list => {
+  Sortable.create(list, {
+    group: { name: 'routes', pull: true, put: true },
+    animation: 150,
+    onStart: function() { addDragActiveClass(); },
+    onEnd: function() {
+      removeDragActiveClass();
+      generateSchedule();
+    },
+  });
+});
+
+function addDragActiveClass() {
+  colLists.forEach(el => el.classList.add('sortable-drag-active'));
+}
+function removeDragActiveClass() {
+  colLists.forEach(el => el.classList.remove('sortable-drag-active'));
+}
+
+regenBtn.addEventListener('click', generateSchedule);
+document.getElementById('printBtn').addEventListener('click', function() {
+  window.print();
+});
+</script>
+</body>
+</html>
