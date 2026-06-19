@@ -161,7 +161,7 @@ body.drag-over::before {
   color: #374151;
 }
 .route-column-list {
-  min-height: 260px;
+  min-height: 120px;
   background: #f9fafb;
   border-radius: 6px;
   padding: 6px;
@@ -270,21 +270,19 @@ body.drag-over::before {
   <div id="pool" class="pool"></div>
 </div>
 
-<!-- Section 2: Routes -->
-<div class="section">
-  <div class="section-header">Routes</div>
-  <div class="scroll-area">
-    <div class="columns-row" id="routeColumns"></div>
-  </div>
-</div>
-
-<!-- Section 3: Schedule -->
-<div class="section">
-  <div class="section-header">
-    <span>Schedule</span>
+<!-- Section 2: Routes & Schedule -->
+<div class="section" id="routesScheduleSection">
+  <div class="section-header" style="border-bottom:none;margin-bottom:0;">
+    <span>Routes</span>
     <span style="display:flex;align-items:center;gap:6px;">
       <button class="btn-sm" id="printBtn">Print</button>
     </span>
+  </div>
+  <div class="scroll-area" style="margin-bottom:24px;">
+    <div class="columns-row" id="routeColumns"></div>
+  </div>
+  <div class="section-header">
+    <span>Schedule</span>
   </div>
   <div class="scroll-area">
     <div class="columns-row" id="scheduleColumns"></div>
@@ -292,7 +290,7 @@ body.drag-over::before {
 </div>
 
 <script>
-const ROUTE_LABELS = ['A','B','C','D','E','F','G','H','I','J'];
+const ROUTE_LABELS = ['A','B','C','D','E','F','G','H'];
 
 const poolEl = document.getElementById('pool');
 const routeColsEl = document.getElementById('routeColumns');
