@@ -275,6 +275,7 @@ body.drag-over::before {
   <div class="section-header" style="border-bottom:none;margin-bottom:0;">
     <span>Route Allocation</span>
     <span style="display:flex;align-items:center;gap:6px;">
+      <button class="btn-sm" id="autoArrangeBtn">Auto-arrange</button>
       <button class="btn-sm" id="printBtn">Print</button>
     </span>
   </div>
@@ -362,6 +363,49 @@ function loadData(athletes) {
   dataStatus.className = 'data-status loaded';
   generateSchedule();
 }
+
+// ---- Auto-arrange (reorder within columns only) ----
+document.getElementById('autoArrangeBtn').addEventListener('click', function() {
+  if (!dataLoaded) return;
+
+  const colLists = document.querySelectorAll('.route-column-list');
+
+  // Read current column assignments, collecting items by group
+  const groupInfo = {};
+  colLists.forEach((col, colIdx) => {
+    Array.from(col.children).forEach(item => {
+      if (item.classList.contains('cleaning')) return;
+      const parsed = parseItem(item.textContent);
+      if (!parsed) return;
+      if (!groupInfo[parsed.group]) {
+        const count = lookup[parsed.group + '|1'] ? lookup[parsed.group + '|1'].length : 0;
+        groupInfo[parsed.group] = { count, slots: {} };
+      }
+      groupInfo[parsed.group].slots[parsed.route] = { item, colIdx };
+    });
+  });
+
+  const groups = Object.keys(groupInfo).sort((a, b) => groupInfo[b].count - groupInfo[a].count);
+  if (groups.length === 0) return;
+
+  // Clear columns
+  colLists.forEach(col => col.innerHTML = '');
+
+  // Place groups largest first, preserving column assignment
+  const colTimes = new Array(colLists.length).fill(0);
+  groups.forEach(group => {
+    const info = groupInfo[group];
+    const duration = info.count * GLOBAL_CADENCE;
+    [1, 2].forEach(r => {
+      const slot = info.slots[r];
+      if (!slot) return;
+      colLists[slot.colIdx].appendChild(slot.item);
+      colTimes[slot.colIdx] += duration;
+    });
+  });
+
+  generateSchedule();
+});
 
 // ---- Drag-and-drop JSON loading ----
 document.addEventListener('dragover', function(e) {
