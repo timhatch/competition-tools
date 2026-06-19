@@ -146,7 +146,7 @@ body.drag-over::before {
   min-width: max-content;
 }
 .column {
-  width: 240px;
+  width: 200px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -203,8 +203,6 @@ body.drag-over::before {
   font-family: 'Courier New', Courier, monospace;
   font-size: 11px;
   line-height: 1.5;
-  overflow-y: auto;
-  max-height: 500px;
 }
 .schedule-row {
   white-space: pre;
@@ -251,7 +249,7 @@ body.drag-over::before {
   body > div:first-of-type { display: none; }
   .scroll-area { overflow: visible; }
   .columns-row { flex-wrap: wrap; }
-  .column { width: 180px; }
+  .column { width: 200px; }
   .schedule-column-list { max-height: none; overflow: visible; border: none; font-size: 10px; }
   .count-badge { display: none; }
   @page { size: landscape; margin: 8mm; }
@@ -263,7 +261,7 @@ body.drag-over::before {
 <!-- Section 1: Pool -->
 <div class="section">
   <div class="section-header">
-    <span>Groups</span>
+    <span>Sport Classes & Routes</span>
     <span style="display:flex;align-items:center;gap:10px;">
       <button class="btn-sm" id="addCleaningBtn">+ Cleaning Break</button>
       <span class="data-status empty" id="dataStatus">Drop athletes.json here</span>
@@ -275,7 +273,7 @@ body.drag-over::before {
 <!-- Section 2: Routes & Schedule -->
 <div class="section" id="routesScheduleSection">
   <div class="section-header" style="border-bottom:none;margin-bottom:0;">
-    <span>Routes</span>
+    <span>Route Allocation</span>
     <span style="display:flex;align-items:center;gap:6px;">
       <button class="btn-sm" id="printBtn">Print</button>
     </span>
@@ -284,7 +282,7 @@ body.drag-over::before {
     <div class="columns-row" id="routeColumns"></div>
   </div>
   <div class="section-header">
-    <span>Schedule</span>
+    <span>Planned Schedule</span>
   </div>
   <div class="scroll-area">
     <div class="columns-row" id="scheduleColumns"></div>
