@@ -424,24 +424,28 @@ function formatTime(mins) {
 }
 
 // ---- Generate schedule ----
+GLOBAL_START   = 9
+GLOBAL_CADENCE = 5
+GLOBAL_CLEAN   = 15
+
 function generateSchedule() {
   if (!dataLoaded) return;
-  const routeCols = document.querySelectorAll('.route-column-list');
+  const routeCols    = document.querySelectorAll('.route-column-list');
   const scheduleCols = document.querySelectorAll('.schedule-column-list');
 
   routeCols.forEach((routeCol, idx) => {
     const schedCol = scheduleCols[idx];
     schedCol.innerHTML = '';
-    let currentTime = 9 * 60;
+    let currentTime = GLOBAL_START * 60;
     let totalAthletes = 0;
 
     Array.from(routeCol.children).forEach(item => {
       if (item.classList.contains('cleaning')) {
         const sep = document.createElement('div');
-        sep.className = 'schedule-cleaning';
+        sep.className   = 'schedule-cleaning';
         sep.textContent = '--- CLEANING --- ' + formatTime(currentTime);
         schedCol.appendChild(sep);
-        currentTime += 15;
+        currentTime += GLOBAL_CLEAN;
         return;
       }
       const parsed = parseItem(item.textContent);
@@ -461,7 +465,7 @@ function generateSchedule() {
         row.textContent = formatAthlete(a);
         schedCol.appendChild(row);
         totalAthletes++;
-        currentTime += 5;
+        currentTime += GLOBAL_CADENCE;
       });
     });
 
