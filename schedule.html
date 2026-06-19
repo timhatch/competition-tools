@@ -85,16 +85,27 @@ body.drag-over::before {
   font-weight: 500;
 }
 .pool-item:active { cursor: grabbing; }
-.pool-item.m {
-  background: #e8f0fe;
-  border: 1px solid #a8c7fa;
-  color: #1a56db;
-}
-.pool-item.w {
-  background: #fde8ef;
-  border: 1px solid #f9a8c3;
-  color: #c81e3e;
-}
+
+/* Category B (Visually Impaired) - Red/Fuchsia */
+.cat-b.lvl-1 { background: #d946ef; border-color: #a21caf; color: #fff; }
+.cat-b.lvl-2 { background: #f0abfc; border-color: #d946ef; color: #4a044e; }
+.cat-b.lvl-3 { background: #fae8ff; border-color: #f0abfc; color: #4a044e; }
+
+/* Category AU (Arm Amputee) - Teal */
+.cat-au.lvl-1 { background: #0d9488; border-color: #0f766e; color: #fff; }
+.cat-au.lvl-2 { background: #5eead4; border-color: #14b8a6; color: #134e4a; }
+.cat-au.lvl-3 { background: #ccfbf1; border-color: #99f6e4; color: #134e4a; }
+
+/* Category AL (Leg Amputee) - Amber */
+.cat-al.lvl-1 { background: #d97706; border-color: #b45309; color: #fff; }
+.cat-al.lvl-2 { background: #fbbf24; border-color: #f59e0b; color: #78350f; }
+.cat-al.lvl-3 { background: #fde68a; border-color: #fcd34d; color: #78350f; }
+
+/* Category RP (Neurological) - Blue */
+.cat-rp.lvl-1 { background: #2563eb; border-color: #1d4ed8; color: #fff; }
+.cat-rp.lvl-2 { background: #60a5fa; border-color: #3b82f6; color: #fff; }
+.cat-rp.lvl-3 { background: #bfdbfe; border-color: #93c5fd; color: #1e3a5f; }
+
 .pool-item.sortable-chosen { transform: scale(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 
 /* Cleaning break */
@@ -178,16 +189,6 @@ body.drag-over::before {
   transition: box-shadow 0.15s, transform 0.15s;
 }
 .route-item:active { cursor: grabbing; }
-.route-item.m {
-  background: #e8f0fe;
-  border: 1px solid #a8c7fa;
-  color: #1a56db;
-}
-.route-item.w {
-  background: #fde8ef;
-  border: 1px solid #f9a8c3;
-  color: #c81e3e;
-}
 .route-item.sortable-chosen { transform: scale(1.04); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
 .route-item.sortable-ghost { opacity: 0.35; }
 
@@ -348,10 +349,12 @@ function loadData(athletes) {
   const groups = Array.from(groupSet).sort();
   poolEl.innerHTML = '';
   groups.forEach(g => {
-    const gender = g.startsWith('M') ? 'm' : 'w';
+    const m = g.match(/^[MW]-([A-Z]+)(\d+)/);
+    const cat = m ? m[1].toLowerCase() : '';
+    const lvl = m ? 'lvl-' + parseInt(m[2]) : '';
     [1, 2].forEach(r => {
       const el = document.createElement('div');
-      el.className = 'pool-item ' + gender;
+      el.className = 'pool-item cat-' + cat + ' ' + lvl;
       const count = lookup[g + '|' + r] ? lookup[g + '|' + r].length : 0;
       el.textContent = g + '-R' + r + ' (' + count + ')';
       poolEl.appendChild(el);
