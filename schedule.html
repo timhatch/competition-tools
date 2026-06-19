@@ -284,7 +284,6 @@ body.drag-over::before {
     <span>Schedule</span>
     <span style="display:flex;align-items:center;gap:6px;">
       <button class="btn-sm" id="printBtn">Print</button>
-      <button class="btn-sm" id="regenerateBtn" disabled>Regenerate</button>
     </span>
   </div>
   <div class="scroll-area">
@@ -298,7 +297,6 @@ const ROUTE_LABELS = ['A','B','C','D','E','F','G','H','I','J'];
 const poolEl = document.getElementById('pool');
 const routeColsEl = document.getElementById('routeColumns');
 const scheduleColsEl = document.getElementById('scheduleColumns');
-const regenBtn = document.getElementById('regenerateBtn');
 const dataStatus = document.getElementById('dataStatus');
 const addCleaningBtn = document.getElementById('addCleaningBtn');
 
@@ -362,7 +360,6 @@ function loadData(athletes) {
   });
 
   dataLoaded = true;
-  regenBtn.disabled = false;
   dataStatus.textContent = 'Loaded ' + groups.length + ' groups, ' + athletes.length + ' athletes';
   dataStatus.className = 'data-status loaded';
   generateSchedule();
@@ -511,7 +508,6 @@ function removeDragActiveClass() {
   colLists.forEach(el => el.classList.remove('sortable-drag-active'));
 }
 
-regenBtn.addEventListener('click', generateSchedule);
 document.getElementById('printBtn').addEventListener('click', function() {
   window.print();
 });
