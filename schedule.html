@@ -146,7 +146,7 @@ body.drag-over::before {
   min-width: max-content;
 }
 .column {
-  width: 200px;
+  width: 196px;
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
@@ -420,6 +420,10 @@ document.getElementById('autoArrangeBtn').addEventListener('click', function() {
     let bestPosA = colSched[colA].length;
     let bestPosB = colSched[colB].length;
     let bestGap = -1;
+    let fallbackPosA = colSched[colA].length;
+    let fallbackPosB = colSched[colB].length;
+    let fallbackGap = -1;
+    const minGap = Math.floor(info.count / 2) * GLOBAL_CADENCE + 60;
 
     for (let posA = 0; posA <= colSched[colA].length; posA++) {
       const startA = startTimeAt(colSched[colA], posA);
@@ -429,9 +433,15 @@ document.getElementById('autoArrangeBtn').addEventListener('click', function() {
         const endB = startB + duration;
         if (endA <= startB || endB <= startA) {
           const gap = Math.abs(startA - startB);
-          if (gap > bestGap) { bestGap = gap; bestPosA = posA; bestPosB = posB; }
+          if (gap > fallbackGap) { fallbackGap = gap; fallbackPosA = posA; fallbackPosB = posB; }
+          if (gap >= minGap && gap > bestGap) { bestGap = gap; bestPosA = posA; bestPosB = posB; }
         }
       }
+    }
+
+    if (bestGap === -1) {
+      bestPosA = fallbackPosA;
+      bestPosB = fallbackPosB;
     }
 
     colSched[colA].splice(bestPosA, 0, { duration, el: elA });
