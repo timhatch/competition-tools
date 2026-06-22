@@ -370,39 +370,81 @@ document.getElementById('autoArrangeBtn').addEventListener('click', function() {
 
   const colLists = document.querySelectorAll('.route-column-list');
 
-  // Read current column assignments, collecting items by group
+  // Read current column assignments
+  const cleanItems = [];
   const groupInfo = {};
+
   colLists.forEach((col, colIdx) => {
-    Array.from(col.children).forEach(item => {
-      if (item.classList.contains('cleaning')) return;
-      const parsed = parseItem(item.textContent);
+    Array.from(col.children).forEach(el => {
+      if (el.classList.contains('cleaning')) {
+        cleanItems.push({ el, colIdx });
+        return;
+      }
+      const parsed = parseItem(el.textContent);
       if (!parsed) return;
       if (!groupInfo[parsed.group]) {
         const count = lookup[parsed.group + '|1'] ? lookup[parsed.group + '|1'].length : 0;
-        groupInfo[parsed.group] = { count, slots: {} };
+        groupInfo[parsed.group] = { count, slots: {}, elements: {} };
       }
-      groupInfo[parsed.group].slots[parsed.route] = { item, colIdx };
+      groupInfo[parsed.group].slots[parsed.route] = colIdx;
+      groupInfo[parsed.group].elements[parsed.route] = el;
     });
   });
 
   const groups = Object.keys(groupInfo).sort((a, b) => groupInfo[b].count - groupInfo[a].count);
   if (groups.length === 0) return;
 
-  // Clear columns
-  colLists.forEach(col => col.innerHTML = '');
+  // Build schedule per column (no DOM operations until render)
+  const colSched = Array.from(colLists, () => []);
 
-  // Place groups largest first, preserving column assignment
-  const colTimes = new Array(colLists.length).fill(0);
+  function startTimeAt(sched, pos) {
+    let t = 0;
+    for (let i = 0; i < pos && i < sched.length; i++) t += sched[i].duration;
+    return t;
+  }
+
   groups.forEach(group => {
     const info = groupInfo[group];
     const duration = info.count * GLOBAL_CADENCE;
-    [1, 2].forEach(r => {
-      const slot = info.slots[r];
-      if (!slot) return;
-      colLists[slot.colIdx].appendChild(slot.item);
-      colTimes[slot.colIdx] += duration;
-    });
+    const colA = info.slots[1];
+    const colB = info.slots[2];
+    const elA = info.elements[1];
+    const elB = info.elements[2];
+
+    if (colA === undefined || colB === undefined || colA === colB) {
+      if (colA !== undefined && elA) colSched[colA].push({ duration, el: elA });
+      if (colB !== undefined && colB !== colA && elB) colSched[colB].push({ duration, el: elB });
+      return;
+    }
+
+    let bestPosA = colSched[colA].length;
+    let bestPosB = colSched[colB].length;
+    let bestGap = -1;
+
+    for (let posA = 0; posA <= colSched[colA].length; posA++) {
+      const startA = startTimeAt(colSched[colA], posA);
+      const endA = startA + duration;
+      for (let posB = 0; posB <= colSched[colB].length; posB++) {
+        const startB = startTimeAt(colSched[colB], posB);
+        const endB = startB + duration;
+        if (endA <= startB || endB <= startA) {
+          const gap = Math.abs(startA - startB);
+          if (gap > bestGap) { bestGap = gap; bestPosA = posA; bestPosB = posB; }
+        }
+      }
+    }
+
+    colSched[colA].splice(bestPosA, 0, { duration, el: elA });
+    colSched[colB].splice(bestPosB, 0, { duration, el: elB });
   });
+
+  // Reorder DOM to match colSched (appendChild moves existing elements)
+  colSched.forEach((sched, colIdx) => {
+    sched.forEach(entry => colLists[colIdx].appendChild(entry.el));
+  });
+
+  // Move cleaning items to end of their columns
+  cleanItems.forEach(({ el, colIdx }) => colLists[colIdx].appendChild(el));
 
   generateSchedule();
 });
