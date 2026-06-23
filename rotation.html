@@ -100,6 +100,37 @@ td.shifted{color:var(--text-dim)}
 .ga-input{width:64px;text-align:center}
 a.dl{color:var(--accent);cursor:pointer;text-decoration:underline}
 footer{text-align:center;padding:18px 20px 24px;color:var(--text-muted);font-size:11px;letter-spacing:.3px;border-top:1px solid var(--border);margin-top:8px}
+body.drag-over::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9999;
+  border: 4px dashed var(--accent);
+  background: var(--accent-bg);
+  pointer-events: none;
+}
+.data-status {
+  font-size: 12px;
+  font-weight: 400;
+  padding: 8px 14px;
+  border-radius: 6px;
+  background: light-dark(#f0fdf4, #0a2e1a);
+  border: 1px solid light-dark(#bbf7d0, #2d6a3f);
+  color: light-dark(#166534, #6cdb8a);
+}
+.data-status.loaded {
+  background: light-dark(#f0fdf4, #0a2e1a);
+  border-color: light-dark(#bbf7d0, #2d6a3f);
+  color: light-dark(#166534, #6cdb8a);
+}
+.data-status.empty {
+  background: light-dark(#fefce8, #2e260a);
+  border-color: light-dark(#fde68a, #6a5a2d);
+  color: light-dark(#92400e, #dbac6c);
+}
+.data-status.error {
+  background: light-dark(#fef2f2, #2e0a0a);
+  border-color: light-dark(#fecaca, #6a2d2d);
+  color: light-dark(#991b1b, #db6c6c);
+}
 @media (max-width: 900px) {
   body { padding: 0 12px; }
   main { padding: 12px; }
@@ -139,71 +170,16 @@ footer{text-align:center;padding:18px 20px 24px;color:var(--text-muted);font-siz
     </div>
   </div>
 
-  <div class="card">
-    <h2><span data-i18n="importTitle"></span> <span class="hint" data-i18n="importHint"></span></h2>
-    <div class="notes" style="margin-bottom:12px" data-i18n-html="importNotes"></div>
-    <textarea id="importBox" rows="6" placeholder="Starting Order&#9;Name&#9;Nation&#9;Bib-Number&#10;1&#9;SCHALCK&#9;FRA&#9;301&#10;2&#9;LEE&#9;KOR&#9;302&#10;3&#9;NARASAKI&#9;JPN&#9;303&#10;…"></textarea>
-    <div class="row" style="margin-top:12px">
-      <button onclick="loadFromBox()" data-i18n="btnApply"></button>
-      <button class="ghost" onclick="document.getElementById('csvFile').click()" data-i18n="btnCSV"></button>
-      <input type="file" id="csvFile" accept=".csv,.txt,.xlsx" style="display:none" onchange="loadCSV(this)">
-      <button class="ghost" onclick="loadDemo()" data-i18n="btnDemo"></button>
-      <button class="danger sm" onclick="clearList()" data-i18n="btnClear"></button>
-      <span class="muted" id="importInfo" style="margin-left:auto"></span>
-    </div>
-  </div>
-
-  <!-- Manual column mapping panel (shown when auto-detection is ambiguous) -->
-  <div id="mapPanel" class="card" style="display:none;border-color:var(--accent)">
-    <h2 data-i18n="mapTitle"></h2>
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:12px">
-      <div>
-        <label data-i18n="mapModeLabel"></label>
-        <select id="mapMode" onchange="toggleMapMode();updateMapPreview()">
-          <option value="split" data-i18n="mapModeSplit"></option>
-          <option value="combined" data-i18n="mapModeCombined"></option>
-        </select>
-      </div>
-      <div style="display:flex;align-items:center;gap:8px;padding-top:22px">
-        <input type="checkbox" id="mapHeader" style="width:auto;margin:0" onchange="updateMapPreview()">
-        <label for="mapHeader" style="margin:0;color:var(--text)" data-i18n="mapHasHeader"></label>
-      </div>
-      <div>
-        <label data-i18n="mapOrderLabel"></label>
-        <select id="mapOrder" onchange="updateMapPreview()"></select>
-      </div>
-      <div id="mapAaWrap">
-        <label data-i18n="mapAaLabel"></label>
-        <select id="mapAa" onchange="updateMapPreview()"></select>
-      </div>
-      <div id="mapNameWrap">
-        <label data-i18n="mapNameLabel"></label>
-        <select id="mapName" onchange="updateMapPreview()"></select>
-      </div>
-      <div id="mapNatWrap">
-        <label data-i18n="mapNatLabel"></label>
-        <select id="mapNat" onchange="updateMapPreview()"></select>
-      </div>
-      <div id="mapBibWrap">
-        <label data-i18n="mapBibLabel"></label>
-        <select id="mapBib" onchange="updateMapPreview()"></select>
-      </div>
-    </div>
-    <div class="notes" style="margin-bottom:12px;font-size:12px">
-      <b data-i18n="mapPreviewLabel"></b>:&nbsp;
-      <span id="mapPreview" style="font-family:var(--mono)"></span>
-    </div>
-    <div class="row">
-      <button onclick="applyMappingFromUI()" data-i18n="mapApply"></button>
-      <button class="ghost" onclick="$('mapPanel').style.display='none'" data-i18n="mapClose"></button>
-    </div>
+  <div class="card" id="importCard">
+    <h2>Import Start List</h2>
+    <div id="importStatus" class="data-status empty">Drop a <strong>.json</strong> file here</div>
   </div>
 
   <div class="card">
     <h2><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span></h2>
     <div class="scroll" style="max-height:55vh">
       <table id="ctrlTable">
-        <thead><tr><th style="width:70px" data-i18n="thOrder"></th><th data-i18n="thAaId"></th><th style="width:90px" data-i18n="thBoulder"></th><th style="width:50px"></th></tr></thead>
+        <thead><tr><th style="width:70px" data-i18n="thOrder"></th><th data-i18n="thAaId"></th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -483,20 +459,7 @@ let climbers = []; // {order, name, boulder(null|number)}
 let gapRows = [];  // {aa, boulder, current, select, gap}
 let pauses = [];   // {from, len} full-wall interruptions (rotation range)
 
-const DEMO = [
-"301 SCHALCK         | FRA","302 LEE             | KOR","303 NARASAKI        | JPN",
-"304 AMAGASA         | JPN","305 DUFFY           | USA","306 PEHARC          | SLO",
-"307 RICHARD         | FRA","308 BLOEM           | GER","309 PEINADO FRANGAN | ESP",
-"310 CHON            | KOR","311 UZNIK           | AUT","312 BAI             | CHN",
-"313 TRANDAFIR       | GER","314 DOHI            | JPN","315 GIRARD          | FRA",
-"316 HU              | CHN","317 PARKS           | AUS","318 GRUBER          | AUT",
-"319 RODRIGUEZ       | CAN","320 INTRACHUPONGSE  | THA","321 HOFHERR         | AUT",
-"322 DORVAL          | CAN","323 MARK            | ISR","324 FAN             | TPE",
-"325 ORTEGA FOSADO   | MEX","326 MARTINS         | GBR","327 SIVAKOV         | LTU",
-"328 CHI             | USA","329 UZNIK           | AUT","330 IASI HANADA     | BRA",
-"331 GUIGNARD        | SUI","332 WAGNER          | CHI","333 DUNNE           | GBR",
-"334 BURNINGHAM      | RSA","335 HOYER           | USA","336 TORRONI         | SUI",
-"337 GHILARDI        | SUI","338 ENDRLE          | CZE","339 MIDDELBURG      | NED"];
+
 
 // ============ Settings ============
 const $ = id => document.getElementById(id);
@@ -540,225 +503,52 @@ function athHtml(name, restart){
     '</div>';
 }
 
-// ============ Import ============
-// Auto-detect the separator and split one line, respecting "quoted, fields".
-function detectDelim(line){
-  const c=[['\t',(line.match(/\t/g)||[]).length],[';',(line.match(/;/g)||[]).length],[',',(line.match(/,/g)||[]).length]];
-  c.sort((a,b)=>b[1]-a[1]); return c[0][1]>0 ? c[0][0] : '\t';
-}
-function splitDelim(line, d){
-  const out=[]; let cur='', q=false;
-  for(let i=0;i<line.length;i++){ const ch=line[i];
-    if(q){ if(ch==='"'){ if(line[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=ch; }
-    else { if(ch==='"') q=true; else if(ch===d){ out.push(cur); cur=''; } else cur+=ch; } }
-  out.push(cur); return out.map(s=>s.trim());
-}
-const AA_RE = /^\s*\d+\s+.+\|.+$/;   // "101 ANRAKU | JPN"
-function cleanAa(s){ return s.replace(/\s+/g,' ').replace(/\s*\|\s*/,' | ').trim(); }
-
-// Text -> table (rows of cells), auto delimiter + quote handling + BOM strip.
-function parseTextToTable(text){
-  const lines = text.split(/\r?\n/).map(l=>l.replace(/^﻿/,'').replace(/\s+$/,'')).filter(l=>l.trim()!=='');
-  if(!lines.length) return [];
-  const d=detectDelim(lines[0]);
-  return lines.map(l=>splitDelim(l,d));
-}
-function numericCol(rows, k){
-  let num=0, tot=0;
-  for(let r=0;r<rows.length;r++){ const v=(rows[r][k]||'').trim(); if(v==='') continue; tot++; if(/^\d+$/.test(v)) num++; }
-  return tot>0 && num/tot>=0.8;
-}
-// Guess how the columns map to {order, name, nation, bib} or a combined Aa-ID column.
-function autoMapping(rows){
-  if(!rows.length) return null;
-  const norm=s=>(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
-  const header=rows[0].map(norm);
-  const looksHeader=header.some(h=>h.includes('name'))&&header.some(h=>h.includes('bib')||h.includes('order'));
-  if(looksHeader){
-    const pick=preds=>{for(const p of preds){const i=header.findIndex(p);if(i>=0)return i;}return -1;};
-    return {hasHeader:true, mode:'split',
-      order:pick([h=>h.includes('startingorder'),h=>h==='order',h=>h.includes('order'),h=>h.includes('rank'),h=>h.includes('pos')]),
-      name:pick([h=>h==='name',h=>h.includes('name'),h=>h.includes('athlete'),h=>h.includes('climber')]),
-      nation:pick([h=>h.includes('nation'),h=>h.includes('country'),h=>h==='nat',h=>h==='noc']),
-      bib:pick([h=>h.includes('bib'),h=>h.includes('startnumber'),h=>h.includes('startno')]), aa:-1};
+// ---- Drag-and-drop JSON loading ----
+let dragged = false;
+document.addEventListener('dragover', function(e) {
+  if (e.dataTransfer.types.includes('Files')) {
+    e.preventDefault();
+    document.body.classList.add('drag-over');
+    dragged = false;
   }
-  const cols=Math.max(...rows.map(r=>r.length));
-  let aaCol=-1;
-  for(let k=0;k<cols;k++){ if(rows.some(r=>AA_RE.test(r[k]||''))){ aaCol=k; break; } }
-  if(aaCol>=0){
-    let orderCol=-1;
-    for(let k=0;k<cols;k++){ if(k!==aaCol && numericCol(rows,k)){ orderCol=k; break; } }
-    return {hasHeader:false, mode:'combined', aa:aaCol, order:orderCol, name:-1, nation:-1, bib:-1};
+});
+document.addEventListener('dragleave', function(e) {
+  if (!e.relatedTarget || e.relatedTarget.nodeName === 'HTML') {
+    document.body.classList.remove('drag-over');
   }
-  if(numericCol(rows,0) && cols>1)
-    return {hasHeader:false, mode:'split', order:0, name:1, nation:-1, bib:-1, aa:-1};
-  return {hasHeader:false, mode:'combined', aa:0, order:-1, name:-1, nation:-1, bib:-1};
-}
-function applyMapping(rows, m){
-  const out=[]; let auto=0; const start=m.hasHeader?1:0;
-  for(let r=start;r<rows.length;r++){
-    const c=rows[r];
-    const ordCell=(m.order>=0?(c[m.order]||''):'').trim();
-    const order = /^\d+$/.test(ordCell) ? +ordCell : (++auto);
-    let aa;
-    if(m.mode==='combined'){ aa=cleanAa(c[m.aa]||''); }
-    else { const name=(m.name>=0?(c[m.name]||''):'').trim(), nat=(m.nation>=0?(c[m.nation]||''):'').trim(), bib=(m.bib>=0?(c[m.bib]||''):'').trim();
-           if(!name && !bib) continue; aa=cleanAa((bib?bib+' ':'')+name+(nat?' | '+nat:'')); }
-    if(!aa) continue;
-    out.push({order, name:aa, boulder:null});
+});
+document.addEventListener('drop', function(e) {
+  e.preventDefault();
+  document.body.classList.remove('drag-over');
+  const file = Array.from(e.dataTransfer.files).find(f => f.name.endsWith('.json'));
+  if (!file) {
+    $('importStatus').textContent = 'Please drop a .json file.';
+    $('importStatus').className = 'data-status error';
+    return;
   }
-  return out;
-}
-function mapTable(rows){
-  if(!rows.length) return {climbers:[], error:null};
-  const m=autoMapping(rows);
-  if(m && m.hasHeader){
-    const miss=[];
-    if(m.order<0) miss.push('Starting Order'); if(m.name<0) miss.push('Name');
-    if(m.nation<0) miss.push('Nation'); if(m.bib<0) miss.push('Bib-Number');
-    if(miss.length) return {climbers:[], error:miss};
-  }
-  return {climbers: m?applyMapping(rows,m):[], error:null};
-}
-let importRows=null;
-function loadFromBox(){
-  importRows = parseTextToTable($('importBox').value);
-  const res = mapTable(importRows);
-  if(res.error){ $('importInfo').innerHTML='<span class="warnmsg">'+t('importMissing',{cols:res.error.join(', ')})+' · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a></span>'; openMapPanel(); return; }
-  if(!res.climbers.length){ $('importInfo').textContent=t('infoNothing'); return; }
-  climbers = res.climbers; renderAll();
-  $('importInfo').innerHTML = '<span class="ok">'+t('infoLoaded',{n:res.climbers.length})+'</span> · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a>';
-}
-
-// ---- manual column mapping panel (works for any layout) ----
-function colSample(rows,k){ const s=((rows[1]&&rows[1][k]!=null)?rows[1][k]:(rows[0][k]||'')).toString().trim().slice(0,24); return (k+1)+': '+(s||'—'); }
-function fillColSel(sel, rows, sel0, firstOpt){
-  const cols=Math.max(...rows.map(r=>r.length)); let h='<option value="-1">'+firstOpt+'</option>';
-  for(let k=0;k<cols;k++) h+='<option value="'+k+'"'+(k===sel0?' selected':'')+'>'+escHtml(colSample(rows,k))+'</option>';
-  sel.innerHTML=h;
-}
-function openMapPanel(){
-  if(!importRows||!importRows.length) importRows=parseTextToTable($('importBox').value);
-  if(!importRows||!importRows.length){ $('importInfo').textContent=t('infoNothing'); return; }
-  const m=autoMapping(importRows)||{mode:'combined',hasHeader:false,aa:0,order:-1,name:-1,nation:-1,bib:-1};
-  $('mapMode').value=m.mode;
-  $('mapHeader').checked=!!m.hasHeader;
-  fillColSel($('mapOrder'),importRows, m.order, t('mapAuto'));
-  fillColSel($('mapAa'),importRows, m.aa<0?0:m.aa, '—');
-  fillColSel($('mapName'),importRows, m.name, '—');
-  fillColSel($('mapNat'),importRows, m.nation, '—');
-  fillColSel($('mapBib'),importRows, m.bib, '—');
-  $('mapPanel').style.display='';
-  toggleMapMode(); updateMapPreview();
-}
-function toggleMapMode(){
-  const split=$('mapMode').value==='split';
-  $('mapAaWrap').style.display=split?'none':'';
-  ['mapNameWrap','mapNatWrap','mapBibWrap'].forEach(id=>$(id).style.display=split?'':'none');
-}
-function readUIMapping(){
-  return { hasHeader:$('mapHeader').checked, mode:$('mapMode').value,
-    order:+$('mapOrder').value, aa:+$('mapAa').value,
-    name:+$('mapName').value, nation:+$('mapNat').value, bib:+$('mapBib').value };
-}
-function updateMapPreview(){
-  const cl=applyMapping(importRows, readUIMapping()).slice(0,3);
-  $('mapPreview').innerHTML = cl.length ? cl.map(c=>'#'+c.order+'  '+escHtml(c.name)).join('<br>') : '—';
-}
-function applyMappingFromUI(){
-  const cl=applyMapping(importRows, readUIMapping());
-  if(!cl.length){ $('importInfo').textContent=t('infoNothing'); return; }
-  climbers=cl; renderAll(); $('mapPanel').style.display='none';
-  $('importInfo').innerHTML='<span class="ok">'+t('infoLoaded',{n:cl.length})+'</span>';
-}
-// ---- xlsx reader (minimal, no external deps, Chrome 80+) ----
-function zipParse(buf){
-  const v=new DataView(buf), u=new Uint8Array(buf), dec=new TextDecoder();
-  const files={}; let i=0;
-  while(i<u.length-4){
-    if(v.getUint32(i,true)!==0x04034B50){i++;continue;}
-    const method=v.getUint16(i+8,true);
-    const compSz=v.getUint32(i+18,true);
-    const fnLen=v.getUint16(i+26,true);
-    const exLen=v.getUint16(i+28,true);
-    const name=dec.decode(u.slice(i+30,i+30+fnLen));
-    const off=i+30+fnLen+exLen;
-    files[name]={method,data:u.slice(off,off+compSz)};
-    i=off+compSz;
-  }
-  return files;
-}
-async function zipEntry(e){
-  if(e.method===0) return e.data;
-  const ds=new DecompressionStream('deflate-raw');
-  const w=ds.writable.getWriter(); w.write(e.data); w.close();
-  const chunks=[]; const r=ds.readable.getReader();
-  while(true){const {done,value}=await r.read();if(done)break;chunks.push(value);}
-  const out=new Uint8Array(chunks.reduce((n,c)=>n+c.length,0));
-  let off=0; chunks.forEach(c=>{out.set(c,off);off+=c.length;}); return out;
-}
-function xlsxColIdx(r){const m=r.match(/^([A-Z]+)/);if(!m)return 0;
-  let c=0;for(const ch of m[1])c=c*26+(ch.charCodeAt(0)-64);return c-1;}
-function xlsxDecode(s){return s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(+n));}
-async function readXlsxBuffer(buf){
-  const files=zipParse(buf);
-  let ss=[];
-  const ssKey=Object.keys(files).find(k=>k.endsWith('sharedStrings.xml'));
-  if(ssKey){const xml=xlsxDecode(new TextDecoder().decode(await zipEntry(files[ssKey])));
-    ss=[...xml.matchAll(/<t(?:\s[^>]*)?>([^<]*)<\/t>/g)].map(m=>m[1]);}
-  const wsKey=Object.keys(files).find(k=>/xl\/worksheets\/sheet\d+\.xml/.test(k));
-  if(!wsKey) return [];
-  const wsXml=xlsxDecode(new TextDecoder().decode(await zipEntry(files[wsKey])));
-  const rows=[];
-  for(const rm of wsXml.matchAll(/<row\b[^>]*>([\s\S]*?)<\/row>/g)){
-    const cells=[];
-    for(const cm of rm[1].matchAll(/<c\b([^>]*)>([\s\S]*?)<\/c>/g)){
-      const ref=(cm[1].match(/r="([^"]+)"/) ||[])[1]||'';
-      const typ=(cm[1].match(/t="([^"]+)"/) ||[])[1]||'';
-      const v=(cm[2].match(/<v>([\s\S]*?)<\/v>/) ||[])[1]||'';
-      const idx=xlsxColIdx(ref);
-      while(cells.length<=idx) cells.push('');
-      cells[idx]=typ==='s'?(ss[+v]||''):v;
+  const reader = new FileReader();
+  reader.onload = function(ev) {
+    try {
+      const data = JSON.parse(ev.target.result);
+      const arr = Array.isArray(data) ? data : data.athletes;
+      if (!Array.isArray(arr) || arr.length === 0 || !arr[0].name) {
+        throw new Error('Invalid format \u2014 expected array of {bib,name,country,order}');
+      }
+      climbers = arr.map(item => ({
+        order: item.order,
+        name: String(item.bib || '').padStart(3, '0') + ' ' + item.name + (item.country ? ' | ' + item.country : ''),
+        boulder: null
+      }));
+      renderAll();
+      $('importStatus').textContent = 'Loaded ' + climbers.length + ' athletes';
+      $('importStatus').className = 'data-status loaded';
+    } catch (err) {
+      $('importStatus').textContent = 'Error: ' + err.message;
+      $('importStatus').className = 'data-status error';
     }
-    if(cells.some(c=>c)) rows.push(cells);
-  }
-  return rows;
-}
-async function loadXlsx(f){
-  $('importInfo').textContent='…';
-  try {
-    const rows=await readXlsxBuffer(await f.arrayBuffer());
-    if(!rows.length){$('importInfo').textContent=t('infoNothing');return;}
-    importRows=rows;
-    const res=mapTable(rows);
-    if(res.error){
-      $('importInfo').innerHTML='<span class="warnmsg">'+t('importMissing',{cols:res.error.join(', ')})+'</span> · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a>';
-      openMapPanel(); return;
-    }
-    if(!res.climbers.length){$('importInfo').textContent=t('infoNothing');return;}
-    climbers=res.climbers; renderAll();
-    $('importInfo').innerHTML='<span class="ok">'+t('infoLoaded',{n:res.climbers.length})+'</span>'
-      +' · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a>';
-  } catch(err){
-    $('importInfo').innerHTML='<span class="warnmsg">XLSX: '+escHtml(err.message)+'</span>';
-    console.error(err);
-  }
-}
-
-function readFileIntoBox(f){
-  if(!f) return;
-  const r=new FileReader();
-  r.onload=e=>{ $('importBox').value=e.target.result; loadFromBox(); };
-  r.readAsText(f);
-}
-function loadFile(f){
-  if(!f) return;
-  if(f.name.toLowerCase().endsWith('.xlsx')) loadXlsx(f);
-  else readFileIntoBox(f);
-}
-function loadCSV(input){ loadFile(input.files[0]); input.value=''; }
-function loadDemo(){ $('importBox').value = DEMO.join('\n'); loadFromBox(); }
-function clearList(){ climbers=[]; renderAll(); $('importInfo').textContent=''; }
+  };
+  reader.readAsText(file);
+});
 function addClimber(){
   const order = climbers.length? Math.max(...climbers.map(c=>c.order))+1 : 1;
   climbers.push({order, name:'', boulder:null}); renderAll();
@@ -871,19 +661,13 @@ function renderCtrl(){
     const tr=document.createElement('tr');
     tr.innerHTML =
       '<td class="num">'+c.order+'</td>'+
-      '<td class="mono"><input value="'+escAttr(c.name)+'" data-i="'+i+'" data-f="name" style="border:none;background:transparent" class="mono"></td>'+
-      '<td class="editable"><input class="num" style="width:70px" value="'+(c.boulder??'')+'" data-i="'+i+'" data-f="boulder" placeholder="–"></td>'+
-      '<td><button class="danger sm" data-del="'+i+'">✕</button></td>';
+      '<td class="mono"><input value="'+escAttr(c.name)+'" data-i="'+i+'" data-f="name" style="border:none;background:transparent" class="mono"></td>';
     tb.appendChild(tr);
   });
   tb.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
-    const i=+e.target.dataset.i, f=e.target.dataset.f;
-    if(f==='name') climbers[i].name = e.target.value;
-    else { const v=e.target.value.trim(); climbers[i].boulder = v===''?null:(+v); }
-    renderCZ(); renderTZ(); updateStatus();   // update schedules, keep input focus
-  }));
-  tb.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',e=>{
-    climbers.splice(+e.target.dataset.del,1); renderAll();
+    const i=+e.target.dataset.i;
+    climbers[i].name = e.target.value;
+    renderCZ(); renderTZ(); updateStatus();
   }));
   $('ctrlCount').textContent = climbers.length? t('count',{n:climbers.length}) : '';
   updateStatus();
@@ -1108,17 +892,8 @@ document.querySelectorAll('#langsel button').forEach(b=>
 ['startTime','interval','boulders','transit','loading','capacity'].forEach(id=>
   $(id).addEventListener('input',recalc));
 
-// drag & drop a CSV/TXT file straight onto the import box
-(function(){
-  const ib=$('importBox'); if(!ib) return;
-  ib.addEventListener('dragover',e=>{ e.preventDefault(); ib.style.borderColor='var(--accent)'; });
-  ib.addEventListener('dragleave',e=>{ e.preventDefault(); ib.style.borderColor=''; });
-  ib.addEventListener('drop',e=>{ e.preventDefault(); ib.style.borderColor=''; loadFile(e.dataTransfer.files[0]); });
-})();
-
 // ============ Init ============
 applyStatic();
-loadDemo();
 addGapRow();
 </script>
 </body>
