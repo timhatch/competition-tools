@@ -287,6 +287,14 @@
       color: light-dark(#991b1b, #ffd5d5) !important;
       font-weight: 600
     }
+    .bad-current {
+      background: rgba(239, 68, 68, 0.2) !important
+    }
+    .bad-current input {
+      background: transparent !important;
+      color: var(--bad) !important;
+      font-weight: 600
+    }
 
     .late {
       background: rgba(255, 180, 84, .22) !important;
@@ -775,7 +783,7 @@
         tzTitle: "Transit Zone (TZ)", tzHint: "Shuttle-Einteilung & Abfahrts-/Wartezeiten",
         tzLeg1: "Shuttle = ⌊(Rotation−1)/Capacity⌋ + 1", tzLeg2: "Depart = Shuttle-Start − Intervall − Transit", tzLeg3: "CZ Wait = CZ-Start − Depart − Transit",
         thAthlete: "Athlet (B1)", thShuttle: "Shuttle", thDepart: "Depart", thWait: "CZ Wait",
-        gapTitle: "Gap Scheduling Assistant", gapHint: "Restarts planen & Konflikte vermeiden",
+        gapTitle: "Single Insert", gapHint: "Restarts planen & Konflikte vermeiden",
         schedTitle: "Competition Schedule (live)", btnPrint: "🖨 Drucken",
         printSettings: "Start {start} · Intervall {iv}s · Boulders {b} · Kapazität {c}", printGen: "erstellt", printCZ: "Call Zone (CZ)", printTZ: "Transit Zone (TZ)",
         pauseTitle: "Unterbrechung / Stop", pauseHint: "ganze Wand anhalten – alle Boulder leer",
@@ -827,7 +835,7 @@
         tzTitle: "Transit Zone (TZ)", tzHint: "Shuttle grouping & departure/wait times",
         tzLeg1: "Shuttle = ⌊(rotation−1)/capacity⌋ + 1", tzLeg2: "Depart = shuttle start − interval − transit", tzLeg3: "CZ Wait = CZ start − depart − transit",
         thAthlete: "Athlete (B1)", thShuttle: "Shuttle", thDepart: "Depart", thWait: "CZ Wait",
-        gapTitle: "Gap Scheduling Assistant", gapHint: "Plan restarts & avoid conflicts",
+        gapTitle: "Single Insert", gapHint: "Plan restarts & avoid conflicts",
         schedTitle: "Competition Schedule (live)", btnPrint: "🖨 Print",
         printSettings: "Start {start} · Interval {iv}s · Boulders {b} · Capacity {c}", printGen: "generated", printCZ: "Call Zone (CZ)", printTZ: "Transit Zone (TZ)",
         pauseTitle: "Interruption / Stop", pauseHint: "hold the whole wall – all boulders empty",
@@ -1243,7 +1251,7 @@
           '<td class="editable"><input class="ga-input" inputmode="numeric" value="' + escAttr(row.boulder) + '" data-i="' + i + '" data-f="boulder"></td>' +
           '<td class="num cell-orig"></td>' +
           '<td class="num cell-target"></td>' +
-          '<td class="editable"><input class="ga-input" inputmode="numeric" value="' + escAttr(row.current) + '" data-i="' + i + '" data-f="current"></td>' +
+           '<td class="editable cell-current"><input class="ga-input" inputmode="numeric" value="' + escAttr(row.current) + '" data-i="' + i + '" data-f="current"></td>' +
           '<td class="num cell-gap"></td>' +
           '<td class="num cell-restart"></td>' +
           '<td><button class="danger sm" data-delg="' + i + '">✕</button></td>';
@@ -1263,7 +1271,7 @@
       const s = S();
       const plan = computeGapPlan();
       const trs = $('gapTable').querySelectorAll('tbody tr');
-      let lateCount = 0;
+      let lateCount = 0, beforeOrigCount = 0;
       gapRows.forEach((row, i) => {
         const tr = trs[i]; if (!tr) return;
         const c = row.bib ? climberByBib(+row.bib) : null;
@@ -1273,10 +1281,14 @@
         const rest = a ? a.R : null;
         const curSet = numOrNull(row.current) != null;
         const late = rest != null && tg != null && rest > tg;   // decision too late: ideal target missed
+        const beforeOrig = curSet && cr != null && +row.current < cr;
         if (late) lateCount++;
+        if (beforeOrig) beforeOrigCount++;
         tr.querySelector('.cell-gapname').textContent = c ? c.name : '';
         tr.querySelector('.cell-gapcty').textContent = c ? c.country : '';
-        tr.querySelector('.cell-orig').innerHTML = cr ?? (row.bib ? '<span class="muted">?</span>' : '');
+        tr.querySelector('.cell-orig').innerHTML = cr != null ? cr : (row.bib ? '<span class="muted">?</span>' : '');
+        const curCell = tr.querySelector('.cell-current');
+        if (curCell) curCell.classList.toggle('bad-current', beforeOrig);
         tr.querySelector('.cell-target').textContent = tg ?? '';
         const gc = tr.querySelector('.cell-gap');
         gc.textContent = gap ?? (curSet ? '' : '-');
@@ -1290,6 +1302,7 @@
       const nRe = Object.keys(plan.assign).length, nGap = plan.gaps.length;
       let status = nRe ? '<span class="ok">' + t('gapEff', {r: nRe, g: nGap}) + '</span>' : '';
       if (lateCount) status += ' &nbsp;<span style="color:var(--warn)">' + t('gapLate', {n: lateCount}) + '</span>';
+      if (beforeOrigCount) status += ' &nbsp;<span style="color:var(--bad)">⚠ ' + beforeOrigCount + ' Current &lt; Orig</span>';
       $('gapStatus').innerHTML = status;
       // a planned restart reshapes the schedule -> refresh CZ + TZ live
       renderCZ(); renderTZ(); updateStatus();
