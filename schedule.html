@@ -514,7 +514,7 @@ document.addEventListener('drop', function(e) {
   reader.onload = function(ev) {
     try {
       const data = JSON.parse(ev.target.result);
-      const arr = Array.isArray(data) ? data : data.athletes;
+      const arr = data;
       if (!Array.isArray(arr) || arr.length === 0 || !arr[0].group) {
         throw new Error('Invalid format — expected array of {bib,name,country,order,group,route}');
       }
