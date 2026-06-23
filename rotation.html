@@ -373,7 +373,7 @@
     }
 
     .editable {
-      background: var(--bg-subtle)
+      background: light-dark(#fef9e7, #2a2516)
     }
 
     .editable input {
@@ -485,7 +485,7 @@
       display: flex;
       gap: 18px;
       flex-wrap: wrap;
-      margin-top: 10px;
+      margin: 10px 0 12px;
       font-size: 12px;
       color: var(--text-muted)
     }
@@ -580,8 +580,8 @@
     <span class="sub" id="statusbar"></span>
     <div class="tabs">
       <div class="tab active" data-view="setup" data-i18n="tabSetup"></div>
-      <div class="tab" data-view="tz" data-i18n="tabTZ"></div>
       <div class="tab" data-view="gap" data-i18n="tabGap"></div>
+      <div class="tab" data-view="tz" data-i18n="tabTZ"></div>
     </div>
     <div class="langsel" id="langsel">
       <button data-lang="en">EN</button>
@@ -606,10 +606,8 @@
       <div class="card" id="importCard">
         <h2>Import Start List</h2>
         <div id="importStatus" class="data-status empty">Drop a <strong>.json</strong> file here</div>
-      </div>
 
-      <div class="card">
-        <h2><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span></h2>
+        <h2 style="margin-top:18px"><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span></h2>
         <div class="scroll" style="max-height:55vh">
           <table id="ctrlTable">
             <thead>
@@ -624,41 +622,7 @@
           </table>
         </div>
         <div class="row" style="margin-top:10px">
-          <button class="ghost sm" onclick="addClimber()" data-i18n="btnAddRow"></button>
-        </div>
-      </div>
-    </section>
-
-    <!-- ============ CZ SCHEDULE ============ -->
-    <!-- ============ TZ SCHEDULE ============ -->
-    <section class="view" id="view-tz">
-      <div class="card">
-        <h2><span data-i18n="tzTitle"></span> <span class="hint" data-i18n="tzHint"></span>
-          <button class="ghost sm" style="float:right" onclick="printSchedule()" data-i18n="btnPrint"></button>
-        </h2>
-        <div class="grid" style="grid-template-columns:repeat(2,1fr);margin-bottom:12px">
-          <div><label data-i18n="lblTransit"></label><input id="transit" type="number" value="315"></div>
-          <div><label data-i18n="lblCapacity"></label><input id="capacity" type="number" value="1" min="1"></div>
-        </div>
-        <div class="legend">
-          <span data-i18n="tzLeg1"></span>
-          <span data-i18n="tzLeg2"></span>
-          <span data-i18n="tzLeg3"></span>
-        </div>
-        <div class="scroll" style="margin-top:12px">
-          <table id="tzTable">
-            <thead>
-              <tr>
-                <th data-i18n="thShuttle"></th>
-                <th data-i18n="thAthlete"></th>
-                <th data-i18n="thRotation"></th>
-                <th data-i18n="thDepart"></th>
-                <th data-i18n="thStart"></th>
-                <th data-i18n="thWait"></th>
-              </tr>
-            </thead>
-            <tbody></tbody>
-          </table>
+          <button class="ghost sm" id="btnAddRow" onclick="addClimber()" data-i18n="btnAddRow"></button>
         </div>
       </div>
     </section>
@@ -711,7 +675,7 @@
             <thead>
               <tr>
                 <th data-i18n="thFrom"></th>
-                <th data-i18n="thRounds"></th>
+                <th data-i18n="thDuration"></th>
                 <th data-i18n="thReason"></th>
                 <th style="width:40px"></th>
               </tr>
@@ -736,6 +700,39 @@
         </div>
         <div>
           <table id="czTableGap" class="cz-target"></table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TZ SCHEDULE ============ -->
+    <section class="view" id="view-tz">
+      <div class="card">
+        <h2><span data-i18n="tzTitle"></span> <span class="hint" data-i18n="tzHint"></span>
+          <button class="ghost sm" style="float:right" onclick="printSchedule()" data-i18n="btnPrint"></button>
+        </h2>
+        <div class="grid" style="grid-template-columns:repeat(2,1fr);margin-bottom:12px">
+          <div><label data-i18n="lblTransit"></label><input id="transit" type="number" value="315"></div>
+          <div><label data-i18n="lblCapacity"></label><input id="capacity" type="number" value="1" min="1"></div>
+        </div>
+        <div class="legend">
+          <span data-i18n="tzLeg1"></span>
+          <span data-i18n="tzLeg2"></span>
+          <span data-i18n="tzLeg3"></span>
+        </div>
+        <div class="scroll" style="margin-top:12px">
+          <table id="tzTable">
+            <thead>
+              <tr>
+                <th data-i18n="thShuttle"></th>
+                <th data-i18n="thAthlete"></th>
+                <th data-i18n="thRotation"></th>
+                <th data-i18n="thDepart"></th>
+                <th data-i18n="thStart"></th>
+                <th data-i18n="thWait"></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
         </div>
       </div>
     </section>
@@ -788,10 +785,10 @@
         printSettings: "Start {start} · Intervall {iv}s · Boulders {b} · Kapazität {c}", printGen: "erstellt", printCZ: "Call Zone (CZ)", printTZ: "Transit Zone (TZ)",
         pauseTitle: "Unterbrechung / Stop", pauseHint: "ganze Wand anhalten – alle Boulder leer",
         pauseNotes: "Stoppt die Rotation komplett (z. B. Reparatur, Regenpause). Ab der Start-Rotation bleiben für die angegebene Anzahl Runden ALLE Boulder leer; alle nachfolgenden Athleten und Zeiten verschieben sich entsprechend.",
-        thFrom: "ab Rotation", thRounds: "Runden", thReason: "Grund", btnAddPause: "+ Stop / Pause",
+        thFrom: "Ab Rotation", thDuration: "Dauer", thReason: "Grund", btnAddPause: "+ Stop / Pause",
         pauseLeg: "PAUSE = komplette Unterbrechung (keine Athleten auf der Wand)",
         gapNotes: '<b>Ablauf:</b><br>1️⃣ <b>Aa ID</b> wählen → 2️⃣ <b>Boulder-Nr.</b> eintragen (auf welchem Boulder der Restart nötig ist). <span class="muted">„Orig’ Rn." zeigt, in welcher Rotation der Athlet auf diesem Boulder war; „Target Rn." die ideale Restart-Rotation.</span><br>3️⃣ <b>Current Rn.</b> eintragen (Rotation, in der die Restart-Entscheidung fällt). → <b>Gap Rn.</b> und <b>Restart Rn.</b> werden jetzt <b>automatisch vorgeschlagen</b> (= frühestmöglicher Restart ohne Nachteil). Bleibt ein Wert <span class="warnmsg">rot</span>, gibt es einen Konflikt mit einem anderen Restart – dann <b>Current Rn.</b> anpassen.',
-        thRef: "Ref.", thCalc: "Orig’ Rn.", thTarget: "Target Rn.", thCurrent: "Current Rn.", thSelect: "Select Rn.", thRotation: "Rotation", thGap: "Gap Rn.", thRestart: "Restart Rn.",
+        thRef: "Ref.", thCalc: "Orig’ Rn.", thTarget: "Target Rn.", thCurrent: "Decision Rn.", thSelect: "Select Rn.", thRotation: "Rotation", thGap: "Gap Rn.", thRestart: "Restart Rn.",
         btnAddRestart: "+ Restart hinzufügen",
         gapNoConflict: "✓ keine Konflikte", gapConflict: "⚠ {n} Konflikt(e) – Gap Rn. anpassen",
         gapEff: "✓ {r} Restart(s) in {g} Gap(s)",
@@ -840,10 +837,10 @@
         printSettings: "Start {start} · Interval {iv}s · Boulders {b} · Capacity {c}", printGen: "generated", printCZ: "Call Zone (CZ)", printTZ: "Transit Zone (TZ)",
         pauseTitle: "Interruption / Stop", pauseHint: "hold the whole wall – all boulders empty",
         pauseNotes: "Completely stops the rotation (e.g. repair, rain delay). From the start rotation, ALL boulders stay empty for the given number of rounds; all following athletes and times shift accordingly.",
-        thFrom: "from rotation", thRounds: "rounds", thReason: "Reason", btnAddPause: "+ Stop / Pause",
+        thFrom: "From rotation", thDuration: "Duration", thReason: "Reason", btnAddPause: "+ Stop / Pause",
         pauseLeg: "PAUSE = full interruption (no athletes on the wall)",
         gapNotes: '<b>Workflow:</b><br>1️⃣ Choose <b>Aa ID</b> → 2️⃣ enter <b>Boulder no.</b> (which boulder needs the restart). <span class="muted">"Orig’ Rn." shows which rotation the athlete was on that boulder; "Target Rn." the ideal restart rotation.</span><br>3️⃣ Enter <b>Current Rn.</b> (rotation in which the restart decision is made). → <b>Gap Rn.</b> and <b>Restart Rn.</b> are now <b>suggested automatically</b> (earliest restart without disadvantage). If a value stays <span class="warnmsg">red</span>, it conflicts with another restart – adjust <b>Current Rn.</b>',
-        thRef: "Ref.", thCalc: "Orig’ Rn.", thTarget: "Target Rn.", thCurrent: "Current Rn.", thSelect: "Select Rn.", thRotation: "Rotation", thGap: "Gap Rn.", thRestart: "Restart Rn.",
+        thRef: "Ref.", thCalc: "Orig’ Rn.", thTarget: "Target Rn.", thCurrent: "Decision Rn.", thSelect: "Select Rn.", thRotation: "Rotation", thGap: "Gap Rn.", thRestart: "Restart Rn.",
         btnAddRestart: "+ Add restart",
         gapNoConflict: "✓ no conflicts", gapConflict: "⚠ {n} conflict(s) – adjust Gap Rn.",
         gapEff: "✓ {r} restart(s) in {g} gap(s)",
@@ -892,10 +889,10 @@
         printSettings: "Départ {start} · Intervalle {iv}s · Blocs {b} · Capacité {c}", printGen: "généré", printCZ: "Call Zone (CZ)", printTZ: "Transit Zone (TZ)",
         pauseTitle: "Interruption / Stop", pauseHint: "arrêter tout le mur – tous les blocs vides",
         pauseNotes: "Arrête complètement la rotation (réparation, pluie). À partir de la rotation de début, TOUS les blocs restent vides pendant le nombre de tours indiqué ; tous les athlètes et horaires suivants sont décalés.",
-        thFrom: "dès la rotation", thRounds: "tours", thReason: "Raison", btnAddPause: "+ Stop / Pause",
+        thFrom: "Dès la rotation", thDuration: "Durée", thReason: "Raison", btnAddPause: "+ Stop / Pause",
         pauseLeg: "PAUSE = interruption totale (aucun athlète sur le mur)",
         gapNotes: '<b>Déroulé :</b><br>1️⃣ Choisir <b>Aa ID</b> → 2️⃣ saisir le <b>n° de bloc</b> (bloc nécessitant le restart). <span class="muted">« Orig’ Rn. » indique la rotation où l’athlète était sur ce bloc ; « Target Rn. » la rotation de restart idéale.</span><br>3️⃣ Saisir <b>Current Rn.</b> (rotation où la décision de restart est prise). → <b>Gap Rn.</b> et <b>Restart Rn.</b> sont désormais <b>proposés automatiquement</b> (restart le plus tôt sans désavantage). Si une valeur reste <span class="warnmsg">rouge</span>, il y a conflit avec un autre restart – ajustez <b>Current Rn.</b>',
-        thRef: "Réf.", thCalc: "Orig’ Rn.", thTarget: "Target Rn.", thCurrent: "Current Rn.", thSelect: "Select Rn.", thRotation: "Rotation", thGap: "Gap Rn.", thRestart: "Restart Rn.",
+        thRef: "Réf.", thCalc: "Orig’ Rn.", thTarget: "Target Rn.", thCurrent: "Decision Rn.", thSelect: "Select Rn.", thRotation: "Rotation", thGap: "Gap Rn.", thRestart: "Restart Rn.",
         btnAddRestart: "+ Ajouter un restart",
         gapNoConflict: "✓ aucun conflit", gapConflict: "⚠ {n} conflit(s) – ajuster Gap Rn.",
         gapEff: "✓ {r} restart(s) dans {g} gap(s)",
@@ -1139,6 +1136,7 @@
         renderCZ(); renderTZ(); updateStatus();
       }));
       $('ctrlCount').textContent = climbers.length ? t('count', {n: climbers.length}) : '';
+      $('btnAddRow').style.display = climbers.length ? 'none' : '';
       updateStatus();
       const dl = $('climberList'); dl.innerHTML = '';
       climbers.forEach(c => {const o = document.createElement('option'); o.value = c.bib; o.label = c.bib + ' ' + c.name + (c.country ? ' | ' + c.country : ''); dl.appendChild(o);});
@@ -1335,7 +1333,7 @@
       const s = S();
       const meta = t('printSettings', {start: $('startTime').value, iv: s.interval, b: s.boulders, c: s.capacity})
         + ' — ' + t('printGen') + ' ' + new Date().toLocaleString();
-      const cz = $('czTable').outerHTML, tz = $('tzTable').outerHTML;
+      const cz = $('czTableGap').outerHTML, tz = $('tzTable').outerHTML;
       const css =
         'body{font-family:-apple-system,Arial,sans-serif;color:#111;margin:20px}' +
         'h1{font-size:18px;margin:0 0 4px}' +
@@ -1362,7 +1360,7 @@
         '<title>' + t('czTitle') + '</title><style>' + css + '</style></head><body>' +
         '<h1>' + t('czTitle') + '</h1><div class="meta">' + meta + '</div>' +
         '<h2>' + t('printCZ') + '</h2>' + cz +
-        '<h2>' + t('printTZ') + '</h2>' + tz +
+        '<h2 style="page-break-before:always">' + t('printTZ') + '</h2>' + tz +
         '</body></html>');
       w.document.close(); w.focus();
       setTimeout(() => {try {w.print();} catch (e) { } }, 350);
