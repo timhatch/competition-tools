@@ -179,7 +179,7 @@ body.drag-over::before {
     <h2><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span></h2>
     <div class="scroll" style="max-height:55vh">
       <table id="ctrlTable">
-        <thead><tr><th style="width:70px" data-i18n="thOrder"></th><th data-i18n="thAaId"></th></tr></thead>
+        <thead><tr><th style="width:70px" data-i18n="thOrder"></th><th data-i18n="thBib"></th><th data-i18n="thName"></th><th data-i18n="thCountry"></th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -231,7 +231,7 @@ body.drag-over::before {
     <div class="scroll" style="margin-top:12px">
       <table id="gapTable">
         <thead><tr>
-          <th data-i18n="thRef"></th><th data-i18n="thAaId"></th><th data-i18n="thBoulder"></th>
+          <th data-i18n="thRef"></th><th data-i18n="thBib"></th><th data-i18n="thName"></th><th data-i18n="thCountry"></th><th data-i18n="thBoulder"></th>
           <th data-i18n="thCalc"></th><th data-i18n="thTarget"></th>
           <th data-i18n="thCurrent"></th><th data-i18n="thGap"></th>
           <th data-i18n="thRestart"></th><th></th>
@@ -310,7 +310,7 @@ const I18N = {
     mapApply:"Übernehmen",
     mapClose:"Schließen",
     controlSheet:"Control Sheet", count:"{n} Athleten",
-    thOrder:"Order", thAaId:"Aa ID", thBoulder:"Boulder", btnAddRow:"+ Zeile",
+    thOrder:"Order", thBib:"Bib", thName:"Name", thCountry:"Nation", thBoulder:"Boulder", btnAddRow:"+ Zeile",
     czTitle:"Call Zone (CZ)", czHint:"Wer steht in welcher Rotation auf welchem Boulder",
     czLeg1:"Start = Startzeit + Intervall × (Rotation−1)", czLeg2:"Jeder Athlet wandert alle 2 Rotationen einen Boulder weiter (B1→B2→…)",
     czGapLeg:"GAP = freigehaltener Slot (wandert leer durch die Boulder)", czRestartLeg:"Restart = wieder eingefügter Athlet",
@@ -362,7 +362,7 @@ const I18N = {
     mapApply:"Apply",
     mapClose:"Close",
     controlSheet:"Control Sheet", count:"{n} athletes",
-    thOrder:"Order", thAaId:"Aa ID", thBoulder:"Boulder", btnAddRow:"+ Row",
+    thOrder:"Order", thBib:"Bib", thName:"Name", thCountry:"Nation", thBoulder:"Boulder", btnAddRow:"+ Row",
     czTitle:"Call Zone (CZ)", czHint:"Who is on which boulder in which rotation",
     czLeg1:"Start = start time + interval × (rotation−1)", czLeg2:"Each athlete moves one boulder every 2 rotations (B1→B2→…)",
     czGapLeg:"GAP = reserved slot (travels empty across the boulders)", czRestartLeg:"Restart = re-inserted athlete",
@@ -414,7 +414,7 @@ const I18N = {
     mapApply:"Appliquer",
     mapClose:"Fermer",
     controlSheet:"Control Sheet", count:"{n} athlètes",
-    thOrder:"Ordre", thAaId:"Aa ID", thBoulder:"Bloc", btnAddRow:"+ Ligne",
+    thOrder:"Ordre", thBib:"Dossard", thName:"Nom", thCountry:"Nation", thBoulder:"Bloc", btnAddRow:"+ Ligne",
     czTitle:"Call Zone (CZ)", czHint:"Qui est sur quel bloc à quelle rotation",
     czLeg1:"Départ = heure de départ + intervalle × (rotation−1)", czLeg2:"Chaque athlète avance d’un bloc toutes les 2 rotations (B1→B2→…)",
     czGapLeg:"GAP = créneau réservé (traverse les blocs à vide)", czRestartLeg:"Restart = athlète réinséré",
@@ -456,7 +456,7 @@ function setLang(l){ lang=l; localStorage.setItem('rotLang',l); applyStatic(); r
 
 // ============ State ============
 let climbers = []; // {order, name, boulder(null|number)}
-let gapRows = [];  // {aa, boulder, current, select, gap}
+let gapRows = [];  // {bib, boulder, current, select, gap}
 let pauses = [];   // {from, len} full-wall interruptions (rotation range)
 
 
@@ -486,20 +486,12 @@ function fmtDur(sec){ sec=Math.round(sec); let neg=sec<0; sec=Math.abs(sec);
 function escAttr(s){ return (s||'').toString().replace(/"/g,'&quot;'); }
 function escHtml(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
 // Split "301 SCHALCK         | FRA" -> {num, name, country} for clean column layout.
-function parseAthlete(str){
-  let m=/^\s*(\d+)\s+(.+?)\s*\|\s*(.+?)\s*$/.exec(str);
-  if(m) return {num:m[1], name:m[2].replace(/\s+/g,' ').trim(), country:m[3].trim()};
-  m=/^\s*(\d+)\s+(.+?)\s*$/.exec(str);
-  if(m) return {num:m[1], name:m[2].replace(/\s+/g,' ').trim(), country:''};
-  return {num:'', name:(str||'').replace(/\s+/g,' ').trim(), country:''};
-}
-function athHtml(name, restart){
-  const a=parseAthlete(name);
+function athHtml(bib, name, country, restart){
   return '<div class="ath">'+
     (restart?'<span class="rmark">⟳</span>':'')+
-    '<span class="anum">'+escHtml(a.num)+'</span>'+
-    '<span class="aname">'+escHtml(a.name)+'</span>'+
-    (a.country?'<span class="acty">'+escHtml(a.country)+'</span>':'')+
+    '<span class="anum">'+escHtml(String(bib||'').padStart(3,'0'))+'</span>'+
+    '<span class="aname">'+escHtml(name)+'</span>'+
+    (country?'<span class="acty">'+escHtml(country)+'</span>':'')+
     '</div>';
 }
 
@@ -536,7 +528,9 @@ document.addEventListener('drop', function(e) {
       }
       climbers = arr.map(item => ({
         order: item.order,
-        name: String(item.bib || '').padStart(3, '0') + ' ' + item.name + (item.country ? ' | ' + item.country : ''),
+        bib: item.bib,
+        name: item.name,
+        country: item.country || '',
         boulder: null
       }));
       renderAll();
@@ -551,7 +545,7 @@ document.addEventListener('drop', function(e) {
 });
 function addClimber(){
   const order = climbers.length? Math.max(...climbers.map(c=>c.order))+1 : 1;
-  climbers.push({order, name:'', boulder:null}); renderAll();
+  climbers.push({order, bib: null, name:'', country:'', boulder:null}); renderAll();
 }
 
 // ============ Lookups ============
@@ -576,9 +570,9 @@ function czCell(rotn, boulderIdx, m, s){
 function restartRequests(){
   const s=S();
   return gapRows.map((row,idx)=>{
-    const c=climberByName(row.aa), b=+row.boulder, cur=numOrNull(row.current), tg=targetRn(row,s);
+    const c=climberByBib(+row.bib), b=+row.boulder, cur=numOrNull(row.current), tg=targetRn(row,s);
     if(!c || !b || cur==null || tg==null) return null;
-    return {idx, name:c.name, b, C:cur, T:tg};   // C=Current Rn, T=Target Rn
+    return {idx, bib:c.bib, name:c.name, country:c.country, b, C:cur, T:tg};   // C=Current Rn, T=Target Rn
   }).filter(Boolean);
 }
 // Plan that uses as FEW gaps as possible: one inserted gap diagonal can host
@@ -601,15 +595,15 @@ function computeGapPlan(){
       if(R > freshR) return;                         // a fresh gap would be earlier
       if(!best || R < best.R) best={g,R};
     });
-    if(best){ best.g.used[q.b]=q.name; assign[q.idx]={gapOrder:best.g.order, R:best.R}; }
-    else { const g={order:freshOrder, used:{}}; g.used[q.b]=q.name; gaps.push(g);
+    if(best){ best.g.used[q.b]={bib:q.bib, name:q.name, country:q.country}; assign[q.idx]={gapOrder:best.g.order, R:best.R}; }
+    else { const g={order:freshOrder, used:{}}; g.used[q.b]={bib:q.bib, name:q.name, country:q.country}; gaps.push(g);
            assign[q.idx]={gapOrder:freshOrder, R:freshR}; }
   });
   return {gaps, assign};
 }
 function effectiveEntries(){
-  const entries = climbers.filter(c=>c.name)
-    .map(c=>({type:'a', name:c.name, boulder:c.boulder, key:c.order}));
+  const entries = climbers.filter(c=>c.bib)
+    .map(c=>({type:'a', bib:c.bib, name:c.name, country:c.country, boulder:c.boulder, key:c.order}));
   computeGapPlan().gaps.forEach(g=>
     entries.push({type:'r', used:g.used, key:g.order-0.5}));
   entries.sort((a,b)=>a.key-b.key);   // index+1 = effective rotation
@@ -623,11 +617,11 @@ function czCellEff(rotn, boulderIdx, entries, s){
   const e = entries[idx];
   if(e.type==='a'){
     const b=e.boulder;
-    return (b==null || b===0 || b===boulderIdx) ? {name:e.name} : null;
+    return (b==null || b===0 || b===boulderIdx) ? {bib:e.bib, name:e.name, country:e.country} : null;
   }
   // shared gap slot: GAP on every boulder except the ones hosting a restart
   const who = e.used[boulderIdx];
-  return who ? {name:who, restart:true} : {gap:true};
+  return who ? {bib:who.bib, name:who.name, country:who.country, restart:true} : {gap:true};
 }
 
 // Valid, sorted full-wall pauses.
@@ -661,18 +655,22 @@ function renderCtrl(){
     const tr=document.createElement('tr');
     tr.innerHTML =
       '<td class="num">'+c.order+'</td>'+
-      '<td class="mono"><input value="'+escAttr(c.name)+'" data-i="'+i+'" data-f="name" style="border:none;background:transparent" class="mono"></td>';
+      '<td class="mono"><input value="'+escAttr(c.bib)+'" data-i="'+i+'" data-f="bib" style="width:70px;border:none;background:transparent" class="mono"></td>'+
+      '<td class="mono"><input value="'+escAttr(c.name)+'" data-i="'+i+'" data-f="name" style="width:120px;border:none;background:transparent" class="mono"></td>'+
+      '<td class="mono"><input value="'+escAttr(c.country)+'" data-i="'+i+'" data-f="country" style="width:80px;border:none;background:transparent" class="mono"></td>';
     tb.appendChild(tr);
   });
   tb.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
-    const i=+e.target.dataset.i;
-    climbers[i].name = e.target.value;
+    const i=+e.target.dataset.i, f=e.target.dataset.f;
+    if(f==='bib') climbers[i].bib = e.target.value ? +e.target.value : null;
+    else if(f==='country') climbers[i].country = e.target.value;
+    else climbers[i].name = e.target.value;
     renderCZ(); renderTZ(); updateStatus();
   }));
   $('ctrlCount').textContent = climbers.length? t('count',{n:climbers.length}) : '';
   updateStatus();
   const dl=$('climberList'); dl.innerHTML='';
-  climbers.forEach(c=>{ const o=document.createElement('option'); o.value=c.name; dl.appendChild(o); });
+  climbers.forEach(c=>{ const o=document.createElement('option'); o.value=c.bib; o.label=c.bib+' '+c.name+(c.country?' | '+c.country:''); dl.appendChild(o); });
 }
 function updateStatus(){
   $('statusbar').textContent = climbers.length
@@ -698,7 +696,7 @@ function renderCZ(){
         const cell=czCellEff(row.logical,b,entries,s);
         if(!cell) body+='<td></td>';
         else if(cell.gap) body+='<td class="gapcell">GAP</td>';
-        else body+='<td class="athcell'+(cell.restart?' restartcell':'')+'">'+athHtml(cell.name,cell.restart)+'</td>';
+        else body+='<td class="athcell'+(cell.restart?' restartcell':'')+'">'+athHtml(cell.bib, cell.name, cell.country, cell.restart)+'</td>';
       }
     }
     body+='</tr>';
@@ -733,7 +731,7 @@ function renderTZ(){
         '<td class="num muted">–</td>';
     } else {
       tr.innerHTML='<td class="num">'+row.disp+'</td><td class="athcell'+(cell.restart?' restartcell':'')+'">'+
-        athHtml(cell.name,cell.restart)+'</td>'+
+        athHtml(cell.bib, cell.name, cell.country, cell.restart)+'</td>'+
         '<td class="num">'+shuttle+'</td><td class="num">'+fmtTime(depart)+'</td>'+
         '<td class="num">'+fmtDur(wait)+'</td>';
     }
@@ -742,9 +740,9 @@ function renderTZ(){
 }
 
 // ============ Gap Assistant ============
-function climberByName(name){ return climbers.find(c=>c.name===name); }
+function climberByBib(bib){ return climbers.find(c=>c.bib===bib); }
 function numOrNull(v){ if(v===''||v==null) return null; const n=+v; return isNaN(n)?null:n; }
-function calcRn(row){ const c=climberByName(row.aa); const b=+row.boulder;
+function calcRn(row){ const c=climberByBib(+row.bib); const b=+row.boulder;
   if(!c || !b) return null; return c.order + (b-1)*2; }
 function targetRn(row, s){ const cr=calcRn(row); const b=+row.boulder;
   if(cr==null || !b) return null; return (s.boulders - b)*2 + (cr + 2); }
@@ -756,7 +754,7 @@ function gapRn(row, s){ const cur=numOrNull(row.current), tgt=targetRn(row,s), b
   return Math.max(cur+1, tgt-(2*b-2)); }
 function restartRn(row, s){ const g=gapRn(row,s), b=+row.boulder;
   if(g==null || !b) return null; return g + (2*b - 2); }
-function addGapRow(){ gapRows.push({aa:'',boulder:'',current:'',select:'',gap:''}); renderGap(); }
+function addGapRow(){ gapRows.push({bib:'',boulder:'',current:'',select:'',gap:''}); renderGap(); }
 
 // Build the rows ONCE (inputs stay alive so focus is never lost while typing).
 function renderGap(){
@@ -765,7 +763,9 @@ function renderGap(){
     const tr=document.createElement('tr');
     tr.innerHTML=
       '<td class="num">'+(i+1)+'</td>'+
-      '<td class="editable mono"><input list="climberList" class="mono" style="width:170px;text-align:left" value="'+escAttr(row.aa)+'" data-i="'+i+'" data-f="aa"></td>'+
+      '<td class="editable mono"><input list="climberList" class="mono" style="width:70px;text-align:left" value="'+escAttr(row.bib)+'" data-i="'+i+'" data-f="bib"></td>'+
+      '<td class="cell-gapname mono"></td>'+
+      '<td class="cell-gapcty"></td>'+
       '<td class="editable"><input class="ga-input" inputmode="numeric" value="'+escAttr(row.boulder)+'" data-i="'+i+'" data-f="boulder"></td>'+
       '<td class="num cell-orig"></td>'+
       '<td class="num cell-target"></td>'+
@@ -792,6 +792,7 @@ function refreshGapComputed(){
   let lateCount=0;
   gapRows.forEach((row,i)=>{
     const tr=trs[i]; if(!tr) return;
+    const c=row.bib ? climberByBib(+row.bib) : null;
     const cr=calcRn(row), tg=targetRn(row,s);
     const a=plan.assign[i];
     const gap = a ? a.gapOrder : null;
@@ -799,7 +800,9 @@ function refreshGapComputed(){
     const curSet=numOrNull(row.current)!=null;
     const late = rest!=null && tg!=null && rest>tg;   // decision too late: ideal target missed
     if(late) lateCount++;
-    tr.querySelector('.cell-orig').innerHTML = cr ?? (row.aa?'<span class="muted">?</span>':'');
+    tr.querySelector('.cell-gapname').textContent = c ? c.name : '';
+    tr.querySelector('.cell-gapcty').textContent = c ? c.country : '';
+    tr.querySelector('.cell-orig').innerHTML = cr ?? (row.bib?'<span class="muted">?</span>':'');
     tr.querySelector('.cell-target').textContent = tg ?? '';
     const gc=tr.querySelector('.cell-gap');
     gc.textContent = gap ?? (curSet?'':'-');
