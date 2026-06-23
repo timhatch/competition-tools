@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rotation & Gap Scheduling Tool</title>
+<style>
+:root {
+  color-scheme: light dark;
+  --bg-page:     light-dark(#f4f5f7, #121212);
+  --bg-card:     light-dark(#fff, #1e1e1e);
+  --text:        light-dark(#1a1a2e, #e0e0e0);
+  --text-muted:  light-dark(#6b7280, #9ca3af);
+  --text-dim:    light-dark(#9ca3af, #6b7280);
+  --text-strong: light-dark(#374151, #ccc);
+  --border:      light-dark(#d1d5db, #555);
+  --border-light: light-dark(#e5e7eb, #444);
+  --bg-subtle:   light-dark(#f9fafb, #222);
+  --bg-ghost:    light-dark(#f3f4f6, #2a2a2a);
+  --bg-hover:    light-dark(#f3f4f6, #2a2a2a);
+  --shadow-sm:   light-dark(rgba(0,0,0,0.08), rgba(0,0,0,0.35));
+  --shadow-lg:   light-dark(rgba(0,0,0,0.15), rgba(0,0,0,0.45));
+  --accent:     #3b82f6;
+  --accent-bg:   light-dark(rgba(59,130,246,0.04), rgba(59,130,246,0.12));
+  --good:        light-dark(#16a34a, #4ade80);
+  --bad:         light-dark(#dc2626, #ff6b6b);
+  --bad-bg:      light-dark(#fef2f2, #5a1f25);
+  --warn:        light-dark(#d97706, #ffb454);
+  --hdr:         light-dark(#374151, #2f3b52);
+  --mono:       'SF Mono', Menlo, Consolas, monospace;
+}
+html[data-theme="light"] { color-scheme: light; }
+html[data-theme="dark"]  { color-scheme: dark; }
+
+*{box-sizing:border-box}
+body{margin:0;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif;
+     background:var(--bg-page);color:var(--text);font-size:14px}
+header{background:var(--bg-card);border-bottom:1px solid var(--border);
+       padding:12px 20px;display:flex;align-items:center;gap:14px;position:sticky;top:0;z-index:10;flex-wrap:wrap}
+header h1{font-size:17px;margin:0;font-weight:600}
+header .sub{color:var(--text-muted);font-size:12px}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{padding:7px 14px;border-radius:7px;cursor:pointer;color:var(--text-muted);
+     border:1px solid transparent;user-select:none;font-weight:500}
+.tab:hover{background:var(--bg-ghost);color:var(--text)}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent)}
+.langsel{display:flex;border:1px solid var(--border);border-radius:7px;overflow:hidden}
+.langsel button{background:var(--bg-subtle);color:var(--text-muted);border:none;border-radius:0;
+     padding:6px 11px;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:.5px}
+.langsel button.active{background:var(--accent);color:#fff}
+main{padding:20px;max-width:1280px;margin:0 auto}
+.view{display:none}
+.view.active{display:block}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:10px;
+      padding:20px 24px;margin-bottom:20px;box-shadow:0 1px 3px var(--shadow-sm)}
+.card h2{margin:0 0 14px;font-size:15px;font-weight:600}
+.card h2 .hint{font-weight:400;color:var(--text-muted);font-size:12px;margin-left:8px}
+label{display:block;color:var(--text-muted);font-size:12px;margin-bottom:4px}
+input,textarea,select{background:var(--bg-subtle);border:1px solid var(--border);
+      color:var(--text);border-radius:6px;padding:7px 9px;font-size:13px;width:100%;font-family:inherit}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(--accent)}
+.grid{display:grid;gap:14px}
+.setup-grid{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+button{background:var(--accent);color:#fff;border:none;border-radius:7px;
+       padding:8px 14px;font-size:13px;font-weight:600;cursor:pointer}
+button:hover{filter:brightness(1.1)}
+button.ghost{background:var(--bg-card);border:1px solid var(--border);color:var(--text)}
+button.sm{padding:5px 10px;font-size:12px}
+button.danger{background:transparent;color:var(--bad);border:1px solid var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}
+table{border-collapse:collapse;width:100%;font-size:13px}
+th,td{border:1px solid var(--border);padding:5px 8px;text-align:left;white-space:nowrap}
+th{background:var(--hdr);color:#fff;position:sticky;top:0;font-weight:600}
+td.mono,th.mono{font-family:var(--mono);font-size:12px}
+td.num{text-align:right;font-variant-numeric:tabular-nums}
+tbody tr:nth-child(even){background:light-dark(rgba(0,0,0,0.02),rgba(255,255,255,0.02))}
+.scroll{overflow:auto;max-height:70vh;border:1px solid var(--border);border-radius:8px}
+.conflict{background:var(--bad-bg)!important;color:light-dark(#991b1b,#ffd5d5)!important;font-weight:600}
+.late{background:rgba(255,180,84,.22)!important;color:var(--warn)!important;font-weight:600}
+.gapcell{background:rgba(255,180,84,.16);color:var(--warn);font-style:italic;text-align:center;font-size:11px;letter-spacing:1px}
+.pausecell{background:light-dark(rgba(59,130,246,0.12),rgba(79,156,255,0.18));color:var(--accent);font-style:italic;text-align:center;font-size:11px;letter-spacing:1.5px;font-weight:600}
+.restartcell{background:light-dark(rgba(22,163,74,0.15),rgba(63,185,80,0.20));color:light-dark(#16a34a,#9ff0a8);font-weight:600}
+td.shifted{color:var(--text-dim)}
+.athcell{padding:3px 9px}
+.ath{display:flex;gap:9px;align-items:baseline;white-space:nowrap}
+.ath .anum{color:var(--text-dim);font-variant-numeric:tabular-nums;min-width:26px;text-align:right}
+.ath .aname{flex:1;overflow:hidden;text-overflow:ellipsis}
+.ath .acty{font-size:11px;font-weight:600;letter-spacing:.5px;color:var(--accent)}
+.ath .rmark{color:var(--good);font-weight:700}
+.restartcell .anum,.restartcell .acty{color:light-dark(#16a34a,#9ff0a8)}
+.editable{background:var(--bg-subtle)}
+.editable input{background:transparent;border:none;padding:3px 4px;text-align:center;width:60px}
+.editable input:focus{background:var(--bg-page);border-radius:4px}
+.muted{color:var(--text-muted)}
+.ok{color:var(--good)}
+.warnmsg{color:var(--bad);font-weight:600}
+.notes{background:var(--bg-subtle);border-left:3px solid var(--accent);padding:12px 14px;border-radius:6px;font-size:13px;line-height:1.6}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--text-muted)}
+.sw{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:middle;margin-right:5px}
+.ga-input{width:64px;text-align:center}
+a.dl{color:var(--accent);cursor:pointer;text-decoration:underline}
+footer{text-align:center;padding:18px 20px 24px;color:var(--text-muted);font-size:11px;letter-spacing:.3px;border-top:1px solid var(--border);margin-top:8px}
+@media (max-width: 900px) {
+  body { padding: 0 12px; }
+  main { padding: 12px; }
+  .card { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<header>
+  <h1>Rotation &amp; Gap Scheduling</h1>
+  <span class="sub" id="statusbar"></span>
+  <div class="tabs">
+    <div class="tab active" data-view="setup" data-i18n="tabSetup"></div>
+    <div class="tab" data-view="cz" data-i18n="tabCZ"></div>
+    <div class="tab" data-view="tz" data-i18n="tabTZ"></div>
+    <div class="tab" data-view="gap" data-i18n="tabGap"></div>
+  </div>
+  <div class="langsel" id="langsel">
+    <button data-lang="en">EN</button>
+    <button data-lang="de">DE</button>
+    <button data-lang="fr">FR</button>
+  </div>
+</header>
+
+<main>
+<!-- ============ SETUP & STARTLIST ============ -->
+<section class="view active" id="view-setup">
+  <div class="card">
+    <h2><span data-i18n="phaseValues"></span> <span class="hint" data-i18n="phaseHint"></span></h2>
+    <div class="grid setup-grid">
+      <div><label data-i18n="lblStart"></label><input id="startTime" type="time" step="1" value="12:06:15"></div>
+      <div><label data-i18n="lblInterval"></label><input id="interval" type="number" value="315"></div>
+      <div><label data-i18n="lblBoulders"></label><input id="boulders" type="number" value="5" min="1" max="8"></div>
+      <div><label data-i18n="lblTransit"></label><input id="transit" type="number" value="90"></div>
+      <div><label data-i18n="lblLoading"></label><input id="loading" type="number" value="30"></div>
+      <div><label data-i18n="lblCapacity"></label><input id="capacity" type="number" value="3" min="1"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span data-i18n="importTitle"></span> <span class="hint" data-i18n="importHint"></span></h2>
+    <div class="notes" style="margin-bottom:12px" data-i18n-html="importNotes"></div>
+    <textarea id="importBox" rows="6" placeholder="Starting Order&#9;Name&#9;Nation&#9;Bib-Number&#10;1&#9;SCHALCK&#9;FRA&#9;301&#10;2&#9;LEE&#9;KOR&#9;302&#10;3&#9;NARASAKI&#9;JPN&#9;303&#10;…"></textarea>
+    <div class="row" style="margin-top:12px">
+      <button onclick="loadFromBox()" data-i18n="btnApply"></button>
+      <button class="ghost" onclick="document.getElementById('csvFile').click()" data-i18n="btnCSV"></button>
+      <input type="file" id="csvFile" accept=".csv,.txt,.xlsx" style="display:none" onchange="loadCSV(this)">
+      <button class="ghost" onclick="loadDemo()" data-i18n="btnDemo"></button>
+      <button class="danger sm" onclick="clearList()" data-i18n="btnClear"></button>
+      <span class="muted" id="importInfo" style="margin-left:auto"></span>
+    </div>
+  </div>
+
+  <!-- Manual column mapping panel (shown when auto-detection is ambiguous) -->
+  <div id="mapPanel" class="card" style="display:none;border-color:var(--accent)">
+    <h2 data-i18n="mapTitle"></h2>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:12px">
+      <div>
+        <label data-i18n="mapModeLabel"></label>
+        <select id="mapMode" onchange="toggleMapMode();updateMapPreview()">
+          <option value="split" data-i18n="mapModeSplit"></option>
+          <option value="combined" data-i18n="mapModeCombined"></option>
+        </select>
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;padding-top:22px">
+        <input type="checkbox" id="mapHeader" style="width:auto;margin:0" onchange="updateMapPreview()">
+        <label for="mapHeader" style="margin:0;color:var(--text)" data-i18n="mapHasHeader"></label>
+      </div>
+      <div>
+        <label data-i18n="mapOrderLabel"></label>
+        <select id="mapOrder" onchange="updateMapPreview()"></select>
+      </div>
+      <div id="mapAaWrap">
+        <label data-i18n="mapAaLabel"></label>
+        <select id="mapAa" onchange="updateMapPreview()"></select>
+      </div>
+      <div id="mapNameWrap">
+        <label data-i18n="mapNameLabel"></label>
+        <select id="mapName" onchange="updateMapPreview()"></select>
+      </div>
+      <div id="mapNatWrap">
+        <label data-i18n="mapNatLabel"></label>
+        <select id="mapNat" onchange="updateMapPreview()"></select>
+      </div>
+      <div id="mapBibWrap">
+        <label data-i18n="mapBibLabel"></label>
+        <select id="mapBib" onchange="updateMapPreview()"></select>
+      </div>
+    </div>
+    <div class="notes" style="margin-bottom:12px;font-size:12px">
+      <b data-i18n="mapPreviewLabel"></b>:&nbsp;
+      <span id="mapPreview" style="font-family:var(--mono)"></span>
+    </div>
+    <div class="row">
+      <button onclick="applyMappingFromUI()" data-i18n="mapApply"></button>
+      <button class="ghost" onclick="$('mapPanel').style.display='none'" data-i18n="mapClose"></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span></h2>
+    <div class="scroll" style="max-height:55vh">
+      <table id="ctrlTable">
+        <thead><tr><th style="width:70px" data-i18n="thOrder"></th><th data-i18n="thAaId"></th><th style="width:90px" data-i18n="thBoulder"></th><th style="width:50px"></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="ghost sm" onclick="addClimber()" data-i18n="btnAddRow"></button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CZ SCHEDULE ============ -->
+<section class="view" id="view-cz">
+  <div class="card">
+    <h2><span data-i18n="czTitle"></span> <span class="hint" data-i18n="czHint"></span>
+      <button class="ghost sm" style="float:right" onclick="printSchedule()" data-i18n="btnPrint"></button></h2>
+    <div class="legend">
+      <span data-i18n="czLeg1"></span>
+      <span data-i18n="czLeg2"></span>
+      <span><span class="sw" style="background:rgba(255,180,84,.5)"></span><span data-i18n="czGapLeg"></span></span>
+      <span><span class="sw" style="background:rgba(63,185,80,.6)"></span><span data-i18n="czRestartLeg"></span></span>
+      <span><span class="sw" style="background:rgba(79,156,255,.6)"></span><span data-i18n="pauseLeg"></span></span>
+    </div>
+    <div class="scroll" style="margin-top:12px"><table id="czTable" class="cz-target"></table></div>
+  </div>
+</section>
+
+<!-- ============ TZ SCHEDULE ============ -->
+<section class="view" id="view-tz">
+  <div class="card">
+    <h2><span data-i18n="tzTitle"></span> <span class="hint" data-i18n="tzHint"></span></h2>
+    <div class="legend">
+      <span data-i18n="tzLeg1"></span>
+      <span data-i18n="tzLeg2"></span>
+      <span data-i18n="tzLeg3"></span>
+    </div>
+    <div class="scroll" style="margin-top:12px">
+      <table id="tzTable">
+        <thead><tr><th data-i18n="thRotation"></th><th data-i18n="thAthlete"></th><th data-i18n="thShuttle"></th><th data-i18n="thDepart"></th><th data-i18n="thWait"></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GAP ASSISTANT ============ -->
+<section class="view" id="view-gap">
+  <div class="card">
+    <h2><span data-i18n="gapTitle"></span> <span class="hint" data-i18n="gapHint"></span></h2>
+    <div class="notes" data-i18n-html="gapNotes"></div>
+    <div class="scroll" style="margin-top:12px">
+      <table id="gapTable">
+        <thead><tr>
+          <th data-i18n="thRef"></th><th data-i18n="thAaId"></th><th data-i18n="thBoulder"></th>
+          <th data-i18n="thCalc"></th><th data-i18n="thTarget"></th>
+          <th data-i18n="thCurrent"></th><th data-i18n="thGap"></th>
+          <th data-i18n="thRestart"></th><th></th>
+        </tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="row" style="margin-top:12px">
+      <button class="ghost sm" onclick="addGapRow()" data-i18n="btnAddRestart"></button>
+      <span id="gapStatus" class="ok" style="margin-left:8px"></span>
+    </div>
+    <div class="legend">
+      <span><span class="sw" style="background:rgba(255,180,84,.5)"></span><span data-i18n="legLate"></span></span>
+      <span><span class="sw" style="background:var(--panel2)"></span><span data-i18n="legManual"></span></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span data-i18n="pauseTitle"></span> <span class="hint" data-i18n="pauseHint"></span></h2>
+    <div class="notes" data-i18n="pauseNotes"></div>
+    <div class="scroll" style="margin-top:12px;max-width:560px">
+      <table id="pauseTable">
+        <thead><tr><th data-i18n="thFrom"></th><th data-i18n="thRounds"></th><th data-i18n="thReason"></th><th style="width:40px"></th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div class="row" style="margin-top:10px">
+      <button class="ghost sm" onclick="addPause()" data-i18n="btnAddPause"></button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2><span data-i18n="schedTitle"></span>
+      <button class="ghost sm" style="float:right" onclick="printSchedule()" data-i18n="btnPrint"></button></h2>
+    <div class="legend">
+      <span><span class="sw" style="background:rgba(255,180,84,.5)"></span><span data-i18n="czGapLeg"></span></span>
+      <span><span class="sw" style="background:rgba(63,185,80,.6)"></span><span data-i18n="czRestartLeg"></span></span>
+      <span><span class="sw" style="background:rgba(79,156,255,.6)"></span><span data-i18n="pauseLeg"></span></span>
+    </div>
+    <div class="scroll" style="margin-top:12px;max-height:60vh"><table id="czTableGap" class="cz-target"></table></div>
+  </div>
+</section>
+</main>
+
+<footer>© 2026 Tim Hatch. All rights reserved.</footer>
+
+<datalist id="climberList"></datalist>
+
+<script>
+// ============ i18n ============
+const I18N = {
+  de:{
+    tabSetup:"Setup & Startliste", tabCZ:"Call Zone (CZ)", tabTZ:"Transit Zone (TZ)", tabGap:"Gap Assistant",
+    statusEmpty:"Keine Startliste geladen", statusLoaded:"{n} Athleten · {r} Rotationen",
+    phaseValues:"Phase Values", phaseHint:"Grundeinstellungen – wirken sich sofort auf alle Berechnungen aus",
+    lblStart:"Start Time (HH:MM:SS)", lblInterval:"Rotation + Interval (Sek.)", lblBoulders:"Boulders",
+    lblTransit:"Transit Time (Sek.)", lblLoading:"Loading Time (Sek.)", lblCapacity:"Capacity (Shuttle)",
+    importTitle:"Startliste importieren", importHint:"aus Numbers/Excel-Spalte kopieren & einfügen, oder CSV laden",
+    importNotes:'<b>Ganz einfach:</b> CSV- oder XLSX-Datei <b>hierher ziehen</b> oder unten „Datei laden" – das Format wird <b>automatisch erkannt</b>. Es funktionieren:<br>• die <b>IFSC-Startliste</b> <span class="mono">101 NAME | NAT , Startreihenfolge</span><br>• eine Tabelle <b>mit Kopfzeile</b> mit diesen 4 Spalten: <span class="mono">Starting Order · Name · Nation · Bib-Number</span><br>• eine <b>xlsx-Datei</b> (Excel 2007+) mit denselben Spalten<br>Zusatzspalten (Kategorie, Jahrgang …) werden ignoriert.',
+    importMissing:'Fehlende Pflichtspalte(n): {cols}',
+    btnApply:"Startliste übernehmen", btnCSV:"CSV / XLSX laden…", btnDemo:"Demo-Startliste (39 Athleten)", btnClear:"Leeren",
+    infoNothing:"Nichts erkannt.", infoLoaded:"{n} Athleten übernommen ✓",
+    mapOpen:"Spalten manuell zuordnen",
+    mapAuto:"– automatisch –",
+    mapTitle:"Spalten manuell zuordnen",
+    mapModeLabel:"Datenformat",
+    mapModeSplit:"Getrennte Spalten (Order / Name / Nation / Bib)",
+    mapModeCombined:"Kombiniertes Aa-ID (z.B. 101 NAME | NAT)",
+    mapHasHeader:"Erste Zeile ist Kopfzeile",
+    mapOrderLabel:"Spalte: Starting Order",
+    mapAaLabel:"Spalte: Aa-ID",
+    mapNameLabel:"Spalte: Name",
+    mapNatLabel:"Spalte: Nation",
+    mapBibLabel:"Spalte: Bib-Number",
+    mapPreviewLabel:"Vorschau (erste 3)",
+    mapApply:"Übernehmen",
+    mapClose:"Schließen",
+    controlSheet:"Control Sheet", count:"{n} Athleten",
+    thOrder:"Order", thAaId:"Aa ID", thBoulder:"Boulder", btnAddRow:"+ Zeile",
+    czTitle:"Call Zone (CZ)", czHint:"Wer steht in welcher Rotation auf welchem Boulder",
+    czLeg1:"Start = Startzeit + Intervall × (Rotation−1)", czLeg2:"Jeder Athlet wandert alle 2 Rotationen einen Boulder weiter (B1→B2→…)",
+    czGapLeg:"GAP = freigehaltener Slot (wandert leer durch die Boulder)", czRestartLeg:"Restart = wieder eingefügter Athlet",
+    thStart:"Start",
+    tzTitle:"Transit Zone (TZ)", tzHint:"Shuttle-Einteilung & Abfahrts-/Wartezeiten",
+    tzLeg1:"Shuttle = ⌊(Rotation−1)/Capacity⌋ + 1", tzLeg2:"Depart = Shuttle-Start − Intervall − Transit − Loading", tzLeg3:"CZ Wait = CZ-Start − Depart − Transit − Loading",
+    thAthlete:"Athlet (B1)", thShuttle:"Shuttle", thDepart:"Depart", thWait:"CZ Wait",
+    gapTitle:"Gap Scheduling Assistant", gapHint:"Restarts planen & Konflikte vermeiden",
+    schedTitle:"Competition Schedule (live)", btnPrint:"🖨 Drucken",
+    printSettings:"Start {start} · Intervall {iv}s · Boulders {b} · Kapazität {c}", printGen:"erstellt", printCZ:"Call Zone (CZ)", printTZ:"Transit Zone (TZ)",
+    pauseTitle:"Unterbrechung / Stop", pauseHint:"ganze Wand anhalten – alle Boulder leer",
+    pauseNotes:"Stoppt die Rotation komplett (z. B. Reparatur, Regenpause). Ab der Start-Rotation bleiben für die angegebene Anzahl Runden ALLE Boulder leer; alle nachfolgenden Athleten und Zeiten verschieben sich entsprechend.",
+    thFrom:"ab Rotation", thRounds:"Runden", thReason:"Grund", btnAddPause:"+ Stop / Pause",
+    pauseLeg:"PAUSE = komplette Unterbrechung (keine Athleten auf der Wand)",
+    gapNotes:'<b>Ablauf:</b><br>1️⃣ <b>Aa ID</b> wählen → 2️⃣ <b>Boulder-Nr.</b> eintragen (auf welchem Boulder der Restart nötig ist). <span class="muted">„Orig’ Rn." zeigt, in welcher Rotation der Athlet auf diesem Boulder war; „Target Rn." die ideale Restart-Rotation.</span><br>3️⃣ <b>Current Rn.</b> eintragen (Rotation, in der die Restart-Entscheidung fällt). → <b>Gap Rn.</b> und <b>Restart Rn.</b> werden jetzt <b>automatisch vorgeschlagen</b> (= frühestmöglicher Restart ohne Nachteil). Bleibt ein Wert <span class="warnmsg">rot</span>, gibt es einen Konflikt mit einem anderen Restart – dann <b>Current Rn.</b> anpassen.',
+    thRef:"Ref.", thCalc:"Orig’ Rn.", thTarget:"Target Rn.", thCurrent:"Current Rn.", thSelect:"Select Rn.", thRotation:"Rotation", thGap:"Gap Rn.", thRestart:"Restart Rn.",
+    btnAddRestart:"+ Restart hinzufügen",
+    gapNoConflict:"✓ keine Konflikte", gapConflict:"⚠ {n} Konflikt(e) – Gap Rn. anpassen",
+    gapEff:"✓ {r} Restart(s) in {g} Gap(s)",
+    gapLate:"⏱ {n} verspätet (ideales Target nicht erreichbar)",
+    gapLateTip:"Entscheidung zu spät – idealer Target verpasst, frühestmöglicher Restart",
+    legConflict:"Konflikt – Wert kommt mehrfach vor", legManual:"manuelles Eingabefeld",
+    legLate:"verspätet – Target nicht erreichbar, frühestmöglicher Restart",
+  },
+  en:{
+    tabSetup:"Setup & Start List", tabCZ:"Call Zone (CZ)", tabTZ:"Transit Zone (TZ)", tabGap:"Gap Assistant",
+    statusEmpty:"No start list loaded", statusLoaded:"{n} athletes · {r} rotations",
+    phaseValues:"Phase Values", phaseHint:"Base settings – instantly affect all calculations",
+    lblStart:"Start Time (HH:MM:SS)", lblInterval:"Rotation + Interval (sec)", lblBoulders:"Boulders",
+    lblTransit:"Transit Time (sec)", lblLoading:"Loading Time (sec)", lblCapacity:"Capacity (Shuttle)",
+    importTitle:"Import start list", importHint:"copy & paste from a Numbers/Excel column, or load a CSV",
+    importNotes:'<b>Easy:</b> <b>drag a CSV or XLSX file here</b> or click "Load file" below – the format is <b>detected automatically</b>. Works with:<br>• the <b>IFSC start list</b> <span class="mono">101 NAME | NAT , starting order</span><br>• a table <b>with a header row</b> containing these 4 columns: <span class="mono">Starting Order · Name · Nation · Bib-Number</span><br>• an <b>xlsx file</b> (Excel 2007+) with the same columns<br>Extra columns (category, year …) are ignored.',
+    importMissing:'Missing required column(s): {cols}',
+    btnApply:"Apply start list", btnCSV:"Load CSV / XLSX…", btnDemo:"Demo start list (39 athletes)", btnClear:"Clear",
+    infoNothing:"Nothing recognised.", infoLoaded:"{n} athletes loaded ✓",
+    mapOpen:"Map columns manually",
+    mapAuto:"– auto –",
+    mapTitle:"Map columns manually",
+    mapModeLabel:"Data format",
+    mapModeSplit:"Split columns (Order / Name / Nation / Bib)",
+    mapModeCombined:"Combined Aa-ID (e.g. 101 NAME | NAT)",
+    mapHasHeader:"First row is header",
+    mapOrderLabel:"Column: Starting Order",
+    mapAaLabel:"Column: Aa-ID",
+    mapNameLabel:"Column: Name",
+    mapNatLabel:"Column: Nation",
+    mapBibLabel:"Column: Bib-Number",
+    mapPreviewLabel:"Preview (first 3)",
+    mapApply:"Apply",
+    mapClose:"Close",
+    controlSheet:"Control Sheet", count:"{n} athletes",
+    thOrder:"Order", thAaId:"Aa ID", thBoulder:"Boulder", btnAddRow:"+ Row",
+    czTitle:"Call Zone (CZ)", czHint:"Who is on which boulder in which rotation",
+    czLeg1:"Start = start time + interval × (rotation−1)", czLeg2:"Each athlete moves one boulder every 2 rotations (B1→B2→…)",
+    czGapLeg:"GAP = reserved slot (travels empty across the boulders)", czRestartLeg:"Restart = re-inserted athlete",
+    thStart:"Start",
+    tzTitle:"Transit Zone (TZ)", tzHint:"Shuttle grouping & departure/wait times",
+    tzLeg1:"Shuttle = ⌊(rotation−1)/capacity⌋ + 1", tzLeg2:"Depart = shuttle start − interval − transit − loading", tzLeg3:"CZ Wait = CZ start − depart − transit − loading",
+    thAthlete:"Athlete (B1)", thShuttle:"Shuttle", thDepart:"Depart", thWait:"CZ Wait",
+    gapTitle:"Gap Scheduling Assistant", gapHint:"Plan restarts & avoid conflicts",
+    schedTitle:"Competition Schedule (live)", btnPrint:"🖨 Print",
+    printSettings:"Start {start} · Interval {iv}s · Boulders {b} · Capacity {c}", printGen:"generated", printCZ:"Call Zone (CZ)", printTZ:"Transit Zone (TZ)",
+    pauseTitle:"Interruption / Stop", pauseHint:"hold the whole wall – all boulders empty",
+    pauseNotes:"Completely stops the rotation (e.g. repair, rain delay). From the start rotation, ALL boulders stay empty for the given number of rounds; all following athletes and times shift accordingly.",
+    thFrom:"from rotation", thRounds:"rounds", thReason:"Reason", btnAddPause:"+ Stop / Pause",
+    pauseLeg:"PAUSE = full interruption (no athletes on the wall)",
+    gapNotes:'<b>Workflow:</b><br>1️⃣ Choose <b>Aa ID</b> → 2️⃣ enter <b>Boulder no.</b> (which boulder needs the restart). <span class="muted">"Orig’ Rn." shows which rotation the athlete was on that boulder; "Target Rn." the ideal restart rotation.</span><br>3️⃣ Enter <b>Current Rn.</b> (rotation in which the restart decision is made). → <b>Gap Rn.</b> and <b>Restart Rn.</b> are now <b>suggested automatically</b> (earliest restart without disadvantage). If a value stays <span class="warnmsg">red</span>, it conflicts with another restart – adjust <b>Current Rn.</b>',
+    thRef:"Ref.", thCalc:"Orig’ Rn.", thTarget:"Target Rn.", thCurrent:"Current Rn.", thSelect:"Select Rn.", thRotation:"Rotation", thGap:"Gap Rn.", thRestart:"Restart Rn.",
+    btnAddRestart:"+ Add restart",
+    gapNoConflict:"✓ no conflicts", gapConflict:"⚠ {n} conflict(s) – adjust Gap Rn.",
+    gapEff:"✓ {r} restart(s) in {g} gap(s)",
+    gapLate:"⏱ {n} late (ideal target not reachable)",
+    gapLateTip:"Decision too late – ideal target missed, earliest possible restart",
+    legConflict:"Conflict – value occurs more than once", legManual:"manual input field",
+    legLate:"late – target not reachable, earliest possible restart",
+  },
+  fr:{
+    tabSetup:"Réglages & Liste", tabCZ:"Call Zone (CZ)", tabTZ:"Transit Zone (TZ)", tabGap:"Assistant Gap",
+    statusEmpty:"Aucune liste de départ chargée", statusLoaded:"{n} athlètes · {r} rotations",
+    phaseValues:"Phase Values", phaseHint:"Réglages de base – affectent immédiatement tous les calculs",
+    lblStart:"Heure de départ (HH:MM:SS)", lblInterval:"Rotation + Intervalle (sec)", lblBoulders:"Blocs",
+    lblTransit:"Temps de transit (sec)", lblLoading:"Temps de chargement (sec)", lblCapacity:"Capacité (navette)",
+    importTitle:"Importer la liste de départ", importHint:"copier-coller depuis une colonne Numbers/Excel, ou charger un CSV",
+    importNotes:'<b>Facile :</b> <b>glissez un fichier CSV ou XLSX ici</b> ou cliquez « Charger » – le format est <b>détecté automatiquement</b>. Fonctionne avec :<br>• la <b>liste de départ IFSC</b> <span class="mono">101 NAME | NAT , ordre de départ</span><br>• un tableau <b>avec en-tête</b> contenant ces 4 colonnes : <span class="mono">Starting Order · Name · Nation · Bib-Number</span><br>• un <b>fichier xlsx</b> (Excel 2007+) avec les mêmes colonnes<br>Les colonnes supplémentaires (catégorie, année …) sont ignorées.',
+    importMissing:'Colonne(s) obligatoire(s) manquante(s) : {cols}',
+    btnApply:"Appliquer la liste", btnCSV:"Charger CSV / XLSX…", btnDemo:"Liste démo (39 athlètes)", btnClear:"Vider",
+    infoNothing:"Rien détecté.", infoLoaded:"{n} athlètes chargés ✓",
+    mapOpen:"Mapper les colonnes manuellement",
+    mapAuto:"– automatique –",
+    mapTitle:"Mapper les colonnes manuellement",
+    mapModeLabel:"Format des données",
+    mapModeSplit:"Colonnes séparées (Order / Name / Nation / Bib)",
+    mapModeCombined:"Aa-ID combiné (ex. 101 NAME | NAT)",
+    mapHasHeader:"Première ligne = en-tête",
+    mapOrderLabel:"Colonne : Starting Order",
+    mapAaLabel:"Colonne : Aa-ID",
+    mapNameLabel:"Colonne : Name",
+    mapNatLabel:"Colonne : Nation",
+    mapBibLabel:"Colonne : Bib-Number",
+    mapPreviewLabel:"Aperçu (3 premiers)",
+    mapApply:"Appliquer",
+    mapClose:"Fermer",
+    controlSheet:"Control Sheet", count:"{n} athlètes",
+    thOrder:"Ordre", thAaId:"Aa ID", thBoulder:"Bloc", btnAddRow:"+ Ligne",
+    czTitle:"Call Zone (CZ)", czHint:"Qui est sur quel bloc à quelle rotation",
+    czLeg1:"Départ = heure de départ + intervalle × (rotation−1)", czLeg2:"Chaque athlète avance d’un bloc toutes les 2 rotations (B1→B2→…)",
+    czGapLeg:"GAP = créneau réservé (traverse les blocs à vide)", czRestartLeg:"Restart = athlète réinséré",
+    thStart:"Départ",
+    tzTitle:"Transit Zone (TZ)", tzHint:"Répartition navettes & heures de départ/attente",
+    tzLeg1:"Navette = ⌊(rotation−1)/capacité⌋ + 1", tzLeg2:"Départ = départ navette − intervalle − transit − chargement", tzLeg3:"Attente CZ = départ CZ − départ − transit − chargement",
+    thAthlete:"Athlète (B1)", thShuttle:"Navette", thDepart:"Départ", thWait:"Attente CZ",
+    gapTitle:"Assistant Gap Scheduling", gapHint:"Planifier les restarts & éviter les conflits",
+    schedTitle:"Planning de compétition (live)", btnPrint:"🖨 Imprimer",
+    printSettings:"Départ {start} · Intervalle {iv}s · Blocs {b} · Capacité {c}", printGen:"généré", printCZ:"Call Zone (CZ)", printTZ:"Transit Zone (TZ)",
+    pauseTitle:"Interruption / Stop", pauseHint:"arrêter tout le mur – tous les blocs vides",
+    pauseNotes:"Arrête complètement la rotation (réparation, pluie). À partir de la rotation de début, TOUS les blocs restent vides pendant le nombre de tours indiqué ; tous les athlètes et horaires suivants sont décalés.",
+    thFrom:"dès la rotation", thRounds:"tours", thReason:"Raison", btnAddPause:"+ Stop / Pause",
+    pauseLeg:"PAUSE = interruption totale (aucun athlète sur le mur)",
+    gapNotes:'<b>Déroulé :</b><br>1️⃣ Choisir <b>Aa ID</b> → 2️⃣ saisir le <b>n° de bloc</b> (bloc nécessitant le restart). <span class="muted">« Orig’ Rn. » indique la rotation où l’athlète était sur ce bloc ; « Target Rn. » la rotation de restart idéale.</span><br>3️⃣ Saisir <b>Current Rn.</b> (rotation où la décision de restart est prise). → <b>Gap Rn.</b> et <b>Restart Rn.</b> sont désormais <b>proposés automatiquement</b> (restart le plus tôt sans désavantage). Si une valeur reste <span class="warnmsg">rouge</span>, il y a conflit avec un autre restart – ajustez <b>Current Rn.</b>',
+    thRef:"Réf.", thCalc:"Orig’ Rn.", thTarget:"Target Rn.", thCurrent:"Current Rn.", thSelect:"Select Rn.", thRotation:"Rotation", thGap:"Gap Rn.", thRestart:"Restart Rn.",
+    btnAddRestart:"+ Ajouter un restart",
+    gapNoConflict:"✓ aucun conflit", gapConflict:"⚠ {n} conflit(s) – ajuster Gap Rn.",
+    gapEff:"✓ {r} restart(s) dans {g} gap(s)",
+    gapLate:"⏱ {n} en retard (target idéale non atteignable)",
+    gapLateTip:"Décision trop tardive – target idéale manquée, restart au plus tôt",
+    legConflict:"Conflit – valeur en double", legManual:"champ de saisie manuel",
+    legLate:"en retard – target non atteignable, restart au plus tôt",
+  }
+};
+let lang = localStorage.getItem('rotLang') || 'de';
+function t(key, vars){
+  let s = (I18N[lang] && I18N[lang][key]) || (I18N.de[key]||key);
+  if(vars) for(const k in vars) s = s.replace('{'+k+'}', vars[k]);
+  return s;
+}
+function applyStatic(){
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{ el.textContent = t(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-html]').forEach(el=>{ el.innerHTML = t(el.dataset.i18nHtml); });
+  document.querySelectorAll('#langsel button').forEach(b=>b.classList.toggle('active', b.dataset.lang===lang));
+}
+function setLang(l){ lang=l; localStorage.setItem('rotLang',l); applyStatic(); renderAll(); }
+
+// ============ State ============
+let climbers = []; // {order, name, boulder(null|number)}
+let gapRows = [];  // {aa, boulder, current, select, gap}
+let pauses = [];   // {from, len} full-wall interruptions (rotation range)
+
+const DEMO = [
+"301 SCHALCK         | FRA","302 LEE             | KOR","303 NARASAKI        | JPN",
+"304 AMAGASA         | JPN","305 DUFFY           | USA","306 PEHARC          | SLO",
+"307 RICHARD         | FRA","308 BLOEM           | GER","309 PEINADO FRANGAN | ESP",
+"310 CHON            | KOR","311 UZNIK           | AUT","312 BAI             | CHN",
+"313 TRANDAFIR       | GER","314 DOHI            | JPN","315 GIRARD          | FRA",
+"316 HU              | CHN","317 PARKS           | AUS","318 GRUBER          | AUT",
+"319 RODRIGUEZ       | CAN","320 INTRACHUPONGSE  | THA","321 HOFHERR         | AUT",
+"322 DORVAL          | CAN","323 MARK            | ISR","324 FAN             | TPE",
+"325 ORTEGA FOSADO   | MEX","326 MARTINS         | GBR","327 SIVAKOV         | LTU",
+"328 CHI             | USA","329 UZNIK           | AUT","330 IASI HANADA     | BRA",
+"331 GUIGNARD        | SUI","332 WAGNER          | CHI","333 DUNNE           | GBR",
+"334 BURNINGHAM      | RSA","335 HOYER           | USA","336 TORRONI         | SUI",
+"337 GHILARDI        | SUI","338 ENDRLE          | CZE","339 MIDDELBURG      | NED"];
+
+// ============ Settings ============
+const $ = id => document.getElementById(id);
+function S(){
+  const tt = $('startTime').value.split(':').map(Number);
+  return {
+    start: (tt[0]||0)*3600 + (tt[1]||0)*60 + (tt[2]||0),
+    interval: +$('interval').value || 0,
+    boulders: +$('boulders').value || 1,
+    transit: +$('transit').value || 0,
+    loading: +$('loading').value || 0,
+    capacity: +$('capacity').value || 1,
+  };
+}
+
+// ============ Formatting ============
+const pad = n => String(n).padStart(2,'0');
+function fmtTime(sec){ sec=Math.round(sec); let neg=sec<0; sec=Math.abs(sec);
+  const h=Math.floor(sec/3600), m=Math.floor((sec%3600)/60), s=sec%60;
+  return (neg?'-':'')+pad(h)+':'+pad(m)+':'+pad(s); }
+function fmtDur(sec){ sec=Math.round(sec); let neg=sec<0; sec=Math.abs(sec);
+  const m=Math.floor(sec/60), s=sec%60;
+  return (neg?'-':'')+(m>0? m+'m '+pad(s)+'s' : s+'s'); }
+function escAttr(s){ return (s||'').toString().replace(/"/g,'&quot;'); }
+function escHtml(s){ return (s||'').toString().replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+// Split "301 SCHALCK         | FRA" -> {num, name, country} for clean column layout.
+function parseAthlete(str){
+  let m=/^\s*(\d+)\s+(.+?)\s*\|\s*(.+?)\s*$/.exec(str);
+  if(m) return {num:m[1], name:m[2].replace(/\s+/g,' ').trim(), country:m[3].trim()};
+  m=/^\s*(\d+)\s+(.+?)\s*$/.exec(str);
+  if(m) return {num:m[1], name:m[2].replace(/\s+/g,' ').trim(), country:''};
+  return {num:'', name:(str||'').replace(/\s+/g,' ').trim(), country:''};
+}
+function athHtml(name, restart){
+  const a=parseAthlete(name);
+  return '<div class="ath">'+
+    (restart?'<span class="rmark">⟳</span>':'')+
+    '<span class="anum">'+escHtml(a.num)+'</span>'+
+    '<span class="aname">'+escHtml(a.name)+'</span>'+
+    (a.country?'<span class="acty">'+escHtml(a.country)+'</span>':'')+
+    '</div>';
+}
+
+// ============ Import ============
+// Auto-detect the separator and split one line, respecting "quoted, fields".
+function detectDelim(line){
+  const c=[['\t',(line.match(/\t/g)||[]).length],[';',(line.match(/;/g)||[]).length],[',',(line.match(/,/g)||[]).length]];
+  c.sort((a,b)=>b[1]-a[1]); return c[0][1]>0 ? c[0][0] : '\t';
+}
+function splitDelim(line, d){
+  const out=[]; let cur='', q=false;
+  for(let i=0;i<line.length;i++){ const ch=line[i];
+    if(q){ if(ch==='"'){ if(line[i+1]==='"'){cur+='"';i++;} else q=false; } else cur+=ch; }
+    else { if(ch==='"') q=true; else if(ch===d){ out.push(cur); cur=''; } else cur+=ch; } }
+  out.push(cur); return out.map(s=>s.trim());
+}
+const AA_RE = /^\s*\d+\s+.+\|.+$/;   // "101 ANRAKU | JPN"
+function cleanAa(s){ return s.replace(/\s+/g,' ').replace(/\s*\|\s*/,' | ').trim(); }
+
+// Text -> table (rows of cells), auto delimiter + quote handling + BOM strip.
+function parseTextToTable(text){
+  const lines = text.split(/\r?\n/).map(l=>l.replace(/^﻿/,'').replace(/\s+$/,'')).filter(l=>l.trim()!=='');
+  if(!lines.length) return [];
+  const d=detectDelim(lines[0]);
+  return lines.map(l=>splitDelim(l,d));
+}
+function numericCol(rows, k){
+  let num=0, tot=0;
+  for(let r=0;r<rows.length;r++){ const v=(rows[r][k]||'').trim(); if(v==='') continue; tot++; if(/^\d+$/.test(v)) num++; }
+  return tot>0 && num/tot>=0.8;
+}
+// Guess how the columns map to {order, name, nation, bib} or a combined Aa-ID column.
+function autoMapping(rows){
+  if(!rows.length) return null;
+  const norm=s=>(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
+  const header=rows[0].map(norm);
+  const looksHeader=header.some(h=>h.includes('name'))&&header.some(h=>h.includes('bib')||h.includes('order'));
+  if(looksHeader){
+    const pick=preds=>{for(const p of preds){const i=header.findIndex(p);if(i>=0)return i;}return -1;};
+    return {hasHeader:true, mode:'split',
+      order:pick([h=>h.includes('startingorder'),h=>h==='order',h=>h.includes('order'),h=>h.includes('rank'),h=>h.includes('pos')]),
+      name:pick([h=>h==='name',h=>h.includes('name'),h=>h.includes('athlete'),h=>h.includes('climber')]),
+      nation:pick([h=>h.includes('nation'),h=>h.includes('country'),h=>h==='nat',h=>h==='noc']),
+      bib:pick([h=>h.includes('bib'),h=>h.includes('startnumber'),h=>h.includes('startno')]), aa:-1};
+  }
+  const cols=Math.max(...rows.map(r=>r.length));
+  let aaCol=-1;
+  for(let k=0;k<cols;k++){ if(rows.some(r=>AA_RE.test(r[k]||''))){ aaCol=k; break; } }
+  if(aaCol>=0){
+    let orderCol=-1;
+    for(let k=0;k<cols;k++){ if(k!==aaCol && numericCol(rows,k)){ orderCol=k; break; } }
+    return {hasHeader:false, mode:'combined', aa:aaCol, order:orderCol, name:-1, nation:-1, bib:-1};
+  }
+  if(numericCol(rows,0) && cols>1)
+    return {hasHeader:false, mode:'split', order:0, name:1, nation:-1, bib:-1, aa:-1};
+  return {hasHeader:false, mode:'combined', aa:0, order:-1, name:-1, nation:-1, bib:-1};
+}
+function applyMapping(rows, m){
+  const out=[]; let auto=0; const start=m.hasHeader?1:0;
+  for(let r=start;r<rows.length;r++){
+    const c=rows[r];
+    const ordCell=(m.order>=0?(c[m.order]||''):'').trim();
+    const order = /^\d+$/.test(ordCell) ? +ordCell : (++auto);
+    let aa;
+    if(m.mode==='combined'){ aa=cleanAa(c[m.aa]||''); }
+    else { const name=(m.name>=0?(c[m.name]||''):'').trim(), nat=(m.nation>=0?(c[m.nation]||''):'').trim(), bib=(m.bib>=0?(c[m.bib]||''):'').trim();
+           if(!name && !bib) continue; aa=cleanAa((bib?bib+' ':'')+name+(nat?' | '+nat:'')); }
+    if(!aa) continue;
+    out.push({order, name:aa, boulder:null});
+  }
+  return out;
+}
+function mapTable(rows){
+  if(!rows.length) return {climbers:[], error:null};
+  const m=autoMapping(rows);
+  if(m && m.hasHeader){
+    const miss=[];
+    if(m.order<0) miss.push('Starting Order'); if(m.name<0) miss.push('Name');
+    if(m.nation<0) miss.push('Nation'); if(m.bib<0) miss.push('Bib-Number');
+    if(miss.length) return {climbers:[], error:miss};
+  }
+  return {climbers: m?applyMapping(rows,m):[], error:null};
+}
+let importRows=null;
+function loadFromBox(){
+  importRows = parseTextToTable($('importBox').value);
+  const res = mapTable(importRows);
+  if(res.error){ $('importInfo').innerHTML='<span class="warnmsg">'+t('importMissing',{cols:res.error.join(', ')})+' · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a></span>'; openMapPanel(); return; }
+  if(!res.climbers.length){ $('importInfo').textContent=t('infoNothing'); return; }
+  climbers = res.climbers; renderAll();
+  $('importInfo').innerHTML = '<span class="ok">'+t('infoLoaded',{n:res.climbers.length})+'</span> · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a>';
+}
+
+// ---- manual column mapping panel (works for any layout) ----
+function colSample(rows,k){ const s=((rows[1]&&rows[1][k]!=null)?rows[1][k]:(rows[0][k]||'')).toString().trim().slice(0,24); return (k+1)+': '+(s||'—'); }
+function fillColSel(sel, rows, sel0, firstOpt){
+  const cols=Math.max(...rows.map(r=>r.length)); let h='<option value="-1">'+firstOpt+'</option>';
+  for(let k=0;k<cols;k++) h+='<option value="'+k+'"'+(k===sel0?' selected':'')+'>'+escHtml(colSample(rows,k))+'</option>';
+  sel.innerHTML=h;
+}
+function openMapPanel(){
+  if(!importRows||!importRows.length) importRows=parseTextToTable($('importBox').value);
+  if(!importRows||!importRows.length){ $('importInfo').textContent=t('infoNothing'); return; }
+  const m=autoMapping(importRows)||{mode:'combined',hasHeader:false,aa:0,order:-1,name:-1,nation:-1,bib:-1};
+  $('mapMode').value=m.mode;
+  $('mapHeader').checked=!!m.hasHeader;
+  fillColSel($('mapOrder'),importRows, m.order, t('mapAuto'));
+  fillColSel($('mapAa'),importRows, m.aa<0?0:m.aa, '—');
+  fillColSel($('mapName'),importRows, m.name, '—');
+  fillColSel($('mapNat'),importRows, m.nation, '—');
+  fillColSel($('mapBib'),importRows, m.bib, '—');
+  $('mapPanel').style.display='';
+  toggleMapMode(); updateMapPreview();
+}
+function toggleMapMode(){
+  const split=$('mapMode').value==='split';
+  $('mapAaWrap').style.display=split?'none':'';
+  ['mapNameWrap','mapNatWrap','mapBibWrap'].forEach(id=>$(id).style.display=split?'':'none');
+}
+function readUIMapping(){
+  return { hasHeader:$('mapHeader').checked, mode:$('mapMode').value,
+    order:+$('mapOrder').value, aa:+$('mapAa').value,
+    name:+$('mapName').value, nation:+$('mapNat').value, bib:+$('mapBib').value };
+}
+function updateMapPreview(){
+  const cl=applyMapping(importRows, readUIMapping()).slice(0,3);
+  $('mapPreview').innerHTML = cl.length ? cl.map(c=>'#'+c.order+'  '+escHtml(c.name)).join('<br>') : '—';
+}
+function applyMappingFromUI(){
+  const cl=applyMapping(importRows, readUIMapping());
+  if(!cl.length){ $('importInfo').textContent=t('infoNothing'); return; }
+  climbers=cl; renderAll(); $('mapPanel').style.display='none';
+  $('importInfo').innerHTML='<span class="ok">'+t('infoLoaded',{n:cl.length})+'</span>';
+}
+// ---- xlsx reader (minimal, no external deps, Chrome 80+) ----
+function zipParse(buf){
+  const v=new DataView(buf), u=new Uint8Array(buf), dec=new TextDecoder();
+  const files={}; let i=0;
+  while(i<u.length-4){
+    if(v.getUint32(i,true)!==0x04034B50){i++;continue;}
+    const method=v.getUint16(i+8,true);
+    const compSz=v.getUint32(i+18,true);
+    const fnLen=v.getUint16(i+26,true);
+    const exLen=v.getUint16(i+28,true);
+    const name=dec.decode(u.slice(i+30,i+30+fnLen));
+    const off=i+30+fnLen+exLen;
+    files[name]={method,data:u.slice(off,off+compSz)};
+    i=off+compSz;
+  }
+  return files;
+}
+async function zipEntry(e){
+  if(e.method===0) return e.data;
+  const ds=new DecompressionStream('deflate-raw');
+  const w=ds.writable.getWriter(); w.write(e.data); w.close();
+  const chunks=[]; const r=ds.readable.getReader();
+  while(true){const {done,value}=await r.read();if(done)break;chunks.push(value);}
+  const out=new Uint8Array(chunks.reduce((n,c)=>n+c.length,0));
+  let off=0; chunks.forEach(c=>{out.set(c,off);off+=c.length;}); return out;
+}
+function xlsxColIdx(r){const m=r.match(/^([A-Z]+)/);if(!m)return 0;
+  let c=0;for(const ch of m[1])c=c*26+(ch.charCodeAt(0)-64);return c-1;}
+function xlsxDecode(s){return s.replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&quot;/g,'"').replace(/&#(\d+);/g,(_,n)=>String.fromCharCode(+n));}
+async function readXlsxBuffer(buf){
+  const files=zipParse(buf);
+  let ss=[];
+  const ssKey=Object.keys(files).find(k=>k.endsWith('sharedStrings.xml'));
+  if(ssKey){const xml=xlsxDecode(new TextDecoder().decode(await zipEntry(files[ssKey])));
+    ss=[...xml.matchAll(/<t(?:\s[^>]*)?>([^<]*)<\/t>/g)].map(m=>m[1]);}
+  const wsKey=Object.keys(files).find(k=>/xl\/worksheets\/sheet\d+\.xml/.test(k));
+  if(!wsKey) return [];
+  const wsXml=xlsxDecode(new TextDecoder().decode(await zipEntry(files[wsKey])));
+  const rows=[];
+  for(const rm of wsXml.matchAll(/<row\b[^>]*>([\s\S]*?)<\/row>/g)){
+    const cells=[];
+    for(const cm of rm[1].matchAll(/<c\b([^>]*)>([\s\S]*?)<\/c>/g)){
+      const ref=(cm[1].match(/r="([^"]+)"/) ||[])[1]||'';
+      const typ=(cm[1].match(/t="([^"]+)"/) ||[])[1]||'';
+      const v=(cm[2].match(/<v>([\s\S]*?)<\/v>/) ||[])[1]||'';
+      const idx=xlsxColIdx(ref);
+      while(cells.length<=idx) cells.push('');
+      cells[idx]=typ==='s'?(ss[+v]||''):v;
+    }
+    if(cells.some(c=>c)) rows.push(cells);
+  }
+  return rows;
+}
+async function loadXlsx(f){
+  $('importInfo').textContent='…';
+  try {
+    const rows=await readXlsxBuffer(await f.arrayBuffer());
+    if(!rows.length){$('importInfo').textContent=t('infoNothing');return;}
+    importRows=rows;
+    const res=mapTable(rows);
+    if(res.error){
+      $('importInfo').innerHTML='<span class="warnmsg">'+t('importMissing',{cols:res.error.join(', ')})+'</span> · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a>';
+      openMapPanel(); return;
+    }
+    if(!res.climbers.length){$('importInfo').textContent=t('infoNothing');return;}
+    climbers=res.climbers; renderAll();
+    $('importInfo').innerHTML='<span class="ok">'+t('infoLoaded',{n:res.climbers.length})+'</span>'
+      +' · <a class="dl" onclick="openMapPanel()">'+t('mapOpen')+'</a>';
+  } catch(err){
+    $('importInfo').innerHTML='<span class="warnmsg">XLSX: '+escHtml(err.message)+'</span>';
+    console.error(err);
+  }
+}
+
+function readFileIntoBox(f){
+  if(!f) return;
+  const r=new FileReader();
+  r.onload=e=>{ $('importBox').value=e.target.result; loadFromBox(); };
+  r.readAsText(f);
+}
+function loadFile(f){
+  if(!f) return;
+  if(f.name.toLowerCase().endsWith('.xlsx')) loadXlsx(f);
+  else readFileIntoBox(f);
+}
+function loadCSV(input){ loadFile(input.files[0]); input.value=''; }
+function loadDemo(){ $('importBox').value = DEMO.join('\n'); loadFromBox(); }
+function clearList(){ climbers=[]; renderAll(); $('importInfo').textContent=''; }
+function addClimber(){
+  const order = climbers.length? Math.max(...climbers.map(c=>c.order))+1 : 1;
+  climbers.push({order, name:'', boulder:null}); renderAll();
+}
+
+// ============ Lookups ============
+function orderMap(){ const m=new Map(); climbers.forEach(c=>m.set(c.order,c)); return m; }
+function maxOrder(){ return climbers.length? Math.max(...climbers.map(c=>c.order)) : 0; }
+function numRotations(s){ return maxOrder()>0 ? maxOrder() + (s.boulders-1)*2 : 0; }
+function czCell(rotn, boulderIdx, m, s){
+  if(boulderIdx > s.boulders) return '';
+  const lookup = rotn - (boulderIdx-1)*2;
+  const c = m.get(lookup);
+  if(!c || !c.name) return '';
+  const b = c.boulder;
+  return (b==null || b===0 || b===boulderIdx) ? c.name : '';
+}
+
+// --- Effective (adapted) start list incl. planned restarts -------------------
+// Each completed Gap-Assistant row inserts ONE empty slot at rotation = Gap Rn.
+// That slot travels empty (GAP) across ALL boulders; only on the restart boulder
+// (at Restart Rn) does the athlete re-climb that single boulder again – his
+// original run stays untouched. Inserting shifts every later entry one rotation.
+// A restart request that is fully specified (athlete + boulder + current rotation).
+function restartRequests(){
+  const s=S();
+  return gapRows.map((row,idx)=>{
+    const c=climberByName(row.aa), b=+row.boulder, cur=numOrNull(row.current), tg=targetRn(row,s);
+    if(!c || !b || cur==null || tg==null) return null;
+    return {idx, name:c.name, b, C:cur, T:tg};   // C=Current Rn, T=Target Rn
+  }).filter(Boolean);
+}
+// Plan that uses as FEW gaps as possible: one inserted gap diagonal can host
+// several restarts (one per boulder). A restart reuses an existing gap whenever
+// that gap has a free cell on its boulder at a feasible rotation (>= Target and
+// in the future) that is no later than a fresh gap would give; otherwise a new
+// gap is opened. Rules honoured: restart never before Target, never in the past.
+function computeGapPlan(){
+  const reqs = restartRequests().slice().sort((a,b)=> (a.T-b.T) || (a.b-b.b));
+  const gaps=[];        // {order, used:{boulder:name}}
+  const assign={};      // gapRows index -> {gapOrder, R}
+  reqs.forEach(q=>{
+    const freshOrder = Math.max(q.C+1, q.T-(q.b-1)*2);
+    const freshR = freshOrder + (q.b-1)*2;          // = max(T, C+1+(b-1)*2)
+    let best=null;                                   // try to reuse an existing gap
+    gaps.forEach(g=>{
+      if(g.used[q.b]) return;                        // that boulder cell already taken
+      const R = g.order + (q.b-1)*2;
+      if(R < q.T || R < q.C+1) return;               // too early -> not allowed
+      if(R > freshR) return;                         // a fresh gap would be earlier
+      if(!best || R < best.R) best={g,R};
+    });
+    if(best){ best.g.used[q.b]=q.name; assign[q.idx]={gapOrder:best.g.order, R:best.R}; }
+    else { const g={order:freshOrder, used:{}}; g.used[q.b]=q.name; gaps.push(g);
+           assign[q.idx]={gapOrder:freshOrder, R:freshR}; }
+  });
+  return {gaps, assign};
+}
+function effectiveEntries(){
+  const entries = climbers.filter(c=>c.name)
+    .map(c=>({type:'a', name:c.name, boulder:c.boulder, key:c.order}));
+  computeGapPlan().gaps.forEach(g=>
+    entries.push({type:'r', used:g.used, key:g.order-0.5}));
+  entries.sort((a,b)=>a.key-b.key);   // index+1 = effective rotation
+  return entries;
+}
+// returns null | {name} | {gap:true} | {name, restart:true}
+function czCellEff(rotn, boulderIdx, entries, s){
+  if(boulderIdx > s.boulders) return null;
+  const idx = rotn - (boulderIdx-1)*2 - 1;   // 0-based into entries
+  if(idx < 0 || idx >= entries.length) return null;
+  const e = entries[idx];
+  if(e.type==='a'){
+    const b=e.boulder;
+    return (b==null || b===0 || b===boulderIdx) ? {name:e.name} : null;
+  }
+  // shared gap slot: GAP on every boulder except the ones hosting a restart
+  const who = e.used[boulderIdx];
+  return who ? {name:who, restart:true} : {gap:true};
+}
+
+// Valid, sorted full-wall pauses.
+function pauseList(){
+  return pauses.map(p=>({from:+p.from, len:+p.len, reason:(p.reason||'').trim()}))
+    .filter(p=>Number.isFinite(p.from)&&p.from>=1&&Number.isFinite(p.len)&&p.len>=1)
+    .sort((a,b)=>a.from-b.from);
+}
+// Display rows: lays full-wall pauses on top of the (restart-adjusted) schedule.
+// A pause blanks ALL boulders for its rows and pushes every later rotation back.
+function buildRows(){
+  const entries=effectiveEntries(), s=S();
+  const Lmax = entries.length ? entries.length+(s.boulders-1)*2 : 0;
+  const ps=pauseList();
+  const rows=[]; let logical=1, disp=1, k=0;
+  while(logical<=Lmax){
+    while(k<ps.length && ps[k].from<=disp){
+      for(let j=0;j<ps[k].len;j++){ rows.push({disp, pause:true, reason:ps[k].reason}); disp++; }
+      k++;
+    }
+    rows.push({disp, pause:false, logical}); disp++; logical++;
+  }
+  return {rows, entries};
+}
+
+// ============ Render: Control Sheet ============
+function renderCtrl(){
+  const tb = $('ctrlTable').querySelector('tbody'); tb.innerHTML='';
+  climbers.sort((a,b)=>a.order-b.order);
+  climbers.forEach((c,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML =
+      '<td class="num">'+c.order+'</td>'+
+      '<td class="mono"><input value="'+escAttr(c.name)+'" data-i="'+i+'" data-f="name" style="border:none;background:transparent" class="mono"></td>'+
+      '<td class="editable"><input class="num" style="width:70px" value="'+(c.boulder??'')+'" data-i="'+i+'" data-f="boulder" placeholder="–"></td>'+
+      '<td><button class="danger sm" data-del="'+i+'">✕</button></td>';
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+    const i=+e.target.dataset.i, f=e.target.dataset.f;
+    if(f==='name') climbers[i].name = e.target.value;
+    else { const v=e.target.value.trim(); climbers[i].boulder = v===''?null:(+v); }
+    renderCZ(); renderTZ(); updateStatus();   // update schedules, keep input focus
+  }));
+  tb.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',e=>{
+    climbers.splice(+e.target.dataset.del,1); renderAll();
+  }));
+  $('ctrlCount').textContent = climbers.length? t('count',{n:climbers.length}) : '';
+  updateStatus();
+  const dl=$('climberList'); dl.innerHTML='';
+  climbers.forEach(c=>{ const o=document.createElement('option'); o.value=c.name; dl.appendChild(o); });
+}
+function updateStatus(){
+  $('statusbar').textContent = climbers.length
+    ? t('statusLoaded',{n:climbers.length, r:buildRows().rows.length})
+    : t('statusEmpty');
+}
+
+// ============ Render: CZ ============
+function renderCZ(){
+  const s=S(), {rows, entries}=buildRows();
+  let head='<thead><tr><th>'+t('thRotation')+'</th><th>'+t('thStart')+'</th>';
+  for(let b=1;b<=s.boulders;b++) head+='<th>'+t('thBoulder')+' '+b+'</th>';
+  head+='</tr></thead>';
+  let body='<tbody>';
+  rows.forEach(row=>{
+    const start=fmtTime(s.start+s.interval*(row.disp-1));
+    body+='<tr><td class="num">'+row.disp+'</td><td class="num">'+start+'</td>';
+    if(row.pause){
+      const lbl='PAUSE'+(row.reason?' — '+escHtml(row.reason):'');
+      body+='<td class="pausecell" colspan="'+s.boulders+'">'+lbl+'</td>';
+    } else {
+      for(let b=1;b<=s.boulders;b++){
+        const cell=czCellEff(row.logical,b,entries,s);
+        if(!cell) body+='<td></td>';
+        else if(cell.gap) body+='<td class="gapcell">GAP</td>';
+        else body+='<td class="athcell'+(cell.restart?' restartcell':'')+'">'+athHtml(cell.name,cell.restart)+'</td>';
+      }
+    }
+    body+='</tr>';
+  });
+  const html = head+body+'</tbody>';
+  document.querySelectorAll('.cz-target').forEach(tab=>tab.innerHTML=html);
+}
+
+// ============ Render: TZ ============
+function renderTZ(){
+  const s=S(), {rows, entries}=buildRows(), tb=$('tzTable').querySelector('tbody');
+  tb.innerHTML='';
+  const L2D={}; rows.forEach(r=>{ if(!r.pause) L2D[r.logical]=r.disp; });   // logical -> display rotation
+  rows.forEach(row=>{
+    const tr=document.createElement('tr');
+    if(row.pause){
+      const lbl='PAUSE'+(row.reason?' — '+escHtml(row.reason):'');
+      tr.innerHTML='<td class="num">'+row.disp+'</td><td class="pausecell">'+lbl+'</td>'+
+        '<td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td>';
+      tb.appendChild(tr); return;
+    }
+    const cell=czCellEff(row.logical,1,entries,s);
+    if(!cell) return;
+    const shuttle=Math.floor((row.logical-1)/s.capacity)+1;       // climber group (unaffected by pauses)
+    const firstLogical=(shuttle-1)*s.capacity+1;
+    const departDisp=L2D[firstLogical] ?? firstLogical;
+    const depart=s.start + s.interval*(departDisp-1) - s.interval - s.transit - s.loading;  // real clock (shifted)
+    const wait=(s.start + s.interval*(row.disp-1)) - depart - s.transit - s.loading;
+    if(cell.gap){
+      tr.innerHTML='<td class="num">'+row.disp+'</td><td class="gapcell">GAP</td>'+
+        '<td class="num">'+shuttle+'</td><td class="num">'+fmtTime(depart)+'</td>'+
+        '<td class="num muted">–</td>';
+    } else {
+      tr.innerHTML='<td class="num">'+row.disp+'</td><td class="athcell'+(cell.restart?' restartcell':'')+'">'+
+        athHtml(cell.name,cell.restart)+'</td>'+
+        '<td class="num">'+shuttle+'</td><td class="num">'+fmtTime(depart)+'</td>'+
+        '<td class="num">'+fmtDur(wait)+'</td>';
+    }
+    tb.appendChild(tr);
+  });
+}
+
+// ============ Gap Assistant ============
+function climberByName(name){ return climbers.find(c=>c.name===name); }
+function numOrNull(v){ if(v===''||v==null) return null; const n=+v; return isNaN(n)?null:n; }
+function calcRn(row){ const c=climberByName(row.aa); const b=+row.boulder;
+  if(!c || !b) return null; return c.order + (b-1)*2; }
+function targetRn(row, s){ const cr=calcRn(row); const b=+row.boulder;
+  if(cr==null || !b) return null; return (s.boulders - b)*2 + (cr + 2); }
+function rotationCol(row){ const g=numOrNull(row.select), b=+row.boulder;
+  if(g==null || !b) return null; return g - (b-1)*2; }
+// Auto-suggested Gap Rn = MAX(Current+1, Target-(2*Boulder-2)); '-' until Current Rn set
+function gapRn(row, s){ const cur=numOrNull(row.current), tgt=targetRn(row,s), b=+row.boulder;
+  if(cur==null) return null; if(tgt==null || !b) return null;
+  return Math.max(cur+1, tgt-(2*b-2)); }
+function restartRn(row, s){ const g=gapRn(row,s), b=+row.boulder;
+  if(g==null || !b) return null; return g + (2*b - 2); }
+function addGapRow(){ gapRows.push({aa:'',boulder:'',current:'',select:'',gap:''}); renderGap(); }
+
+// Build the rows ONCE (inputs stay alive so focus is never lost while typing).
+function renderGap(){
+  const tb=$('gapTable').querySelector('tbody'); tb.innerHTML='';
+  gapRows.forEach((row,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=
+      '<td class="num">'+(i+1)+'</td>'+
+      '<td class="editable mono"><input list="climberList" class="mono" style="width:170px;text-align:left" value="'+escAttr(row.aa)+'" data-i="'+i+'" data-f="aa"></td>'+
+      '<td class="editable"><input class="ga-input" inputmode="numeric" value="'+escAttr(row.boulder)+'" data-i="'+i+'" data-f="boulder"></td>'+
+      '<td class="num cell-orig"></td>'+
+      '<td class="num cell-target"></td>'+
+      '<td class="editable"><input class="ga-input" inputmode="numeric" value="'+escAttr(row.current)+'" data-i="'+i+'" data-f="current"></td>'+
+      '<td class="num cell-gap"></td>'+
+      '<td class="num cell-restart"></td>'+
+      '<td><button class="danger sm" data-delg="'+i+'">✕</button></td>';
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+    const i=+e.target.dataset.i, f=e.target.dataset.f;
+    gapRows[i][f]=e.target.value; refreshGapComputed();   // update only outputs, keep focus
+  }));
+  tb.querySelectorAll('[data-delg]').forEach(b=>b.addEventListener('click',e=>{
+    gapRows.splice(+e.target.dataset.delg,1); renderGap();
+  }));
+  refreshGapComputed();
+}
+// Recompute derived cells in place – never touches the <input> elements.
+function refreshGapComputed(){
+  const s=S();
+  const plan=computeGapPlan();
+  const trs=$('gapTable').querySelectorAll('tbody tr');
+  let lateCount=0;
+  gapRows.forEach((row,i)=>{
+    const tr=trs[i]; if(!tr) return;
+    const cr=calcRn(row), tg=targetRn(row,s);
+    const a=plan.assign[i];
+    const gap = a ? a.gapOrder : null;
+    const rest = a ? a.R : null;
+    const curSet=numOrNull(row.current)!=null;
+    const late = rest!=null && tg!=null && rest>tg;   // decision too late: ideal target missed
+    if(late) lateCount++;
+    tr.querySelector('.cell-orig').innerHTML = cr ?? (row.aa?'<span class="muted">?</span>':'');
+    tr.querySelector('.cell-target').textContent = tg ?? '';
+    const gc=tr.querySelector('.cell-gap');
+    gc.textContent = gap ?? (curSet?'':'-');
+    gc.classList.toggle('late', late);
+    const rc=tr.querySelector('.cell-restart');
+    rc.textContent = rest ?? (curSet?'':'-');
+    rc.classList.toggle('late', late);
+    rc.title = late ? t('gapLateTip') : '';
+  });
+  // efficiency feedback: how many restarts fit into how few gaps
+  const nRe=Object.keys(plan.assign).length, nGap=plan.gaps.length;
+  let status = nRe ? '<span class="ok">'+t('gapEff',{r:nRe,g:nGap})+'</span>' : '';
+  if(lateCount) status += ' &nbsp;<span style="color:var(--warn)">'+t('gapLate',{n:lateCount})+'</span>';
+  $('gapStatus').innerHTML = status;
+  // a planned restart reshapes the schedule -> refresh CZ + TZ live
+  renderCZ(); renderTZ(); updateStatus();
+}
+
+// ============ Pause / Stop ============
+function addPause(){ pauses.push({from:'', len:'', reason:''}); renderPause(); }
+function renderPause(){
+  const tb=$('pauseTable').querySelector('tbody'); tb.innerHTML='';
+  pauses.forEach((p,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=
+      '<td class="editable"><input class="ga-input" inputmode="numeric" value="'+escAttr(p.from)+'" data-i="'+i+'" data-f="from"></td>'+
+      '<td class="editable"><input class="ga-input" inputmode="numeric" value="'+escAttr(p.len)+'" data-i="'+i+'" data-f="len"></td>'+
+      '<td class="editable"><input style="width:200px;text-align:left" value="'+escAttr(p.reason)+'" data-i="'+i+'" data-f="reason" placeholder="z.B. Regen / Baustelle B3"></td>'+
+      '<td><button class="danger sm" data-delp="'+i+'">✕</button></td>';
+    tb.appendChild(tr);
+  });
+  tb.querySelectorAll('input').forEach(inp=>inp.addEventListener('input',e=>{
+    const i=+e.target.dataset.i, f=e.target.dataset.f;
+    pauses[i][f]=e.target.value; renderCZ(); renderTZ(); updateStatus();   // update schedule, keep focus
+  }));
+  tb.querySelectorAll('[data-delp]').forEach(b=>b.addEventListener('click',e=>{
+    pauses.splice(+e.target.dataset.delp,1); renderPause(); renderCZ(); renderTZ(); updateStatus();
+  }));
+}
+
+// ============ Print ============
+function printSchedule(){
+  const s=S();
+  const meta = t('printSettings',{start:$('startTime').value, iv:s.interval, b:s.boulders, c:s.capacity})
+             + ' — ' + t('printGen') + ' ' + new Date().toLocaleString();
+  const cz=$('czTable').outerHTML, tz=$('tzTable').outerHTML;
+  const css=
+    'body{font-family:-apple-system,Arial,sans-serif;color:#111;margin:20px}'+
+    'h1{font-size:18px;margin:0 0 4px}'+
+    'h2{font-size:12px;margin:18px 0 6px;text-transform:uppercase;letter-spacing:.5px;color:#333}'+
+    '.meta{font-size:11px;color:#555;margin-bottom:8px}'+
+    'table{border-collapse:collapse;width:100%;font-size:10.5px;margin-bottom:6px}'+
+    'th,td{border:1px solid #aaa;padding:2px 5px;text-align:left;white-space:nowrap}'+
+    'th{background:#2f3b52;color:#fff}'+
+    '.num{text-align:right} .mono{font-family:Menlo,Consolas,monospace}'+
+    '.athcell{padding:2px 7px}'+
+    '.ath{display:flex;gap:9px;align-items:baseline}'+
+    '.ath .anum{color:#555;min-width:24px;text-align:right;font-variant-numeric:tabular-nums}'+
+    '.ath .aname{flex:1}'+
+    '.ath .acty{font-size:10px;font-weight:bold;color:#15407a;letter-spacing:.5px}'+
+    '.ath .rmark{color:#176117;font-weight:bold}'+
+    '.gapcell{background:#ffe7c2;color:#7a5200;text-align:center;font-style:italic}'+
+    '.restartcell{background:#d4f5d4;color:#176117;font-weight:bold}'+
+    '.pausecell{background:#d6e6ff;color:#15407a;text-align:center;font-weight:bold;font-style:italic}'+
+    '.muted{color:#999}'+
+    '@page{margin:10mm}';
+  const w=window.open('','_blank','width=1000,height=760');
+  if(!w){ alert('Popup blocked – please allow popups for printing.'); return; }
+  w.document.write('<!DOCTYPE html><html lang="'+lang+'"><head><meta charset="utf-8">'+
+    '<title>'+t('czTitle')+'</title><style>'+css+'</style></head><body>'+
+    '<h1>'+t('czTitle')+'</h1><div class="meta">'+meta+'</div>'+
+    '<h2>'+t('printCZ')+'</h2>'+cz+
+    '<h2>'+t('printTZ')+'</h2>'+tz+
+    '</body></html>');
+  w.document.close(); w.focus();
+  setTimeout(()=>{ try{ w.print(); }catch(e){} }, 350);
+}
+
+// ============ Orchestration ============
+function recalc(){ renderCZ(); renderTZ(); renderGap(); renderCtrl(); }
+function renderAll(){ renderCtrl(); renderPause(); renderCZ(); renderTZ(); renderGap(); }
+
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active'); $('view-'+t.dataset.view).classList.add('active');
+}));
+document.querySelectorAll('#langsel button').forEach(b=>
+  b.addEventListener('click',()=>setLang(b.dataset.lang)));
+['startTime','interval','boulders','transit','loading','capacity'].forEach(id=>
+  $(id).addEventListener('input',recalc));
+
+// drag & drop a CSV/TXT file straight onto the import box
+(function(){
+  const ib=$('importBox'); if(!ib) return;
+  ib.addEventListener('dragover',e=>{ e.preventDefault(); ib.style.borderColor='var(--accent)'; });
+  ib.addEventListener('dragleave',e=>{ e.preventDefault(); ib.style.borderColor=''; });
+  ib.addEventListener('drop',e=>{ e.preventDefault(); ib.style.borderColor=''; loadFile(e.dataTransfer.files[0]); });
+})();
+
+// ============ Init ============
+applyStatic();
+loadDemo();
+addGapRow();
+</script>
+</body>
+</html>
