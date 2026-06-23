@@ -158,18 +158,6 @@ body.drag-over::before {
 <main>
 <!-- ============ SETUP & STARTLIST ============ -->
 <section class="view active" id="view-setup">
-  <div class="card">
-    <h2><span data-i18n="phaseValues"></span> <span class="hint" data-i18n="phaseHint"></span></h2>
-    <div class="grid setup-grid">
-      <div><label data-i18n="lblStart"></label><input id="startTime" type="time" step="1" value="12:06:15"></div>
-      <div><label data-i18n="lblInterval"></label><input id="interval" type="number" value="315"></div>
-      <div><label data-i18n="lblBoulders"></label><input id="boulders" type="number" value="5" min="1" max="8"></div>
-      <div><label data-i18n="lblTransit"></label><input id="transit" type="number" value="90"></div>
-      <div><label data-i18n="lblLoading"></label><input id="loading" type="number" value="30"></div>
-      <div><label data-i18n="lblCapacity"></label><input id="capacity" type="number" value="3" min="1"></div>
-    </div>
-  </div>
-
   <div class="card" id="importCard">
     <h2>Import Start List</h2>
     <div id="importStatus" class="data-status empty">Drop a <strong>.json</strong> file here</div>
@@ -194,6 +182,11 @@ body.drag-over::before {
   <div class="card">
     <h2><span data-i18n="czTitle"></span> <span class="hint" data-i18n="czHint"></span>
       <button class="ghost sm" style="float:right" onclick="printSchedule()" data-i18n="btnPrint"></button></h2>
+    <div class="grid setup-grid" style="margin-bottom:12px">
+      <div><label data-i18n="lblStart"></label><input id="startTime" type="time" step="1" value="12:06:15"></div>
+      <div><label data-i18n="lblInterval"></label><input id="interval" type="number" value="315"></div>
+      <div><label data-i18n="lblBoulders"></label><input id="boulders" type="number" value="5" min="1" max="8"></div>
+    </div>
     <div class="legend">
       <span data-i18n="czLeg1"></span>
       <span data-i18n="czLeg2"></span>
@@ -208,7 +201,12 @@ body.drag-over::before {
 <!-- ============ TZ SCHEDULE ============ -->
 <section class="view" id="view-tz">
   <div class="card">
-    <h2><span data-i18n="tzTitle"></span> <span class="hint" data-i18n="tzHint"></span></h2>
+    <h2><span data-i18n="tzTitle"></span> <span class="hint" data-i18n="tzHint"></span>
+      <button class="ghost sm" style="float:right" onclick="printSchedule()" data-i18n="btnPrint"></button></h2>
+    <div class="grid" style="grid-template-columns:repeat(2,1fr);margin-bottom:12px">
+      <div><label data-i18n="lblTransit"></label><input id="transit" type="number" value="315"></div>
+      <div><label data-i18n="lblCapacity"></label><input id="capacity" type="number" value="1" min="1"></div>
+    </div>
     <div class="legend">
       <span data-i18n="tzLeg1"></span>
       <span data-i18n="tzLeg2"></span>
@@ -216,7 +214,7 @@ body.drag-over::before {
     </div>
     <div class="scroll" style="margin-top:12px">
       <table id="tzTable">
-        <thead><tr><th data-i18n="thRotation"></th><th data-i18n="thAthlete"></th><th data-i18n="thShuttle"></th><th data-i18n="thDepart"></th><th data-i18n="thWait"></th></tr></thead>
+        <thead><tr><th data-i18n="thShuttle"></th><th data-i18n="thAthlete"></th><th data-i18n="thRotation"></th><th data-i18n="thDepart"></th><th data-i18n="thStart"></th><th data-i18n="thWait"></th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -288,7 +286,7 @@ const I18N = {
     statusEmpty:"Keine Startliste geladen", statusLoaded:"{n} Athleten · {r} Rotationen",
     phaseValues:"Phase Values", phaseHint:"Grundeinstellungen – wirken sich sofort auf alle Berechnungen aus",
     lblStart:"Start Time (HH:MM:SS)", lblInterval:"Rotation + Interval (Sek.)", lblBoulders:"Boulders",
-    lblTransit:"Transit Time (Sek.)", lblLoading:"Loading Time (Sek.)", lblCapacity:"Capacity (Shuttle)",
+    lblTransit:"Transit Time (Sek.)", lblCapacity:"Capacity (Shuttle)",
     importTitle:"Startliste importieren", importHint:"aus Numbers/Excel-Spalte kopieren & einfügen, oder CSV laden",
     importNotes:'<b>Ganz einfach:</b> CSV- oder XLSX-Datei <b>hierher ziehen</b> oder unten „Datei laden" – das Format wird <b>automatisch erkannt</b>. Es funktionieren:<br>• die <b>IFSC-Startliste</b> <span class="mono">101 NAME | NAT , Startreihenfolge</span><br>• eine Tabelle <b>mit Kopfzeile</b> mit diesen 4 Spalten: <span class="mono">Starting Order · Name · Nation · Bib-Number</span><br>• eine <b>xlsx-Datei</b> (Excel 2007+) mit denselben Spalten<br>Zusatzspalten (Kategorie, Jahrgang …) werden ignoriert.',
     importMissing:'Fehlende Pflichtspalte(n): {cols}',
@@ -316,7 +314,7 @@ const I18N = {
     czGapLeg:"GAP = freigehaltener Slot (wandert leer durch die Boulder)", czRestartLeg:"Restart = wieder eingefügter Athlet",
     thStart:"Start",
     tzTitle:"Transit Zone (TZ)", tzHint:"Shuttle-Einteilung & Abfahrts-/Wartezeiten",
-    tzLeg1:"Shuttle = ⌊(Rotation−1)/Capacity⌋ + 1", tzLeg2:"Depart = Shuttle-Start − Intervall − Transit − Loading", tzLeg3:"CZ Wait = CZ-Start − Depart − Transit − Loading",
+    tzLeg1:"Shuttle = ⌊(Rotation−1)/Capacity⌋ + 1", tzLeg2:"Depart = Shuttle-Start − Intervall − Transit", tzLeg3:"CZ Wait = CZ-Start − Depart − Transit",
     thAthlete:"Athlet (B1)", thShuttle:"Shuttle", thDepart:"Depart", thWait:"CZ Wait",
     gapTitle:"Gap Scheduling Assistant", gapHint:"Restarts planen & Konflikte vermeiden",
     schedTitle:"Competition Schedule (live)", btnPrint:"🖨 Drucken",
@@ -340,7 +338,7 @@ const I18N = {
     statusEmpty:"No start list loaded", statusLoaded:"{n} athletes · {r} rotations",
     phaseValues:"Phase Values", phaseHint:"Base settings – instantly affect all calculations",
     lblStart:"Start Time (HH:MM:SS)", lblInterval:"Rotation + Interval (sec)", lblBoulders:"Boulders",
-    lblTransit:"Transit Time (sec)", lblLoading:"Loading Time (sec)", lblCapacity:"Capacity (Shuttle)",
+    lblTransit:"Transit Time (sec)", lblCapacity:"Capacity (Shuttle)",
     importTitle:"Import start list", importHint:"copy & paste from a Numbers/Excel column, or load a CSV",
     importNotes:'<b>Easy:</b> <b>drag a CSV or XLSX file here</b> or click "Load file" below – the format is <b>detected automatically</b>. Works with:<br>• the <b>IFSC start list</b> <span class="mono">101 NAME | NAT , starting order</span><br>• a table <b>with a header row</b> containing these 4 columns: <span class="mono">Starting Order · Name · Nation · Bib-Number</span><br>• an <b>xlsx file</b> (Excel 2007+) with the same columns<br>Extra columns (category, year …) are ignored.',
     importMissing:'Missing required column(s): {cols}',
@@ -368,7 +366,7 @@ const I18N = {
     czGapLeg:"GAP = reserved slot (travels empty across the boulders)", czRestartLeg:"Restart = re-inserted athlete",
     thStart:"Start",
     tzTitle:"Transit Zone (TZ)", tzHint:"Shuttle grouping & departure/wait times",
-    tzLeg1:"Shuttle = ⌊(rotation−1)/capacity⌋ + 1", tzLeg2:"Depart = shuttle start − interval − transit − loading", tzLeg3:"CZ Wait = CZ start − depart − transit − loading",
+    tzLeg1:"Shuttle = ⌊(rotation−1)/capacity⌋ + 1", tzLeg2:"Depart = shuttle start − interval − transit", tzLeg3:"CZ Wait = CZ start − depart − transit",
     thAthlete:"Athlete (B1)", thShuttle:"Shuttle", thDepart:"Depart", thWait:"CZ Wait",
     gapTitle:"Gap Scheduling Assistant", gapHint:"Plan restarts & avoid conflicts",
     schedTitle:"Competition Schedule (live)", btnPrint:"🖨 Print",
@@ -392,7 +390,7 @@ const I18N = {
     statusEmpty:"Aucune liste de départ chargée", statusLoaded:"{n} athlètes · {r} rotations",
     phaseValues:"Phase Values", phaseHint:"Réglages de base – affectent immédiatement tous les calculs",
     lblStart:"Heure de départ (HH:MM:SS)", lblInterval:"Rotation + Intervalle (sec)", lblBoulders:"Blocs",
-    lblTransit:"Temps de transit (sec)", lblLoading:"Temps de chargement (sec)", lblCapacity:"Capacité (navette)",
+    lblTransit:"Temps de transit (sec)", lblCapacity:"Capacité (navette)",
     importTitle:"Importer la liste de départ", importHint:"copier-coller depuis une colonne Numbers/Excel, ou charger un CSV",
     importNotes:'<b>Facile :</b> <b>glissez un fichier CSV ou XLSX ici</b> ou cliquez « Charger » – le format est <b>détecté automatiquement</b>. Fonctionne avec :<br>• la <b>liste de départ IFSC</b> <span class="mono">101 NAME | NAT , ordre de départ</span><br>• un tableau <b>avec en-tête</b> contenant ces 4 colonnes : <span class="mono">Starting Order · Name · Nation · Bib-Number</span><br>• un <b>fichier xlsx</b> (Excel 2007+) avec les mêmes colonnes<br>Les colonnes supplémentaires (catégorie, année …) sont ignorées.',
     importMissing:'Colonne(s) obligatoire(s) manquante(s) : {cols}',
@@ -420,7 +418,7 @@ const I18N = {
     czGapLeg:"GAP = créneau réservé (traverse les blocs à vide)", czRestartLeg:"Restart = athlète réinséré",
     thStart:"Départ",
     tzTitle:"Transit Zone (TZ)", tzHint:"Répartition navettes & heures de départ/attente",
-    tzLeg1:"Navette = ⌊(rotation−1)/capacité⌋ + 1", tzLeg2:"Départ = départ navette − intervalle − transit − chargement", tzLeg3:"Attente CZ = départ CZ − départ − transit − chargement",
+    tzLeg1:"Navette = ⌊(rotation−1)/capacité⌋ + 1", tzLeg2:"Départ = départ navette − intervalle − transit", tzLeg3:"Attente CZ = départ CZ − départ − transit",
     thAthlete:"Athlète (B1)", thShuttle:"Navette", thDepart:"Départ", thWait:"Attente CZ",
     gapTitle:"Assistant Gap Scheduling", gapHint:"Planifier les restarts & éviter les conflits",
     schedTitle:"Planning de compétition (live)", btnPrint:"🖨 Imprimer",
@@ -470,7 +468,7 @@ function S(){
     interval: +$('interval').value || 0,
     boulders: +$('boulders').value || 1,
     transit: +$('transit').value || 0,
-    loading: +$('loading').value || 0,
+    loading: 0,
     capacity: +$('capacity').value || 1,
   };
 }
@@ -714,8 +712,8 @@ function renderTZ(){
     const tr=document.createElement('tr');
     if(row.pause){
       const lbl='PAUSE'+(row.reason?' — '+escHtml(row.reason):'');
-      tr.innerHTML='<td class="num">'+row.disp+'</td><td class="pausecell">'+lbl+'</td>'+
-        '<td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td>';
+      tr.innerHTML='<td class="num muted">–</td><td class="pausecell">'+lbl+'</td>'+
+        '<td class="num">'+row.disp+'</td><td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td>';
       tb.appendChild(tr); return;
     }
     const cell=czCellEff(row.logical,1,entries,s);
@@ -724,16 +722,17 @@ function renderTZ(){
     const firstLogical=(shuttle-1)*s.capacity+1;
     const departDisp=L2D[firstLogical] ?? firstLogical;
     const depart=s.start + s.interval*(departDisp-1) - s.interval - s.transit - s.loading;  // real clock (shifted)
-    const wait=(s.start + s.interval*(row.disp-1)) - depart - s.transit - s.loading;
+    const czStart=s.start + s.interval*(row.disp-1);
+    const wait=czStart - depart - s.transit - s.loading;
     if(cell.gap){
-      tr.innerHTML='<td class="num">'+row.disp+'</td><td class="gapcell">GAP</td>'+
-        '<td class="num">'+shuttle+'</td><td class="num">'+fmtTime(depart)+'</td>'+
-        '<td class="num muted">–</td>';
+      tr.innerHTML='<td class="num">'+shuttle+'</td><td class="gapcell">GAP</td>'+
+        '<td class="num">'+row.disp+'</td><td class="num">'+fmtTime(depart)+'</td>'+
+        '<td class="num">'+fmtTime(czStart)+'</td><td class="num muted">–</td>';
     } else {
-      tr.innerHTML='<td class="num">'+row.disp+'</td><td class="athcell'+(cell.restart?' restartcell':'')+'">'+
+      tr.innerHTML='<td class="num">'+shuttle+'</td><td class="athcell'+(cell.restart?' restartcell':'')+'">'+
         athHtml(cell.bib, cell.name, cell.country, cell.restart)+'</td>'+
-        '<td class="num">'+shuttle+'</td><td class="num">'+fmtTime(depart)+'</td>'+
-        '<td class="num">'+fmtDur(wait)+'</td>';
+        '<td class="num">'+row.disp+'</td><td class="num">'+fmtTime(depart)+'</td>'+
+        '<td class="num">'+fmtTime(czStart)+'</td><td class="num">'+fmtDur(wait)+'</td>';
     }
     tb.appendChild(tr);
   });
@@ -892,7 +891,7 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
 }));
 document.querySelectorAll('#langsel button').forEach(b=>
   b.addEventListener('click',()=>setLang(b.dataset.lang)));
-['startTime','interval','boulders','transit','loading','capacity'].forEach(id=>
+['startTime','interval','boulders','transit','capacity'].forEach(id=>
   $(id).addEventListener('input',recalc));
 
 // ============ Init ============
