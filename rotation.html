@@ -605,7 +605,7 @@
 
       <div class="card" id="importCard">
         <h2>Import Start List</h2>
-        <div id="importStatus" class="data-status empty">Drop a <strong>.json</strong> file here</div>
+        <div id="importStatus" class="data-status empty">Drop <strong>.json</strong> or <strong>.csv</strong> here</div>
 
         <h2 style="margin-top:18px"><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span></h2>
         <div class="scroll" style="max-height:55vh">
@@ -961,7 +961,7 @@
         '</div>';
     }
 
-    // ---- Drag-and-drop JSON loading ----
+    // ---- Drag-and-drop JSON / CSV loading ----
     let dragged = false;
     document.addEventListener('dragover', function (e) {
       if (e.dataTransfer.types.includes('Files')) {
@@ -978,19 +978,25 @@
     document.addEventListener('drop', function (e) {
       e.preventDefault();
       document.body.classList.remove('drag-over');
-      const file = Array.from(e.dataTransfer.files).find(f => f.name.endsWith('.json'));
+      const file = Array.from(e.dataTransfer.files).find(f => f.name.endsWith('.json') || f.name.endsWith('.csv'));
       if (!file) {
-        $('importStatus').textContent = 'Please drop a .json file.';
+        $('importStatus').textContent = 'Please drop a .json or .csv file.';
         $('importStatus').className = 'data-status error';
         return;
       }
       const reader = new FileReader();
       reader.onload = function (ev) {
         try {
-          const data = JSON.parse(ev.target.result);
-          const arr = Array.isArray(data) ? data : data.athletes;
+          const text = ev.target.result;
+          let arr;
+          if (file.name.endsWith('.json')) {
+            arr = JSON.parse(text);
+            if (!Array.isArray(arr)) arr = arr.athletes;
+          } else {
+            arr = parseCSV(text);
+          }
           if (!Array.isArray(arr) || arr.length === 0 || !arr[0].name) {
-            throw new Error('Invalid format \u2014 expected array of {bib,name,country,order}');
+            throw new Error('Invalid format \u2014 expected {bib,name,country,order}');
           }
           climbers = arr.map(item => ({
             order: item.order,
@@ -1009,6 +1015,42 @@
       };
       reader.readAsText(file);
     });
+
+    // ---- CSV parser ----
+    function parseCSV(text) {
+      const lines = [];
+      let cur = '', inQ = false;
+      for (const ch of text) {
+        if (ch === '"') { inQ = !inQ; continue; }
+        if (ch === '\n' && !inQ) { lines.push(cur); cur = ''; continue; }
+        if (ch === '\r') continue;
+        cur += ch;
+      }
+      if (cur) lines.push(cur);
+      if (lines.length < 2) throw new Error('CSV must have a header row and at least one data row');
+      const rawHeaders = lines[0];
+      const delim = rawHeaders.includes(';') ? ';' : ',';
+      const headers = rawHeaders.split(delim).map(h => h.trim());
+      const numeric = ['bib', 'order', 'route'];
+      return lines.slice(1).map(line => {
+        const values = [];
+        let f = '', q = false;
+        for (const ch of line) {
+          if (ch === '"') { q = !q; continue; }
+          if (ch === delim && !q) { values.push(f); f = ''; continue; }
+          f += ch;
+        }
+        values.push(f);
+        const obj = {};
+        headers.forEach((h, i) => {
+          let v = i < values.length ? values[i].trim() : '';
+          if (v === '') v = null;
+          else if (numeric.includes(h)) v = parseInt(v, 10);
+          obj[h] = v;
+        });
+        return obj;
+      });
+    }
     function addClimber() {
       const order = climbers.length ? Math.max(...climbers.map(c => c.order)) + 1 : 1;
       climbers.push({order, bib: null, name: '', country: '', boulder: null}); renderAll();
