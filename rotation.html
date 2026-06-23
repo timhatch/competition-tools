@@ -144,7 +144,6 @@ body.drag-over::before {
   <span class="sub" id="statusbar"></span>
   <div class="tabs">
     <div class="tab active" data-view="setup" data-i18n="tabSetup"></div>
-    <div class="tab" data-view="cz" data-i18n="tabCZ"></div>
     <div class="tab" data-view="tz" data-i18n="tabTZ"></div>
     <div class="tab" data-view="gap" data-i18n="tabGap"></div>
   </div>
@@ -158,6 +157,15 @@ body.drag-over::before {
 <main>
 <!-- ============ SETUP & STARTLIST ============ -->
 <section class="view active" id="view-setup">
+  <div class="card">
+    <h2><span data-i18n="phaseValues"></span> <span class="hint" data-i18n="phaseHint"></span></h2>
+    <div class="grid setup-grid">
+      <div><label data-i18n="lblStart"></label><input id="startTime" type="time" step="1" value="12:06:15"></div>
+      <div><label data-i18n="lblInterval"></label><input id="interval" type="number" value="315"></div>
+      <div><label data-i18n="lblBoulders"></label><input id="boulders" type="number" value="5" min="1" max="8"></div>
+    </div>
+  </div>
+
   <div class="card" id="importCard">
     <h2>Import Start List</h2>
     <div id="importStatus" class="data-status empty">Drop a <strong>.json</strong> file here</div>
@@ -178,26 +186,6 @@ body.drag-over::before {
 </section>
 
 <!-- ============ CZ SCHEDULE ============ -->
-<section class="view" id="view-cz">
-  <div class="card">
-    <h2><span data-i18n="czTitle"></span> <span class="hint" data-i18n="czHint"></span>
-      <button class="ghost sm" style="float:right" onclick="printSchedule()" data-i18n="btnPrint"></button></h2>
-    <div class="grid setup-grid" style="margin-bottom:12px">
-      <div><label data-i18n="lblStart"></label><input id="startTime" type="time" step="1" value="12:06:15"></div>
-      <div><label data-i18n="lblInterval"></label><input id="interval" type="number" value="315"></div>
-      <div><label data-i18n="lblBoulders"></label><input id="boulders" type="number" value="5" min="1" max="8"></div>
-    </div>
-    <div class="legend">
-      <span data-i18n="czLeg1"></span>
-      <span data-i18n="czLeg2"></span>
-      <span><span class="sw" style="background:rgba(255,180,84,.5)"></span><span data-i18n="czGapLeg"></span></span>
-      <span><span class="sw" style="background:rgba(63,185,80,.6)"></span><span data-i18n="czRestartLeg"></span></span>
-      <span><span class="sw" style="background:rgba(79,156,255,.6)"></span><span data-i18n="pauseLeg"></span></span>
-    </div>
-    <div class="scroll" style="margin-top:12px"><table id="czTable" class="cz-target"></table></div>
-  </div>
-</section>
-
 <!-- ============ TZ SCHEDULE ============ -->
 <section class="view" id="view-tz">
   <div class="card">
@@ -269,7 +257,7 @@ body.drag-over::before {
       <span><span class="sw" style="background:rgba(63,185,80,.6)"></span><span data-i18n="czRestartLeg"></span></span>
       <span><span class="sw" style="background:rgba(79,156,255,.6)"></span><span data-i18n="pauseLeg"></span></span>
     </div>
-    <div class="scroll" style="margin-top:12px;max-height:60vh"><table id="czTableGap" class="cz-target"></table></div>
+    <div><table id="czTableGap" class="cz-target"></table></div>
   </div>
 </section>
 </main>
@@ -282,7 +270,7 @@ body.drag-over::before {
 // ============ i18n ============
 const I18N = {
   de:{
-    tabSetup:"Setup & Startliste", tabCZ:"Call Zone (CZ)", tabTZ:"Transit Zone (TZ)", tabGap:"Gap Assistant",
+    tabSetup:"Setup & Startliste", tabTZ:"Transit Zone (TZ)",     tabGap:"Call Zone (CZ)",
     statusEmpty:"Keine Startliste geladen", statusLoaded:"{n} Athleten · {r} Rotationen",
     phaseValues:"Phase Values", phaseHint:"Grundeinstellungen – wirken sich sofort auf alle Berechnungen aus",
     lblStart:"Start Time (HH:MM:SS)", lblInterval:"Rotation + Interval (Sek.)", lblBoulders:"Boulders",
@@ -334,7 +322,7 @@ const I18N = {
     legLate:"verspätet – Target nicht erreichbar, frühestmöglicher Restart",
   },
   en:{
-    tabSetup:"Setup & Start List", tabCZ:"Call Zone (CZ)", tabTZ:"Transit Zone (TZ)", tabGap:"Gap Assistant",
+    tabSetup:"Setup & Start List", tabTZ:"Transit Zone (TZ)",     tabGap:"Call Zone (CZ)",
     statusEmpty:"No start list loaded", statusLoaded:"{n} athletes · {r} rotations",
     phaseValues:"Phase Values", phaseHint:"Base settings – instantly affect all calculations",
     lblStart:"Start Time (HH:MM:SS)", lblInterval:"Rotation + Interval (sec)", lblBoulders:"Boulders",
@@ -386,7 +374,7 @@ const I18N = {
     legLate:"late – target not reachable, earliest possible restart",
   },
   fr:{
-    tabSetup:"Réglages & Liste", tabCZ:"Call Zone (CZ)", tabTZ:"Transit Zone (TZ)", tabGap:"Assistant Gap",
+    tabSetup:"Réglages & Liste", tabTZ:"Transit Zone (TZ)", tabGap:"Assistant Gap",
     statusEmpty:"Aucune liste de départ chargée", statusLoaded:"{n} athlètes · {r} rotations",
     phaseValues:"Phase Values", phaseHint:"Réglages de base – affectent immédiatement tous les calculs",
     lblStart:"Heure de départ (HH:MM:SS)", lblInterval:"Rotation + Intervalle (sec)", lblBoulders:"Blocs",
@@ -896,7 +884,6 @@ document.querySelectorAll('#langsel button').forEach(b=>
 
 // ============ Init ============
 applyStatic();
-addGapRow();
 </script>
 </body>
 </html>
