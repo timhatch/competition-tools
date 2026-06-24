@@ -732,9 +732,9 @@
           <table id="tzTable">
             <thead>
               <tr>
+                <th data-i18n="thRotation"></th>
                 <th data-i18n="thShuttle"></th>
                 <th data-i18n="thAthlete"></th>
-                <th data-i18n="thRotation"></th>
                 <th data-i18n="thDepart"></th>
                 <th data-i18n="thStart"></th>
                 <th data-i18n="thWait"></th>
@@ -1234,8 +1234,8 @@
         const tr = document.createElement('tr');
         if (row.pause) {
           const lbl = 'PAUSE' + (row.reason ? ' — ' + escHtml(row.reason) : '');
-          tr.innerHTML = '<td class="num muted">–</td><td class="pausecell">' + lbl + '</td>' +
-            '<td class="num">' + row.disp + '</td><td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td>';
+          tr.innerHTML = '<td class="num">' + row.disp + '</td><td class="num muted">–</td><td class="pausecell">' + lbl + '</td>' +
+            '<td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td>';
           tb.appendChild(tr); return;
         }
         const cell = czCellEff(row.logical, 1, entries, s);
@@ -1246,14 +1246,15 @@
         const depart = s.start + s.interval * (departDisp - 1) - s.interval - s.transit - s.loading;  // real clock (shifted)
         const czStart = s.start + s.interval * (row.disp - 1);
         const wait = czStart - depart - s.transit - s.loading;
+        const tzRot = Math.floor((depart - s.start) / s.interval) + 1;
         if (cell.gap) {
-          tr.innerHTML = '<td class="num">' + shuttle + '</td><td class="gapcell">GAP</td>' +
-            '<td class="num">' + row.disp + '</td><td class="num">' + fmtTime(depart) + '</td>' +
+          tr.innerHTML = '<td class="num">' + tzRot + '</td><td class="num">' + shuttle + '</td><td class="gapcell">GAP</td>' +
+            '<td class="num">' + fmtTime(depart) + '</td>' +
             '<td class="num">' + fmtTime(czStart) + '</td><td class="num muted">–</td>';
         } else {
-          tr.innerHTML = '<td class="num">' + shuttle + '</td><td class="athcell' + (cell.restart ? ' restartcell' : '') + '">' +
+          tr.innerHTML = '<td class="num">' + tzRot + '</td><td class="num">' + shuttle + '</td><td class="athcell' + (cell.restart ? ' restartcell' : '') + '">' +
             athHtml(cell.bib, cell.name, cell.country, cell.restart) + '</td>' +
-            '<td class="num">' + row.disp + '</td><td class="num">' + fmtTime(depart) + '</td>' +
+            '<td class="num">' + fmtTime(depart) + '</td>' +
             '<td class="num">' + fmtTime(czStart) + '</td><td class="num">' + fmtDur(wait) + '</td>';
         }
         tb.appendChild(tr);
