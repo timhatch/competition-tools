@@ -379,14 +379,23 @@
     .editable input {
       background: transparent;
       border: none;
-      padding: 3px 4px;
-      text-align: center;
-      width: 60px
+      padding: 10px 6px;
+      min-height: 38px;
+      width: 100%;
+      box-sizing: border-box;
+      text-align: center
     }
 
     .editable input:focus {
       background: var(--bg-page);
       border-radius: 4px
+    }
+
+    td input {
+      padding: 10px 6px;
+      min-height: 38px;
+      width: 100%;
+      box-sizing: border-box
     }
 
     .muted {
@@ -500,7 +509,7 @@
     }
 
     .ga-input {
-      width: 64px;
+      width: 100%;
       text-align: center
     }
 
@@ -1165,9 +1174,9 @@
         const tr = document.createElement('tr');
         tr.innerHTML =
           '<td class="num">' + c.order + '</td>' +
-          '<td class="mono"><input value="' + escAttr(c.bib) + '" data-i="' + i + '" data-f="bib" style="width:70px;border:none;background:transparent" class="mono"></td>' +
-          '<td class="mono"><input value="' + escAttr(c.name) + '" data-i="' + i + '" data-f="name" style="width:120px;border:none;background:transparent" class="mono"></td>' +
-          '<td class="mono"><input value="' + escAttr(c.country) + '" data-i="' + i + '" data-f="country" style="width:80px;border:none;background:transparent" class="mono"></td>';
+          '<td class="mono"><input value="' + escAttr(c.bib) + '" data-i="' + i + '" data-f="bib" class="mono"></td>' +
+          '<td class="mono"><input value="' + escAttr(c.name) + '" data-i="' + i + '" data-f="name" class="mono"></td>' +
+          '<td class="mono"><input value="' + escAttr(c.country) + '" data-i="' + i + '" data-f="country" class="mono"></td>';
         tb.appendChild(tr);
       });
       tb.querySelectorAll('input').forEach(inp => inp.addEventListener('input', e => {
@@ -1285,7 +1294,7 @@
         const tr = document.createElement('tr');
         tr.innerHTML =
           '<td class="num">' + (i + 1) + '</td>' +
-          '<td class="editable mono"><input list="climberList" class="mono" style="width:70px;text-align:left" value="' + escAttr(row.bib) + '" data-i="' + i + '" data-f="bib"></td>' +
+          '<td class="editable mono"><input list="climberList" class="mono" value="' + escAttr(row.bib) + '" data-i="' + i + '" data-f="bib"></td>' +
           '<td class="cell-gapname mono"></td>' +
           '<td class="cell-gapcty"></td>' +
           '<td class="editable"><input class="ga-input" inputmode="numeric" value="' + escAttr(row.boulder) + '" data-i="' + i + '" data-f="boulder"></td>' +
