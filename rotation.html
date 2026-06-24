@@ -1004,13 +1004,13 @@
           } else {
             arr = parseCSV(text);
           }
-          if (!Array.isArray(arr) || arr.length === 0 || !arr[0].name) {
-            throw new Error('Invalid format \u2014 expected {bib,name,country,order}');
+          if (!Array.isArray(arr) || arr.length === 0 || !arr[0].lastname) {
+            throw new Error('Invalid format \u2014 expected {bib,lastname,country,order}');
           }
           climbers = arr.map(item => ({
             order: item.order,
             bib: item.bib,
-            name: item.name,
+            name: item.lastname,
             country: item.country || '',
             boulder: null
           }));

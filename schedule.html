@@ -523,6 +523,7 @@ document.addEventListener('drop', function(e) {
       if (!Array.isArray(arr) || arr.length === 0) {
         throw new Error('File is empty or not an array');
       }
+      arr.forEach(item => { item.name = item.lastname; });
       if (!arr[0].group || !arr[0].route) {
         throw new Error('Missing "group" and/or "route" fields');
       }
