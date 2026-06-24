@@ -1329,12 +1329,13 @@
         const depart = s.start + s.interval * (departDisp - 1) - s.interval - s.transit - s.loading;
         const wait = czStart - depart - s.transit - s.loading;
         const tzRot = Math.floor((depart - s.start) / s.interval) + 1;
+        const displayTzRot = tzRot < 1 ? tzRot - 1 : tzRot;
         if (cell.gap) {
-          tr.innerHTML = '<td class="num">' + tzRot + '</td><td class="num">' + shuttle + '</td><td class="gapcell">GAP</td>' +
+          tr.innerHTML = '<td class="num">' + displayTzRot + '</td><td class="num">' + shuttle + '</td><td class="gapcell">GAP</td>' +
             '<td class="num">' + fmtTime(depart) + '</td>' +
             '<td class="num">' + fmtTime(czStart) + '</td><td class="num muted">–</td>';
         } else {
-          tr.innerHTML = '<td class="num">' + tzRot + '</td><td class="num">' + shuttle + '</td><td class="athcell' + (cell.restart ? ' restartcell' : '') + '">' +
+          tr.innerHTML = '<td class="num">' + displayTzRot + '</td><td class="num">' + shuttle + '</td><td class="athcell' + (cell.restart ? ' restartcell' : '') + '">' +
             athHtml(cell.bib, cell.name, cell.country, cell.restart) + '</td>' +
             '<td class="num">' + fmtTime(depart) + '</td>' +
             '<td class="num">' + fmtTime(czStart) + '</td><td class="num">' + fmtDur(wait) + '</td>';
