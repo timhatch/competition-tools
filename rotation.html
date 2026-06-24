@@ -1128,6 +1128,35 @@
       entries.sort((a, b) => a.key - b.key);   // index+1 = effective rotation
       return entries;
     }
+    // TZ entries: same athletes as CZ, but gaps shifted earlier by transit time.
+    // Gap placement logic (per CZ gap at rotation g.order):
+    //   1. raw = g.order - transitRot   — offset gap earlier by transit time
+    //   2. tzOrder = max(raw, decisionRot + 1)  — never at/before the decision
+    // transitRot = ceil(transit / interval); decisionRot = max{current} of gapRows using this gap.
+    function tzEffectiveEntries() {
+      const s = S();
+      const entries = climbers.filter(c => c.bib)
+        .map(c => ({type: 'a', bib: c.bib, name: c.name, country: c.country, boulder: c.boulder, key: c.order}));
+      const czPlan = computeGapPlan();
+      const transitRot = Math.ceil(s.transit / s.interval);
+      czPlan.gaps.forEach(g => {
+        let maxCur = null;
+        for (const [bStr, info] of Object.entries(g.used)) {
+          const row = gapRows.find(r => +r.bib === info.bib && +r.boulder === +bStr);
+          if (row) {
+            const cur = numOrNull(row.current);
+            if (cur != null && (maxCur == null || cur > maxCur)) maxCur = cur;
+          }
+        }
+        const desiredDisplay = maxCur != null
+          ? Math.max(g.order - 1 - transitRot, maxCur + 1)
+          : Math.max(g.order - 1 - transitRot, 1);
+        const keyBase = desiredDisplay + 1 + transitRot;
+        entries.push({type: 'r', used: g.used, key: keyBase - 0.5});
+      });
+      entries.sort((a, b) => a.key - b.key);
+      return entries;
+    }
     // returns null | {name} | {gap:true} | {name, restart:true}
     function czCellEff(rotn, boulderIdx, entries, s) {
       if (boulderIdx > s.boulders) return null;
@@ -1226,10 +1255,41 @@
     }
 
     // ============ Render: TZ ============
+    // TZ table columns: Transit-Rn, Shuttle, Athlete/GAP, Depart, Start, CZ Wait
+    //   Transit-Rn  = rotation when the shuttle departs (in transit time) — Math.floor((depart-start)/interval)+1
+    //   Shuttle     = shuttle group for this entry
+    //   Athlete/GAP = athlete name, or "GAP" if no athlete in transit at this rotation
+    //   Depart      = clock time the shuttle leaves transit zone
+    //   Start       = clock time the athlete starts climbing in CZ (from CZ sheet)
+    //   CZ Wait     = time the athlete waits in call zone before starting
+    //
+    // Rows are built from TZ-specific entries (gaps shifted earlier by transit time, clamped after decision).
+    // Start times are looked up from CZ rows so they match the CZ sheet exactly.
     function renderTZ() {
-      const s = S(), {rows, entries} = buildRows(), tb = $('tzTable').querySelector('tbody');
+      const s = S(), tb = $('tzTable').querySelector('tbody');
       tb.innerHTML = '';
-      const L2D = {}; rows.forEach(r => {if (!r.pause) L2D[r.logical] = r.disp;});   // logical -> display rotation
+
+      // Build CZ start-time lookup: bib -> CZ display rotation
+      const {rows: czRows, entries: czEntries} = buildRows();
+      const bibCzDisp = {};
+      czRows.forEach(r => {
+        if (r.pause) return;
+        const cell = czCellEff(r.logical, 1, czEntries, s);
+        if (cell && !cell.gap && cell.bib) bibCzDisp[cell.bib] = r.disp;
+      });
+
+      // Build TZ entries and rows
+      const entries = tzEffectiveEntries();
+      const Lmax = entries.length, ps = pauseList();
+      const rows = []; let logical = 1, disp = 1, k = 0;
+      while (logical <= Lmax) {
+        while (k < ps.length && ps[k].from <= disp) {
+          for (let j = 0; j < ps[k].len; j++) {rows.push({disp, pause: true, reason: ps[k].reason}); disp++;}
+          k++;
+        }
+        rows.push({disp, pause: false, logical}); disp++; logical++;
+      }
+      const L2D = {}; rows.forEach(r => {if (!r.pause) L2D[r.logical] = r.disp;});
       rows.forEach(row => {
         const tr = document.createElement('tr');
         if (row.pause) {
@@ -1238,13 +1298,27 @@
             '<td class="num muted">–</td><td class="num muted">–</td><td class="num muted">–</td>';
           tb.appendChild(tr); return;
         }
-        const cell = czCellEff(row.logical, 1, entries, s);
-        if (!cell) return;
-        const shuttle = Math.floor((row.logical - 1) / s.capacity) + 1;       // climber group (unaffected by pauses)
+        const idx = row.logical - 1;
+        if (idx < 0 || idx >= entries.length) return;
+        const e = entries[idx];
+        // e is either an athlete entry (type 'a') or a gap entry (type 'r')
+        // Gap entries carry a 'used' map: boulder# -> {bib, name, country} for restarts hosted in that gap
+        let cell;
+        if (e.type === 'a') {
+          cell = {bib: e.bib, name: e.name, country: e.country};
+        } else {
+          const w = e.used[1];
+          cell = w
+            ? {bib: w.bib, name: w.name, country: w.country, restart: true}
+            : {gap: true};
+        }
+        // Start time from CZ sheet, not from TZ row.disp
+        const czDispRot = cell.gap ? row.disp : (bibCzDisp[cell.bib] || row.disp);
+        const czStart = s.start + s.interval * (czDispRot - 1);
+        const shuttle = Math.floor((row.logical - 1) / s.capacity) + 1;
         const firstLogical = (shuttle - 1) * s.capacity + 1;
         const departDisp = L2D[firstLogical] ?? firstLogical;
-        const depart = s.start + s.interval * (departDisp - 1) - s.interval - s.transit - s.loading;  // real clock (shifted)
-        const czStart = s.start + s.interval * (row.disp - 1);
+        const depart = s.start + s.interval * (departDisp - 1) - s.interval - s.transit - s.loading;
         const wait = czStart - depart - s.transit - s.loading;
         const tzRot = Math.floor((depart - s.start) / s.interval) + 1;
         if (cell.gap) {
