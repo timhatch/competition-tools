@@ -79,6 +79,12 @@
       color: light-dark(#92400e, #dbac6c);
     }
 
+    .data-status.error {
+      background: light-dark(#fef2f2, #2e0a0a);
+      border-color: light-dark(#fecaca, #6a2d2d);
+      color: light-dark(#991b1b, #db6c6c);
+    }
+
     .pool {
       display: flex;
       flex-wrap: wrap;
@@ -376,6 +382,41 @@
       return m ? {group: m[1], route: parseInt(m[2])} : null;
     }
 
+    function parseCSV(text) {
+      const lines = [];
+      let cur = '', inQ = false;
+      for (const ch of text) {
+        if (ch === '"') { inQ = !inQ; continue; }
+        if (ch === '\n' && !inQ) { lines.push(cur); cur = ''; continue; }
+        if (ch === '\r') continue;
+        cur += ch;
+      }
+      if (cur) lines.push(cur);
+      if (lines.length < 2) throw new Error('CSV must have a header row and at least one data row');
+      const rawHeaders = lines[0];
+      const delim = rawHeaders.includes(';') ? ';' : ',';
+      const headers = rawHeaders.split(delim).map(h => h.trim());
+      const numeric = ['bib', 'order', 'route'];
+      return lines.slice(1).map(line => {
+        const values = [];
+        let f = '', q = false;
+        for (const ch of line) {
+          if (ch === '"') { q = !q; continue; }
+          if (ch === delim && !q) { values.push(f); f = ''; continue; }
+          f += ch;
+        }
+        values.push(f);
+        const obj = {};
+        headers.forEach((h, i) => {
+          let v = i < values.length ? values[i].trim() : '';
+          if (v === '') v = null;
+          else if (numeric.includes(h)) v = parseInt(v, 10);
+          obj[h] = v;
+        });
+        return obj;
+      });
+    }
+
     function formatTime(mins) {
       return `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`;
     }
@@ -535,6 +576,7 @@
         if (!lookup[key]) lookup[key] = [];
         lookup[key].push(a);
       });
+      Object.values(lookup).forEach(list => list.sort((a, b) => a.order - b.order));
       namePad = Math.max(...athletes.map(a => (a.lastname || a.name || "").length), 10);
       const groups = [...new Set(athletes.map(a => a.group))].sort();
 
@@ -556,7 +598,7 @@
       });
       dataLoaded = true;
       document.getElementById('dataStatus').className = 'data-status loaded';
-      document.getElementById('dataStatus').textContent = `Loaded ${athletes.length} athletes`;
+      document.getElementById('dataStatus').textContent = `Loaded ${groups.length} groups, ${athletes.length} athletes`;
       generateSchedule();
     }
 
@@ -574,9 +616,35 @@
     document.body.ondragover = e => e.preventDefault();
     document.body.ondrop = e => {
       e.preventDefault();
-      const file = e.dataTransfer.files[0];
+      const file = Array.from(e.dataTransfer.files).find(f => f.name.endsWith('.json') || f.name.endsWith('.csv'));
+      if (!file) {
+        document.getElementById('dataStatus').textContent = 'Please drop a .json or .csv file.';
+        document.getElementById('dataStatus').className = 'data-status error';
+        return;
+      }
       const reader = new FileReader();
-      reader.onload = ev => loadData(JSON.parse(ev.target.result));
+      reader.onload = ev => {
+        try {
+          const text = ev.target.result;
+          let arr;
+          if (file.name.endsWith('.csv')) {
+            arr = parseCSV(text);
+          } else {
+            arr = JSON.parse(text);
+          }
+          if (!Array.isArray(arr) || arr.length === 0) {
+            throw new Error('File is empty or not an array');
+          }
+          arr.forEach(item => { if (item.lastname != null) item.name = item.lastname; });
+          if (!arr[0].group || !arr[0].route) {
+            throw new Error('Missing "group" and/or "route" fields');
+          }
+          loadData(arr);
+        } catch (err) {
+          document.getElementById('dataStatus').textContent = 'Error: ' + err.message;
+          document.getElementById('dataStatus').className = 'data-status error';
+        }
+      };
       reader.readAsText(file);
     };
     document.getElementById('printBtn').onclick = () => window.print();
