@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climbing Qualification Schedule Planner</title>
+  <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg-page: light-dark(#f4f5f7, #121212);
+      --bg-card: light-dark(#fff, #1e1e1e);
+      --text: light-dark(#1a1a2e, #e0e0e0);
+      --text-muted: light-dark(#6b7280, #9ca3af);
+      --text-dim: light-dark(#9ca3af, #6b7280);
+      --text-strong: light-dark(#374151, #ccc);
+      --border: light-dark(#d1d5db, #555);
+      --border-light: light-dark(#e5e7eb, #444);
+      --bg-subtle: light-dark(#f9fafb, #222);
+      --bg-ghost: light-dark(#f3f4f6, #2a2a2a);
+      --bg-hover: light-dark(#f3f4f6, #2a2a2a);
+      --shadow-sm: light-dark(rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.35));
+      --shadow-lg: light-dark(rgba(0, 0, 0, 0.15), rgba(0, 0, 0, 0.45));
+      --accent: #3b82f6;
+      --accent-bg: light-dark(rgba(59, 130, 246, 0.04), rgba(59, 130, 246, 0.12));
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      padding: 24px;
+      background: var(--bg-page);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .section {
+      background: var(--bg-card);
+      border-radius: 10px;
+      padding: 20px 24px 24px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px var(--shadow-sm);
+    }
+
+    .section-header {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      font-weight: 600;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .data-status {
+      font-size: 12px;
+      font-weight: 400;
+      padding: 8px 14px;
+      border-radius: 6px;
+    }
+
+    .data-status.loaded {
+      background: light-dark(#f0fdf4, #0a2e1a);
+      border-color: light-dark(#bbf7d0, #2d6a3f);
+      color: light-dark(#166534, #6cdb8a);
+    }
+
+    .data-status.empty {
+      background: light-dark(#fefce8, #2e260a);
+      border-color: light-dark(#fde68a, #6a5a2d);
+      color: light-dark(#92400e, #dbac6c);
+    }
+
+    .pool {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      min-height: 52px;
+    }
+
+    .pool-item,
+    .route-item {
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: grab;
+      user-select: none;
+      font-weight: 500;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+
+    /* Category B (Visually Impaired) - Fuchsia */
+    .cat-b.lvl-1 {
+      background: #d946ef;
+      border-color: #a21caf;
+      color: #fff;
+    }
+
+    .cat-b.lvl-2 {
+      background: #f0abfc;
+      border-color: #d946ef;
+      color: #4a044e;
+    }
+
+    .cat-b.lvl-3 {
+      background: #fae8ff;
+      border-color: #f0abfc;
+      color: #4a044e;
+    }
+
+    /* Category AU (Arm Amputee) - Teal */
+    .cat-au.lvl-1 {
+      background: #0d9488;
+      border-color: #0f766e;
+      color: #fff;
+    }
+
+    .cat-au.lvl-2 {
+      background: #5eead4;
+      border-color: #14b8a6;
+      color: #134e4a;
+    }
+
+    .cat-au.lvl-3 {
+      background: #ccfbf1;
+      border-color: #99f6e4;
+      color: #134e4a;
+    }
+
+    /* Category AL (Leg Amputee) - Amber */
+    .cat-al.lvl-1 {
+      background: #d97706;
+      border-color: #b45309;
+      color: #fff;
+    }
+
+    .cat-al.lvl-2 {
+      background: #fbbf24;
+      border-color: #f59e0b;
+      color: #78350f;
+    }
+
+    .cat-al.lvl-3 {
+      background: #fde68a;
+      border-color: #fcd34d;
+      color: #78350f;
+    }
+
+    /* Category RP (Neurological) - Blue */
+    .cat-rp.lvl-1 {
+      background: #2563eb;
+      border-color: #1d4ed8;
+      color: #fff;
+    }
+
+    .cat-rp.lvl-2 {
+      background: #60a5fa;
+      border-color: #3b82f6;
+      color: #fff;
+    }
+
+    .cat-rp.lvl-3 {
+      background: #bfdbfe;
+      border-color: #93c5fd;
+      color: #1e3a5f;
+    }
+
+    .cleaning {
+      background: light-dark(#fef9c3, #2e260a);
+      border: 1px solid light-dark(#facc15, #6a5a00);
+      color: light-dark(#854d0e, #e6c35c);
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+
+    .route-item.padding {
+      background: light-dark(#e0e7ff, #1e2a4a);
+      border: 1px solid light-dark(#a5b4fc, #4a5a8a);
+      color: light-dark(#4338ca, #a5b4fc);
+      font-size: 11px;
+      text-transform: uppercase;
+      text-align: center;
+      position: relative;
+    }
+
+    .pad-del {
+      position: absolute;
+      right: 4px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      opacity: 0.5;
+      font-size: 13px;
+    }
+
+    .scroll-area {
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .columns-row {
+      display: flex;
+      gap: 12px;
+      min-width: max-content;
+    }
+
+    .column {
+      width: 196px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .column-header {
+      font-weight: 600;
+      font-size: 14px;
+      padding: 8px 0;
+      border-bottom: 2px solid var(--border-light);
+      margin-bottom: 8px;
+      text-align: center;
+      color: var(--text-strong);
+    }
+
+    .route-column-list {
+      min-height: 120px;
+      background: var(--bg-subtle);
+      border-radius: 6px;
+      padding: 6px;
+      border: 2px dashed var(--border-light);
+      flex: 1;
+    }
+
+    .schedule-column-list {
+      min-height: 100px;
+      background: var(--bg-subtle);
+      border-radius: 6px;
+      padding: 6px;
+      border: 1px solid var(--border-light);
+      flex: 1;
+      font-family: 'Courier New', monospace;
+      font-size: 11px;
+    }
+
+    .schedule-group-header {
+      font-weight: 700;
+      padding: 3px 4px;
+      margin-top: 4px;
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-ghost);
+      white-space: pre;
+    }
+
+    .schedule-row {
+      white-space: pre;
+      padding: 1px 4px;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .schedule-cleaning {
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 10px;
+      padding: 4px 0;
+      border-top: 1px dashed var(--border);
+      border-bottom: 1px dashed var(--border);
+      margin: 2px 0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .btn-sm {
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg-card);
+      color: var(--text-strong);
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .count-badge {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-left: 8px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 18px 20px;
+      color: var(--text-muted);
+      font-size: 11px;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+
+    @media print {
+      body {
+        background: #fff !important;
+      }
+
+      .btn-sm,
+      #dataStatus,
+      #pool {
+        display: none !important;
+      }
+
+      .scroll-area {
+        overflow: visible;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="section">
+    <div class="section-header">
+      <span>Sport Classes & Routes</span>
+      <span style="display:flex;align-items:center;gap:10px;">
+        <button class="btn-sm" id="addCleaningBtn">+ Cleaning Break</button>
+        <span class="data-status empty" id="dataStatus">Drop JSON or CSV here</span>
+      </span>
+    </div>
+    <div id="pool" class="pool"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-header">
+      <span>Route Allocation</span>
+      <span style="display:flex;align-items:center;gap:6px;">
+        <button class="btn-sm" id="autoArrangeBtn">Auto-arrange</button>
+        <button class="btn-sm" id="addSpacingBtn">Add Spacing</button>
+        <button class="btn-sm" id="printBtn">Print</button>
+      </span>
+    </div>
+    <div class="scroll-area" style="margin-bottom:24px;">
+      <div class="columns-row" id="routeColumns"></div>
+    </div>
+    <div class="section-header"><span>Planned Schedule</span></div>
+    <div class="scroll-area">
+      <div class="columns-row" id="scheduleColumns"></div>
+    </div>
+  </div>
+
+  <footer>© 2026 Tim Hatch. All rights reserved.</footer>
+
+  <script>
+    const ROUTE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+    const GLOBAL_START = 9;
+    const GLOBAL_CADENCE = 5;
+    const GLOBAL_CLEAN = 15;
+
+    let lookup = {};
+    let dataLoaded = false;
+    let namePad = 10;
+    let cleaningId = 0;
+
+    const routeColsEl = document.getElementById('routeColumns');
+    const scheduleColsEl = document.getElementById('scheduleColumns');
+
+    ROUTE_LABELS.forEach(label => {
+      routeColsEl.innerHTML += `<div class="column"><div class="column-header">${label}</div><div class="route-column-list" data-route="${label}"></div></div>`;
+      scheduleColsEl.innerHTML += `<div class="column"><div class="column-header">${label}<span class="count-badge" id="count-${label}">0</span></div><div class="schedule-column-list"></div></div>`;
+    });
+
+    function parseItem(text) {
+      const base = text.replace(/ \(.+$/, '');
+      const m = base.match(/^(.+)-R(\d)$/);
+      return m ? {group: m[1], route: parseInt(m[2])} : null;
+    }
+
+    function formatTime(mins) {
+      return `${String(Math.floor(mins / 60)).padStart(2, '0')}:${String(mins % 60).padStart(2, '0')}`;
+    }
+
+    function startTimeAt(colList, upToIdx) {
+      let t = 0;
+      const children = Array.from(colList.children);
+      for (let i = 0; i < upToIdx && i < children.length; i++) {
+        const item = children[i];
+        if (item.classList.contains('padding')) {
+          t += parseInt(item.dataset.duration || 0);
+        } else if (item.classList.contains('cleaning')) {
+          t += GLOBAL_CLEAN;
+        } else {
+          const parsed = parseItem(item.textContent);
+          if (parsed) t += (lookup[parsed.group + '|' + parsed.route]?.length || 0) * GLOBAL_CADENCE;
+        }
+      }
+      return t;
+    }
+
+    // --- AUTO-ARRANGE (Fix: Now correctly re-sorts DOM items) ---
+    document.getElementById('autoArrangeBtn').addEventListener('click', function () {
+      if (!dataLoaded) return;
+      const colLists = Array.from(document.querySelectorAll('.route-column-list'));
+
+      // Scrape current items
+      const groupData = {};
+      colLists.forEach((col, colIdx) => {
+        Array.from(col.children).forEach(el => {
+          if (el.classList.contains('padding') || el.classList.contains('cleaning')) return;
+          const parsed = parseItem(el.textContent);
+          if (!parsed) return;
+          if (!groupData[parsed.group]) {
+            groupData[parsed.group] = {slots: {}, elements: {}, count: lookup[parsed.group + '|1']?.length || 0};
+          }
+          groupData[parsed.group].slots[parsed.route] = colIdx;
+          groupData[parsed.group].elements[parsed.route] = el;
+        });
+      });
+
+      const sortedGroups = Object.keys(groupData).sort((a, b) => groupData[a].count - groupData[b].count);
+      const colScheds = colLists.map(() => []);
+
+      sortedGroups.forEach(group => {
+        const info = groupData[group];
+        const dur = info.count * GLOBAL_CADENCE;
+        const colA = info.slots[1];
+        const colB = info.slots[2];
+
+        if (colA === undefined || colB === undefined || colA === colB) {
+          if (colA !== undefined) colScheds[colA].push({el: info.elements[1], dur});
+          if (colB !== undefined && colB !== colA) colScheds[colB].push({el: info.elements[2], dur});
+          return;
+        }
+
+        const requiredGap = Math.max(dur, Math.floor(info.count / 2) * GLOBAL_CADENCE + 60);
+        let bestA = colScheds[colA].length, bestB = colScheds[colB].length, minPad = Infinity;
+
+        for (let pA = 0; pA <= colScheds[colA].length; pA++) {
+          const sA = colScheds[colA].slice(0, pA).reduce((acc, curr) => acc + curr.dur, 0);
+          for (let pB = 0; pB <= colScheds[colB].length; pB++) {
+            const sB = colScheds[colB].slice(0, pB).reduce((acc, curr) => acc + curr.dur, 0);
+            const pad = Math.max(0, requiredGap - Math.abs(sA - sB));
+            if (pad < minPad) {minPad = pad; bestA = pA; bestB = pB;}
+          }
+        }
+        colScheds[colA].splice(bestA, 0, {el: info.elements[1], dur});
+        colScheds[colB].splice(bestB, 0, {el: info.elements[2], dur});
+      });
+
+      colScheds.forEach((list, idx) => list.forEach(item => colLists[idx].appendChild(item.el)));
+      generateSchedule();
+    });
+
+    // --- ADD SPACING (As provided) ---
+    document.getElementById('addSpacingBtn').addEventListener('click', function () {
+      if (!dataLoaded) return;
+      const colLists = Array.from(document.querySelectorAll('.route-column-list'));
+      const groupInfo = {};
+
+      colLists.forEach((col, colIdx) => {
+        Array.from(col.children).forEach((el, elIdx) => {
+          const parsed = parseItem(el.textContent);
+          if (!parsed) return;
+          if (!groupInfo[parsed.group]) groupInfo[parsed.group] = {slots: {}};
+          groupInfo[parsed.group].slots[parsed.route] = {colIdx, elIdx, el};
+        });
+      });
+
+      Object.keys(groupInfo).forEach(group => {
+        const info = groupInfo[group];
+        const r1 = info.slots[1];
+        const r2 = info.slots[2];
+        if (!r1 || !r2) return;
+
+        const count = lookup[group + '|1']?.length || 0;
+        const duration = count * GLOBAL_CADENCE;
+        const requiredGap = Math.max(duration, Math.floor(count / 2) * GLOBAL_CADENCE + 60);
+
+        const start1 = startTimeAt(colLists[r1.colIdx], r1.elIdx);
+        const start2 = startTimeAt(colLists[r2.colIdx], r2.elIdx);
+        const paddingNeeded = requiredGap - Math.abs(start1 - start2);
+
+        if (paddingNeeded > 0) {
+          const target = (start1 <= start2) ? r2 : r1;
+          const padDuration = Math.ceil(paddingNeeded / 5) * 5;
+          const paddingEl = document.createElement('div');
+          paddingEl.className = 'route-item padding';
+          paddingEl.dataset.duration = padDuration;
+          paddingEl.innerHTML = `PAD ${padDuration}' <span class="pad-del">✕</span>`;
+          paddingEl.querySelector('.pad-del').onclick = (e) => {e.stopPropagation(); paddingEl.remove(); generateSchedule();};
+          colLists[target.colIdx].insertBefore(paddingEl, target.el);
+        }
+      });
+      generateSchedule();
+    });
+
+    function generateSchedule() {
+      if (!dataLoaded) return;
+      const routeCols = document.querySelectorAll('.route-column-list');
+      const schedCols = document.querySelectorAll('.schedule-column-list');
+
+      routeCols.forEach((col, idx) => {
+        const sched = schedCols[idx];
+        sched.innerHTML = '';
+        let curTime = GLOBAL_START * 60, total = 0;
+
+        Array.from(col.children).forEach(item => {
+          if (item.classList.contains('padding')) {
+            const d = parseInt(item.dataset.duration);
+            sched.innerHTML += `<div class="schedule-cleaning">--- GAP ${d}m --- ${formatTime(curTime)}</div>`;
+            curTime += d;
+          } else if (item.classList.contains('cleaning')) {
+            sched.innerHTML += `<div class="schedule-cleaning">--- CLEANING --- ${formatTime(curTime)}</div>`;
+            curTime += GLOBAL_CLEAN;
+          } else {
+            const p = parseItem(item.textContent);
+            if (!p) return;
+            const athletes = lookup[p.group + '|' + p.route] || [];
+            sched.innerHTML += `<div class="schedule-group-header">${p.group} R${p.route}  ${formatTime(curTime)}</div>`;
+            athletes.forEach(a => {
+              sched.innerHTML += `<div class="schedule-row">${String(a.bib || 0).padStart(3, '0')}  ${(a.lastname || a.name || "").padEnd(namePad)} | ${a.country || ""}</div>`;
+              curTime += GLOBAL_CADENCE;
+              total++;
+            });
+          }
+        });
+        document.getElementById(`count-${ROUTE_LABELS[idx]}`).textContent = total;
+      });
+    }
+
+    function loadData(athletes) {
+      lookup = {};
+      athletes.forEach(a => {
+        const key = a.group + '|' + a.route;
+        if (!lookup[key]) lookup[key] = [];
+        lookup[key].push(a);
+      });
+      namePad = Math.max(...athletes.map(a => (a.lastname || a.name || "").length), 10);
+      const groups = [...new Set(athletes.map(a => a.group))].sort();
+
+      const pool = document.getElementById('pool');
+      pool.innerHTML = '';
+      groups.forEach(g => {
+        const m = g.match(/^[MW]-([A-Z]+)(\d+)/);
+        const cat = m ? m[1].toLowerCase() : '';
+        const lvl = m ? 'lvl-' + parseInt(m[2]) : '';
+
+        [1, 2].forEach(r => {
+          const count = lookup[g + '|' + r]?.length || 0;
+          if (count === 0) return;
+          const el = document.createElement('div');
+          el.className = `pool-item cat-${cat} ${lvl}`;
+          el.textContent = `${g}-R${r} (${count})`;
+          pool.appendChild(el);
+        });
+      });
+      dataLoaded = true;
+      document.getElementById('dataStatus').className = 'data-status loaded';
+      document.getElementById('dataStatus').textContent = `Loaded ${athletes.length} athletes`;
+      generateSchedule();
+    }
+
+    document.getElementById('addCleaningBtn').onclick = () => {
+      const el = document.createElement('div');
+      el.className = 'pool-item cleaning';
+      el.textContent = 'CLN-' + (++cleaningId);
+      document.getElementById('pool').appendChild(el);
+    };
+
+    [document.getElementById('pool'), ...document.querySelectorAll('.route-column-list')].forEach(el => {
+      Sortable.create(el, {group: 'routes', animation: 150, onEnd: generateSchedule});
+    });
+
+    document.body.ondragover = e => e.preventDefault();
+    document.body.ondrop = e => {
+      e.preventDefault();
+      const file = e.dataTransfer.files[0];
+      const reader = new FileReader();
+      reader.onload = ev => loadData(JSON.parse(ev.target.result));
+      reader.readAsText(file);
+    };
+    document.getElementById('printBtn').onclick = () => window.print();
+  </script>
+</body>
+
+</html>
