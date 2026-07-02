@@ -1,0 +1,4530 @@
+[
+  {
+    "bib": 261,
+    "lastname": "NEDBAL",
+    "country": "CZE",
+    "order": 1,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 262,
+    "lastname": "PELEGRÍN GÓMEZ",
+    "country": "ESP",
+    "order": 2,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 263,
+    "lastname": "HVID",
+    "country": "DEN",
+    "order": 3,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 264,
+    "lastname": "MOINEAU",
+    "country": "FRA",
+    "order": 4,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 265,
+    "lastname": "AGUILAR AMOEDO",
+    "country": "ESP",
+    "order": 5,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 266,
+    "lastname": "MAEOKA",
+    "country": "JPN",
+    "order": 6,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 267,
+    "lastname": "HODDINOTT",
+    "country": "CAN",
+    "order": 7,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 268,
+    "lastname": "SALVAGNIN",
+    "country": "ITA",
+    "order": 8,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 269,
+    "lastname": "AITA",
+    "country": "JPN",
+    "order": 9,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 270,
+    "lastname": "PROCTOR",
+    "country": "USA",
+    "order": 10,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 271,
+    "lastname": "BALDIR",
+    "country": "TUR",
+    "order": 11,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 272,
+    "lastname": "TREMBLAY",
+    "country": "CAN",
+    "order": 12,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 273,
+    "lastname": "MACK",
+    "country": "SUI",
+    "order": 13,
+    "group": "M-B1",
+    "route": 1
+  },
+  {
+    "bib": 267,
+    "lastname": "HODDINOTT",
+    "country": "CAN",
+    "order": 1,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 268,
+    "lastname": "SALVAGNIN",
+    "country": "ITA",
+    "order": 2,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 269,
+    "lastname": "AITA",
+    "country": "JPN",
+    "order": 3,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 270,
+    "lastname": "PROCTOR",
+    "country": "USA",
+    "order": 4,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 271,
+    "lastname": "BALDIR",
+    "country": "TUR",
+    "order": 5,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 272,
+    "lastname": "TREMBLAY",
+    "country": "CAN",
+    "order": 6,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 273,
+    "lastname": "MACK",
+    "country": "SUI",
+    "order": 7,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 261,
+    "lastname": "NEDBAL",
+    "country": "CZE",
+    "order": 8,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 262,
+    "lastname": "PELEGRÍN GÓMEZ",
+    "country": "ESP",
+    "order": 9,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 263,
+    "lastname": "HVID",
+    "country": "DEN",
+    "order": 10,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 264,
+    "lastname": "MOINEAU",
+    "country": "FRA",
+    "order": 11,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 265,
+    "lastname": "AGUILAR AMOEDO",
+    "country": "ESP",
+    "order": 12,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 266,
+    "lastname": "MAEOKA",
+    "country": "JPN",
+    "order": 13,
+    "group": "M-B1",
+    "route": 2
+  },
+  {
+    "bib": 281,
+    "lastname": "CEVENINI",
+    "country": "ITA",
+    "order": 1,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 282,
+    "lastname": "MORANTE CLEMENTE",
+    "country": "ESP",
+    "order": 2,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 283,
+    "lastname": "SLEUWAEGEN",
+    "country": "BEL",
+    "order": 3,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 284,
+    "lastname": "KESİM",
+    "country": "TUR",
+    "order": 4,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 285,
+    "lastname": "MINOWADA",
+    "country": "JPN",
+    "order": 5,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 286,
+    "lastname": "YONCHEV",
+    "country": "GER",
+    "order": 6,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 287,
+    "lastname": "DOLANC",
+    "country": "SLO",
+    "order": 7,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 288,
+    "lastname": "ÇAM",
+    "country": "TUR",
+    "order": 8,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 289,
+    "lastname": "HAMANOUE",
+    "country": "JPN",
+    "order": 9,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 290,
+    "lastname": "NEDU",
+    "country": "ROU",
+    "order": 10,
+    "group": "M-B2",
+    "route": 1
+  },
+  {
+    "bib": 286,
+    "lastname": "YONCHEV",
+    "country": "GER",
+    "order": 1,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 287,
+    "lastname": "DOLANC",
+    "country": "SLO",
+    "order": 2,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 288,
+    "lastname": "ÇAM",
+    "country": "TUR",
+    "order": 3,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 289,
+    "lastname": "HAMANOUE",
+    "country": "JPN",
+    "order": 4,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 290,
+    "lastname": "NEDU",
+    "country": "ROU",
+    "order": 5,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 281,
+    "lastname": "CEVENINI",
+    "country": "ITA",
+    "order": 6,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 282,
+    "lastname": "MORANTE CLEMENTE",
+    "country": "ESP",
+    "order": 7,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 283,
+    "lastname": "SLEUWAEGEN",
+    "country": "BEL",
+    "order": 8,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 284,
+    "lastname": "KESİM",
+    "country": "TUR",
+    "order": 9,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 285,
+    "lastname": "MINOWADA",
+    "country": "JPN",
+    "order": 10,
+    "group": "M-B2",
+    "route": 2
+  },
+  {
+    "bib": 291,
+    "lastname": "LOSEY SAIL",
+    "country": "GBR",
+    "order": 1,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 292,
+    "lastname": "YOLAL",
+    "country": "TUR",
+    "order": 2,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 293,
+    "lastname": "MAILLARD",
+    "country": "FRA",
+    "order": 3,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 294,
+    "lastname": "GÜNEY",
+    "country": "TUR",
+    "order": 4,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 295,
+    "lastname": "FRALICK",
+    "country": "USA",
+    "order": 5,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 296,
+    "lastname": "SCHMITZ",
+    "country": "SUI",
+    "order": 6,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 297,
+    "lastname": "KAWAMURA",
+    "country": "JPN",
+    "order": 7,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 298,
+    "lastname": "MOHAMMADI",
+    "country": "USA",
+    "order": 8,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 299,
+    "lastname": "ANDREI",
+    "country": "ROU",
+    "order": 9,
+    "group": "M-B3",
+    "route": 1
+  },
+  {
+    "bib": 295,
+    "lastname": "FRALICK",
+    "country": "USA",
+    "order": 1,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 296,
+    "lastname": "SCHMITZ",
+    "country": "SUI",
+    "order": 2,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 297,
+    "lastname": "KAWAMURA",
+    "country": "JPN",
+    "order": 3,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 298,
+    "lastname": "MOHAMMADI",
+    "country": "USA",
+    "order": 4,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 299,
+    "lastname": "ANDREI",
+    "country": "ROU",
+    "order": 5,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 291,
+    "lastname": "LOSEY SAIL",
+    "country": "GBR",
+    "order": 6,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 292,
+    "lastname": "YOLAL",
+    "country": "TUR",
+    "order": 7,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 293,
+    "lastname": "MAILLARD",
+    "country": "FRA",
+    "order": 8,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 294,
+    "lastname": "GÜNEY",
+    "country": "TUR",
+    "order": 9,
+    "group": "M-B3",
+    "route": 2
+  },
+  {
+    "bib": 301,
+    "lastname": "BUONAIUTO",
+    "country": "ITA",
+    "order": 1,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 302,
+    "lastname": "BREDICE",
+    "country": "ITA",
+    "order": 2,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 303,
+    "lastname": "LASCHITZ",
+    "country": "AUT",
+    "order": 3,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 304,
+    "lastname": "MOCANU",
+    "country": "ROU",
+    "order": 4,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 305,
+    "lastname": "APPLEBEE",
+    "country": "USA",
+    "order": 5,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 306,
+    "lastname": "GLUSIC",
+    "country": "SLO",
+    "order": 6,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 307,
+    "lastname": "GRILLO",
+    "country": "SUI",
+    "order": 7,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 308,
+    "lastname": "LAKROUT",
+    "country": "USA",
+    "order": 8,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 309,
+    "lastname": "ANLAŞ",
+    "country": "TUR",
+    "order": 9,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 310,
+    "lastname": "AOKI",
+    "country": "JPN",
+    "order": 10,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 311,
+    "lastname": "CHIRIAC",
+    "country": "ROU",
+    "order": 11,
+    "group": "W-B1",
+    "route": 1
+  },
+  {
+    "bib": 306,
+    "lastname": "GLUSIC",
+    "country": "SLO",
+    "order": 1,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 307,
+    "lastname": "GRILLO",
+    "country": "SUI",
+    "order": 2,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 308,
+    "lastname": "LAKROUT",
+    "country": "USA",
+    "order": 3,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 309,
+    "lastname": "ANLAŞ",
+    "country": "TUR",
+    "order": 4,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 310,
+    "lastname": "AOKI",
+    "country": "JPN",
+    "order": 5,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 311,
+    "lastname": "CHIRIAC",
+    "country": "ROU",
+    "order": 6,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 301,
+    "lastname": "BUONAIUTO",
+    "country": "ITA",
+    "order": 7,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 302,
+    "lastname": "BREDICE",
+    "country": "ITA",
+    "order": 8,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 303,
+    "lastname": "LASCHITZ",
+    "country": "AUT",
+    "order": 9,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 304,
+    "lastname": "MOCANU",
+    "country": "ROU",
+    "order": 10,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 305,
+    "lastname": "APPLEBEE",
+    "country": "USA",
+    "order": 11,
+    "group": "W-B1",
+    "route": 2
+  },
+  {
+    "bib": 321,
+    "lastname": "BIENDARRA",
+    "country": "USA",
+    "order": 1,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 322,
+    "lastname": "GRUBE",
+    "country": "GER",
+    "order": 2,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 323,
+    "lastname": "DEGUCHI",
+    "country": "JPN",
+    "order": 3,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 324,
+    "lastname": "YEŞİLYURT",
+    "country": "TUR",
+    "order": 4,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 325,
+    "lastname": "DEMİRTUYİ",
+    "country": "TUR",
+    "order": 5,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 326,
+    "lastname": "WRIGHT",
+    "country": "GBR",
+    "order": 6,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 327,
+    "lastname": "CESARONE",
+    "country": "FRA",
+    "order": 7,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 328,
+    "lastname": "LE BON",
+    "country": "AUT",
+    "order": 8,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 329,
+    "lastname": "SCHEINECKER",
+    "country": "AUT",
+    "order": 9,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 330,
+    "lastname": "EJIRI",
+    "country": "JPN",
+    "order": 10,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 331,
+    "lastname": "NAZARETH FLOR PEREIRA",
+    "country": "BRA",
+    "order": 11,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 332,
+    "lastname": "HOBSON",
+    "country": "GBR",
+    "order": 12,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 333,
+    "lastname": "LEE",
+    "country": "KOR",
+    "order": 13,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 334,
+    "lastname": "KUTER",
+    "country": "POL",
+    "order": 14,
+    "group": "W-B2",
+    "route": 1
+  },
+  {
+    "bib": 328,
+    "lastname": "LE BON",
+    "country": "AUT",
+    "order": 1,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 329,
+    "lastname": "SCHEINECKER",
+    "country": "AUT",
+    "order": 2,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 330,
+    "lastname": "EJIRI",
+    "country": "JPN",
+    "order": 3,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 331,
+    "lastname": "NAZARETH FLOR PEREIRA",
+    "country": "BRA",
+    "order": 4,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 332,
+    "lastname": "HOBSON",
+    "country": "GBR",
+    "order": 5,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 333,
+    "lastname": "LEE",
+    "country": "KOR",
+    "order": 6,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 334,
+    "lastname": "KUTER",
+    "country": "POL",
+    "order": 7,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 321,
+    "lastname": "BIENDARRA",
+    "country": "USA",
+    "order": 8,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 322,
+    "lastname": "GRUBE",
+    "country": "GER",
+    "order": 9,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 323,
+    "lastname": "DEGUCHI",
+    "country": "JPN",
+    "order": 10,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 324,
+    "lastname": "YEŞİLYURT",
+    "country": "TUR",
+    "order": 11,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 325,
+    "lastname": "DEMİRTUYİ",
+    "country": "TUR",
+    "order": 12,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 326,
+    "lastname": "WRIGHT",
+    "country": "GBR",
+    "order": 13,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 327,
+    "lastname": "CESARONE",
+    "country": "FRA",
+    "order": 14,
+    "group": "W-B2",
+    "route": 2
+  },
+  {
+    "bib": 341,
+    "lastname": "DHONDAPPANAVAR",
+    "country": "IND",
+    "order": 1,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 342,
+    "lastname": "BOUTEL MENARD",
+    "country": "FRA",
+    "order": 2,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 343,
+    "lastname": "POSTON",
+    "country": "USA",
+    "order": 3,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 344,
+    "lastname": "KWOLEK",
+    "country": "POL",
+    "order": 4,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 345,
+    "lastname": "VADSETH",
+    "country": "NOR",
+    "order": 5,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 346,
+    "lastname": "SEMMEL",
+    "country": "USA",
+    "order": 6,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 347,
+    "lastname": "MAJERČÁKOVÁ",
+    "country": "SVK",
+    "order": 7,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 348,
+    "lastname": "CHOI",
+    "country": "KOR",
+    "order": 8,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 349,
+    "lastname": "DRAGAN",
+    "country": "ROU",
+    "order": 9,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 350,
+    "lastname": "MAEOKA",
+    "country": "JPN",
+    "order": 10,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 351,
+    "lastname": "OTLUKAYA",
+    "country": "TUR",
+    "order": 11,
+    "group": "W-B3",
+    "route": 1
+  },
+  {
+    "bib": 346,
+    "lastname": "SEMMEL",
+    "country": "USA",
+    "order": 1,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 347,
+    "lastname": "MAJERČÁKOVÁ",
+    "country": "SVK",
+    "order": 2,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 348,
+    "lastname": "CHOI",
+    "country": "KOR",
+    "order": 3,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 349,
+    "lastname": "DRAGAN",
+    "country": "ROU",
+    "order": 4,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 350,
+    "lastname": "MAEOKA",
+    "country": "JPN",
+    "order": 5,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 351,
+    "lastname": "OTLUKAYA",
+    "country": "TUR",
+    "order": 6,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 341,
+    "lastname": "DHONDAPPANAVAR",
+    "country": "IND",
+    "order": 7,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 342,
+    "lastname": "BOUTEL MENARD",
+    "country": "FRA",
+    "order": 8,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 343,
+    "lastname": "POSTON",
+    "country": "USA",
+    "order": 9,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 344,
+    "lastname": "KWOLEK",
+    "country": "POL",
+    "order": 10,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 345,
+    "lastname": "VADSETH",
+    "country": "NOR",
+    "order": 11,
+    "group": "W-B3",
+    "route": 2
+  },
+  {
+    "bib": 1,
+    "lastname": "DUČÁK",
+    "country": "SVK",
+    "order": 1,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 2,
+    "lastname": "ARH",
+    "country": "SLO",
+    "order": 2,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 3,
+    "lastname": "LOMAGISTRO",
+    "country": "ITA",
+    "order": 3,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 4,
+    "lastname": "HATAKEYAMA",
+    "country": "JPN",
+    "order": 4,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 5,
+    "lastname": "PÖSENDORFER",
+    "country": "AUT",
+    "order": 5,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 6,
+    "lastname": "NISHIZAKI",
+    "country": "JPN",
+    "order": 6,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 7,
+    "lastname": "ZELLER",
+    "country": "AUT",
+    "order": 7,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 8,
+    "lastname": "GIOIA",
+    "country": "ITA",
+    "order": 8,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 9,
+    "lastname": "CARUANA",
+    "country": "AUS",
+    "order": 9,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 10,
+    "lastname": "ČUPKA",
+    "country": "SVK",
+    "order": 10,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 11,
+    "lastname": "BEYAZ",
+    "country": "TUR",
+    "order": 11,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 12,
+    "lastname": "VANDENHOVEN",
+    "country": "BEL",
+    "order": 12,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 13,
+    "lastname": "COOK",
+    "country": "USA",
+    "order": 13,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 14,
+    "lastname": "CHADBOURNE",
+    "country": "USA",
+    "order": 14,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 15,
+    "lastname": "ALMEIDA DE MORAIS",
+    "country": "BRA",
+    "order": 15,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 16,
+    "lastname": "KATAOKA",
+    "country": "JPN",
+    "order": 16,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 17,
+    "lastname": "RUANE",
+    "country": "GBR",
+    "order": 17,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 18,
+    "lastname": "ALTINEL",
+    "country": "TUR",
+    "order": 18,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 19,
+    "lastname": "MUTSCHLECHNER",
+    "country": "ITA",
+    "order": 19,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 20,
+    "lastname": "BEIGHTON",
+    "country": "GBR",
+    "order": 20,
+    "group": "X-AL1",
+    "route": 1
+  },
+  {
+    "bib": 11,
+    "lastname": "BEYAZ",
+    "country": "TUR",
+    "order": 1,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 12,
+    "lastname": "VANDENHOVEN",
+    "country": "BEL",
+    "order": 2,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 13,
+    "lastname": "COOK",
+    "country": "USA",
+    "order": 3,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 14,
+    "lastname": "CHADBOURNE",
+    "country": "USA",
+    "order": 4,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 15,
+    "lastname": "ALMEIDA DE MORAIS",
+    "country": "BRA",
+    "order": 5,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 16,
+    "lastname": "KATAOKA",
+    "country": "JPN",
+    "order": 6,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 17,
+    "lastname": "RUANE",
+    "country": "GBR",
+    "order": 7,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 18,
+    "lastname": "ALTINEL",
+    "country": "TUR",
+    "order": 8,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 19,
+    "lastname": "MUTSCHLECHNER",
+    "country": "ITA",
+    "order": 9,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 20,
+    "lastname": "BEIGHTON",
+    "country": "GBR",
+    "order": 10,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 1,
+    "lastname": "DUČÁK",
+    "country": "SVK",
+    "order": 11,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 2,
+    "lastname": "ARH",
+    "country": "SLO",
+    "order": 12,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 3,
+    "lastname": "LOMAGISTRO",
+    "country": "ITA",
+    "order": 13,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 4,
+    "lastname": "HATAKEYAMA",
+    "country": "JPN",
+    "order": 14,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 5,
+    "lastname": "PÖSENDORFER",
+    "country": "AUT",
+    "order": 15,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 6,
+    "lastname": "NISHIZAKI",
+    "country": "JPN",
+    "order": 16,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 7,
+    "lastname": "ZELLER",
+    "country": "AUT",
+    "order": 17,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 8,
+    "lastname": "GIOIA",
+    "country": "ITA",
+    "order": 18,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 9,
+    "lastname": "CARUANA",
+    "country": "AUS",
+    "order": 19,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 10,
+    "lastname": "ČUPKA",
+    "country": "SVK",
+    "order": 20,
+    "group": "X-AL1",
+    "route": 2
+  },
+  {
+    "bib": 21,
+    "lastname": "RAMOS",
+    "country": "USA",
+    "order": 1,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 22,
+    "lastname": "ONO",
+    "country": "JPN",
+    "order": 2,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 23,
+    "lastname": "ZILZ",
+    "country": "USA",
+    "order": 3,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 24,
+    "lastname": "AL KHATIB",
+    "country": "ITA",
+    "order": 4,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 25,
+    "lastname": "LEYS",
+    "country": "BEL",
+    "order": 5,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 26,
+    "lastname": "DELARUE",
+    "country": "FRA",
+    "order": 6,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 27,
+    "lastname": "SPEED",
+    "country": "CAN",
+    "order": 7,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 28,
+    "lastname": "YUKI",
+    "country": "JPN",
+    "order": 8,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 29,
+    "lastname": "MENZE",
+    "country": "NOR",
+    "order": 9,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 30,
+    "lastname": "KAMMERER",
+    "country": "ITA",
+    "order": 10,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 31,
+    "lastname": "MILLAN COLLADO",
+    "country": "ARG",
+    "order": 11,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 32,
+    "lastname": "LONG",
+    "country": "USA",
+    "order": 12,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 33,
+    "lastname": "KUCZEWSKI",
+    "country": "POL",
+    "order": 13,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 34,
+    "lastname": "ROLDÁN BUSTOS",
+    "country": "ESP",
+    "order": 14,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 35,
+    "lastname": "RITCHIE",
+    "country": "CAN",
+    "order": 15,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 36,
+    "lastname": "GUDBRANDSEN",
+    "country": "NOR",
+    "order": 16,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 37,
+    "lastname": "ZUNDEL",
+    "country": "SUI",
+    "order": 17,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 38,
+    "lastname": "TAKAHATA",
+    "country": "JPN",
+    "order": 18,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 39,
+    "lastname": "SHAFFER",
+    "country": "USA",
+    "order": 19,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 40,
+    "lastname": "VILLIGER",
+    "country": "SUI",
+    "order": 20,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 41,
+    "lastname": "AYDEMİR",
+    "country": "TUR",
+    "order": 21,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 42,
+    "lastname": "DOGARU",
+    "country": "ROU",
+    "order": 22,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 43,
+    "lastname": "SCHWARZ-DIAZ MANRESA",
+    "country": "GER",
+    "order": 23,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 44,
+    "lastname": "ERTAN",
+    "country": "TUR",
+    "order": 24,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 45,
+    "lastname": "HIRKA",
+    "country": "TUR",
+    "order": 25,
+    "group": "M-AL2",
+    "route": 1
+  },
+  {
+    "bib": 33,
+    "lastname": "KUCZEWSKI",
+    "country": "POL",
+    "order": 1,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 34,
+    "lastname": "ROLDÁN BUSTOS",
+    "country": "ESP",
+    "order": 2,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 35,
+    "lastname": "RITCHIE",
+    "country": "CAN",
+    "order": 3,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 36,
+    "lastname": "GUDBRANDSEN",
+    "country": "NOR",
+    "order": 4,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 37,
+    "lastname": "ZUNDEL",
+    "country": "SUI",
+    "order": 5,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 38,
+    "lastname": "TAKAHATA",
+    "country": "JPN",
+    "order": 6,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 39,
+    "lastname": "SHAFFER",
+    "country": "USA",
+    "order": 7,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 40,
+    "lastname": "VILLIGER",
+    "country": "SUI",
+    "order": 8,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 41,
+    "lastname": "AYDEMİR",
+    "country": "TUR",
+    "order": 9,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 42,
+    "lastname": "DOGARU",
+    "country": "ROU",
+    "order": 10,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 43,
+    "lastname": "SCHWARZ-DIAZ MANRESA",
+    "country": "GER",
+    "order": 11,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 44,
+    "lastname": "ERTAN",
+    "country": "TUR",
+    "order": 12,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 45,
+    "lastname": "HIRKA",
+    "country": "TUR",
+    "order": 13,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 21,
+    "lastname": "RAMOS",
+    "country": "USA",
+    "order": 14,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 22,
+    "lastname": "ONO",
+    "country": "JPN",
+    "order": 15,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 23,
+    "lastname": "ZILZ",
+    "country": "USA",
+    "order": 16,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 24,
+    "lastname": "AL KHATIB",
+    "country": "ITA",
+    "order": 17,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 25,
+    "lastname": "LEYS",
+    "country": "BEL",
+    "order": 18,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 26,
+    "lastname": "DELARUE",
+    "country": "FRA",
+    "order": 19,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 27,
+    "lastname": "SPEED",
+    "country": "CAN",
+    "order": 20,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 28,
+    "lastname": "YUKI",
+    "country": "JPN",
+    "order": 21,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 29,
+    "lastname": "MENZE",
+    "country": "NOR",
+    "order": 22,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 30,
+    "lastname": "KAMMERER",
+    "country": "ITA",
+    "order": 23,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 31,
+    "lastname": "MILLAN COLLADO",
+    "country": "ARG",
+    "order": 24,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 32,
+    "lastname": "LONG",
+    "country": "USA",
+    "order": 25,
+    "group": "M-AL2",
+    "route": 2
+  },
+  {
+    "bib": 51,
+    "lastname": "NEWTON",
+    "country": "GBR",
+    "order": 1,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 52,
+    "lastname": "COCCHI",
+    "country": "ITA",
+    "order": 2,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 53,
+    "lastname": "HARTE",
+    "country": "GBR",
+    "order": 3,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 54,
+    "lastname": "GOTMAN",
+    "country": "ISR",
+    "order": 4,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 55,
+    "lastname": "HANSEN",
+    "country": "USA",
+    "order": 5,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 56,
+    "lastname": "LARCOMBE",
+    "country": "AUS",
+    "order": 6,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 57,
+    "lastname": "SORIA",
+    "country": "USA",
+    "order": 7,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 58,
+    "lastname": "JARRIGE",
+    "country": "FRA",
+    "order": 8,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 59,
+    "lastname": "FRITZ",
+    "country": "GER",
+    "order": 9,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 60,
+    "lastname": "WATANABE",
+    "country": "JPN",
+    "order": 10,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 61,
+    "lastname": "BATTS",
+    "country": "USA",
+    "order": 11,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 62,
+    "lastname": "ZBINDEN",
+    "country": "SUI",
+    "order": 12,
+    "group": "W-AL2",
+    "route": 1
+  },
+  {
+    "bib": 57,
+    "lastname": "SORIA",
+    "country": "USA",
+    "order": 1,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 58,
+    "lastname": "JARRIGE",
+    "country": "FRA",
+    "order": 2,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 59,
+    "lastname": "FRITZ",
+    "country": "GER",
+    "order": 3,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 60,
+    "lastname": "WATANABE",
+    "country": "JPN",
+    "order": 4,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 61,
+    "lastname": "BATTS",
+    "country": "USA",
+    "order": 5,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 62,
+    "lastname": "ZBINDEN",
+    "country": "SUI",
+    "order": 6,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 51,
+    "lastname": "NEWTON",
+    "country": "GBR",
+    "order": 7,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 52,
+    "lastname": "COCCHI",
+    "country": "ITA",
+    "order": 8,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 53,
+    "lastname": "HARTE",
+    "country": "GBR",
+    "order": 9,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 54,
+    "lastname": "GOTMAN",
+    "country": "ISR",
+    "order": 10,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 55,
+    "lastname": "HANSEN",
+    "country": "USA",
+    "order": 11,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 56,
+    "lastname": "LARCOMBE",
+    "country": "AUS",
+    "order": 12,
+    "group": "W-AL2",
+    "route": 2
+  },
+  {
+    "bib": 71,
+    "lastname": "TRAMM",
+    "country": "DEN",
+    "order": 1,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 72,
+    "lastname": "BRASSIER",
+    "country": "FRA",
+    "order": 2,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 73,
+    "lastname": "BARTKE",
+    "country": "GER",
+    "order": 3,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 74,
+    "lastname": "CRELL",
+    "country": "GER",
+    "order": 4,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 75,
+    "lastname": "ZARZUELA",
+    "country": "USA",
+    "order": 5,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 76,
+    "lastname": "RIPMAN",
+    "country": "NOR",
+    "order": 6,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 77,
+    "lastname": "GUILLEN",
+    "country": "FRA",
+    "order": 7,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 78,
+    "lastname": "MIGUEL SCHAUS",
+    "country": "BRA",
+    "order": 8,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 79,
+    "lastname": "RUDGE",
+    "country": "GBR",
+    "order": 9,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 80,
+    "lastname": "MUSSON",
+    "country": "GBR",
+    "order": 10,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 81,
+    "lastname": "KORSGAARD BUUS-HINKLER",
+    "country": "DEN",
+    "order": 11,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 82,
+    "lastname": "PHILLIPS",
+    "country": "GBR",
+    "order": 12,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 83,
+    "lastname": "BRELSFORD",
+    "country": "USA",
+    "order": 13,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 84,
+    "lastname": "CABA",
+    "country": "ROU",
+    "order": 14,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 85,
+    "lastname": "KUSUNOKI",
+    "country": "JPN",
+    "order": 15,
+    "group": "M-AU2",
+    "route": 1
+  },
+  {
+    "bib": 78,
+    "lastname": "MIGUEL SCHAUS",
+    "country": "BRA",
+    "order": 1,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 79,
+    "lastname": "RUDGE",
+    "country": "GBR",
+    "order": 2,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 80,
+    "lastname": "MUSSON",
+    "country": "GBR",
+    "order": 3,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 81,
+    "lastname": "KORSGAARD BUUS-HINKLER",
+    "country": "DEN",
+    "order": 4,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 82,
+    "lastname": "PHILLIPS",
+    "country": "GBR",
+    "order": 5,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 83,
+    "lastname": "BRELSFORD",
+    "country": "USA",
+    "order": 6,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 84,
+    "lastname": "CABA",
+    "country": "ROU",
+    "order": 7,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 85,
+    "lastname": "KUSUNOKI",
+    "country": "JPN",
+    "order": 8,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 71,
+    "lastname": "TRAMM",
+    "country": "DEN",
+    "order": 9,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 72,
+    "lastname": "BRASSIER",
+    "country": "FRA",
+    "order": 10,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 73,
+    "lastname": "BARTKE",
+    "country": "GER",
+    "order": 11,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 74,
+    "lastname": "CRELL",
+    "country": "GER",
+    "order": 12,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 75,
+    "lastname": "ZARZUELA",
+    "country": "USA",
+    "order": 13,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 76,
+    "lastname": "RIPMAN",
+    "country": "NOR",
+    "order": 14,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 77,
+    "lastname": "GUILLEN",
+    "country": "FRA",
+    "order": 15,
+    "group": "M-AU2",
+    "route": 2
+  },
+  {
+    "bib": 91,
+    "lastname": "CABEZAS RAMOS",
+    "country": "ESP",
+    "order": 1,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 92,
+    "lastname": "WIMMER",
+    "country": "GER",
+    "order": 2,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 93,
+    "lastname": "DI MAURO",
+    "country": "ITA",
+    "order": 3,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 94,
+    "lastname": "GÓMEZ ESCOBAR",
+    "country": "ESP",
+    "order": 4,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 95,
+    "lastname": "WALSH",
+    "country": "GBR",
+    "order": 5,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 96,
+    "lastname": "TETAZ",
+    "country": "FRA",
+    "order": 6,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 97,
+    "lastname": "RUBIN",
+    "country": "USA",
+    "order": 7,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 98,
+    "lastname": "CAPOVILLA",
+    "country": "ITA",
+    "order": 8,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 99,
+    "lastname": "BENVENUTI",
+    "country": "USA",
+    "order": 9,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 100,
+    "lastname": "HEBERLE",
+    "country": "GER",
+    "order": 10,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 101,
+    "lastname": "BOESCH",
+    "country": "SUI",
+    "order": 11,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 102,
+    "lastname": "CENATI",
+    "country": "ITA",
+    "order": 12,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 103,
+    "lastname": "REDSHAW",
+    "country": "USA",
+    "order": 13,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 104,
+    "lastname": "SMARŽOVÁ",
+    "country": "SVK",
+    "order": 14,
+    "group": "W-AU2",
+    "route": 1
+  },
+  {
+    "bib": 98,
+    "lastname": "CAPOVILLA",
+    "country": "ITA",
+    "order": 1,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 99,
+    "lastname": "BENVENUTI",
+    "country": "USA",
+    "order": 2,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 100,
+    "lastname": "HEBERLE",
+    "country": "GER",
+    "order": 3,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 101,
+    "lastname": "BOESCH",
+    "country": "SUI",
+    "order": 4,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 102,
+    "lastname": "CENATI",
+    "country": "ITA",
+    "order": 5,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 103,
+    "lastname": "REDSHAW",
+    "country": "USA",
+    "order": 6,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 104,
+    "lastname": "SMARŽOVÁ",
+    "country": "SVK",
+    "order": 7,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 91,
+    "lastname": "CABEZAS RAMOS",
+    "country": "ESP",
+    "order": 8,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 92,
+    "lastname": "WIMMER",
+    "country": "GER",
+    "order": 9,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 93,
+    "lastname": "DI MAURO",
+    "country": "ITA",
+    "order": 10,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 94,
+    "lastname": "GÓMEZ ESCOBAR",
+    "country": "ESP",
+    "order": 11,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 95,
+    "lastname": "WALSH",
+    "country": "GBR",
+    "order": 12,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 96,
+    "lastname": "TETAZ",
+    "country": "FRA",
+    "order": 13,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 97,
+    "lastname": "RUBIN",
+    "country": "USA",
+    "order": 14,
+    "group": "W-AU2",
+    "route": 2
+  },
+  {
+    "bib": 110,
+    "lastname": "OKADA",
+    "country": "JPN",
+    "order": 1,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 111,
+    "lastname": "BERRUYER GALTÉ",
+    "country": "FRA",
+    "order": 2,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 112,
+    "lastname": "POTTIER",
+    "country": "FRA",
+    "order": 3,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 113,
+    "lastname": "JAMIESON",
+    "country": "GBR",
+    "order": 4,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 114,
+    "lastname": "PETRARU",
+    "country": "ROU",
+    "order": 5,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 115,
+    "lastname": "RISHAUG",
+    "country": "NOR",
+    "order": 6,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 116,
+    "lastname": "TODD",
+    "country": "AUS",
+    "order": 7,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 117,
+    "lastname": "HORN",
+    "country": "GER",
+    "order": 8,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 118,
+    "lastname": "SCHAFFRINNA",
+    "country": "GER",
+    "order": 9,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 119,
+    "lastname": "FRANCK",
+    "country": "GER",
+    "order": 10,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 120,
+    "lastname": "KING",
+    "country": "USA",
+    "order": 11,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 121,
+    "lastname": "MARTIN",
+    "country": "USA",
+    "order": 12,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 122,
+    "lastname": "BELYEA",
+    "country": "USA",
+    "order": 13,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 123,
+    "lastname": "SCHLEGL",
+    "country": "AUT",
+    "order": 14,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 124,
+    "lastname": "MCCARTHY",
+    "country": "GBR",
+    "order": 15,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 125,
+    "lastname": "RAMINI",
+    "country": "ITA",
+    "order": 16,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 126,
+    "lastname": "OTANI",
+    "country": "JPN",
+    "order": 17,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 127,
+    "lastname": "AERNI",
+    "country": "SUI",
+    "order": 18,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 128,
+    "lastname": "OUDIJK",
+    "country": "NED",
+    "order": 19,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 129,
+    "lastname": "GALBUSERA",
+    "country": "SUI",
+    "order": 20,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 130,
+    "lastname": "GOLDBLATT",
+    "country": "ISR",
+    "order": 21,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 131,
+    "lastname": "WYSOCKI",
+    "country": "POL",
+    "order": 22,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 132,
+    "lastname": "MANECUTA",
+    "country": "CAN",
+    "order": 23,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 133,
+    "lastname": "DORNBUSCH",
+    "country": "USA",
+    "order": 24,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 134,
+    "lastname": "LEISTNER",
+    "country": "GER",
+    "order": 25,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 135,
+    "lastname": "RICHARDSON",
+    "country": "GBR",
+    "order": 26,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 136,
+    "lastname": "FARSINSEN",
+    "country": "DEN",
+    "order": 27,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 137,
+    "lastname": "POPA-FLOREA",
+    "country": "ROU",
+    "order": 28,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 138,
+    "lastname": "ROTEM",
+    "country": "ISR",
+    "order": 29,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 139,
+    "lastname": "LAMBERT",
+    "country": "FRA",
+    "order": 30,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 140,
+    "lastname": "HARPER",
+    "country": "GBR",
+    "order": 31,
+    "group": "M-RP1",
+    "route": 1
+  },
+  {
+    "bib": 125,
+    "lastname": "RAMINI",
+    "country": "ITA",
+    "order": 1,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 126,
+    "lastname": "OTANI",
+    "country": "JPN",
+    "order": 2,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 127,
+    "lastname": "AERNI",
+    "country": "SUI",
+    "order": 3,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 128,
+    "lastname": "OUDIJK",
+    "country": "NED",
+    "order": 4,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 129,
+    "lastname": "GALBUSERA",
+    "country": "SUI",
+    "order": 5,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 130,
+    "lastname": "GOLDBLATT",
+    "country": "ISR",
+    "order": 6,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 131,
+    "lastname": "WYSOCKI",
+    "country": "POL",
+    "order": 7,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 132,
+    "lastname": "MANECUTA",
+    "country": "CAN",
+    "order": 8,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 133,
+    "lastname": "DORNBUSCH",
+    "country": "USA",
+    "order": 9,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 134,
+    "lastname": "LEISTNER",
+    "country": "GER",
+    "order": 10,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 135,
+    "lastname": "RICHARDSON",
+    "country": "GBR",
+    "order": 11,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 136,
+    "lastname": "FARSINSEN",
+    "country": "DEN",
+    "order": 12,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 137,
+    "lastname": "POPA-FLOREA",
+    "country": "ROU",
+    "order": 13,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 138,
+    "lastname": "ROTEM",
+    "country": "ISR",
+    "order": 14,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 139,
+    "lastname": "LAMBERT",
+    "country": "FRA",
+    "order": 15,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 140,
+    "lastname": "HARPER",
+    "country": "GBR",
+    "order": 16,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 110,
+    "lastname": "OKADA",
+    "country": "JPN",
+    "order": 17,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 111,
+    "lastname": "BERRUYER GALTÉ",
+    "country": "FRA",
+    "order": 18,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 112,
+    "lastname": "POTTIER",
+    "country": "FRA",
+    "order": 19,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 113,
+    "lastname": "JAMIESON",
+    "country": "GBR",
+    "order": 20,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 114,
+    "lastname": "PETRARU",
+    "country": "ROU",
+    "order": 21,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 115,
+    "lastname": "RISHAUG",
+    "country": "NOR",
+    "order": 22,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 116,
+    "lastname": "TODD",
+    "country": "AUS",
+    "order": 23,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 117,
+    "lastname": "HORN",
+    "country": "GER",
+    "order": 24,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 118,
+    "lastname": "SCHAFFRINNA",
+    "country": "GER",
+    "order": 25,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 119,
+    "lastname": "FRANCK",
+    "country": "GER",
+    "order": 26,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 120,
+    "lastname": "KING",
+    "country": "USA",
+    "order": 27,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 121,
+    "lastname": "MARTIN",
+    "country": "USA",
+    "order": 28,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 122,
+    "lastname": "BELYEA",
+    "country": "USA",
+    "order": 29,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 123,
+    "lastname": "SCHLEGL",
+    "country": "AUT",
+    "order": 30,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 124,
+    "lastname": "MCCARTHY",
+    "country": "GBR",
+    "order": 31,
+    "group": "M-RP1",
+    "route": 2
+  },
+  {
+    "bib": 141,
+    "lastname": "HELSPER",
+    "country": "GER",
+    "order": 1,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 142,
+    "lastname": "QUINTANA",
+    "country": "USA",
+    "order": 2,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 143,
+    "lastname": "MELLENTHIN",
+    "country": "USA",
+    "order": 3,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 144,
+    "lastname": "MACHEFERT",
+    "country": "FRA",
+    "order": 4,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 145,
+    "lastname": "HROZEK",
+    "country": "GER",
+    "order": 5,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 146,
+    "lastname": "MOČNIK",
+    "country": "SLO",
+    "order": 6,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 147,
+    "lastname": "KUMAR",
+    "country": "IND",
+    "order": 7,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 148,
+    "lastname": "BUTLER",
+    "country": "USA",
+    "order": 8,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 149,
+    "lastname": "MAYFORTH",
+    "country": "USA",
+    "order": 9,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 150,
+    "lastname": "WIENER",
+    "country": "AUT",
+    "order": 10,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 151,
+    "lastname": "CARNAZZO",
+    "country": "USA",
+    "order": 11,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 152,
+    "lastname": "DE BROCK",
+    "country": "BEL",
+    "order": 12,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 153,
+    "lastname": "SZIJÁRTÓ",
+    "country": "HUN",
+    "order": 13,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 154,
+    "lastname": "RODRIGUES D`ELLY",
+    "country": "BRA",
+    "order": 14,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 155,
+    "lastname": "HAJDÚCH",
+    "country": "SVK",
+    "order": 15,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 156,
+    "lastname": "KUMAR",
+    "country": "IND",
+    "order": 16,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 157,
+    "lastname": "TEUFL",
+    "country": "AUT",
+    "order": 17,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 158,
+    "lastname": "NAPPUS",
+    "country": "EST",
+    "order": 18,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 159,
+    "lastname": "YUN",
+    "country": "KOR",
+    "order": 19,
+    "group": "M-RP2",
+    "route": 1
+  },
+  {
+    "bib": 150,
+    "lastname": "WIENER",
+    "country": "AUT",
+    "order": 1,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 151,
+    "lastname": "CARNAZZO",
+    "country": "USA",
+    "order": 2,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 152,
+    "lastname": "DE BROCK",
+    "country": "BEL",
+    "order": 3,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 153,
+    "lastname": "SZIJÁRTÓ",
+    "country": "HUN",
+    "order": 4,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 154,
+    "lastname": "RODRIGUES D`ELLY",
+    "country": "BRA",
+    "order": 5,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 155,
+    "lastname": "HAJDÚCH",
+    "country": "SVK",
+    "order": 6,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 156,
+    "lastname": "KUMAR",
+    "country": "IND",
+    "order": 7,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 157,
+    "lastname": "TEUFL",
+    "country": "AUT",
+    "order": 8,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 158,
+    "lastname": "NAPPUS",
+    "country": "EST",
+    "order": 9,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 159,
+    "lastname": "YUN",
+    "country": "KOR",
+    "order": 10,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 141,
+    "lastname": "HELSPER",
+    "country": "GER",
+    "order": 11,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 142,
+    "lastname": "QUINTANA",
+    "country": "USA",
+    "order": 12,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 143,
+    "lastname": "MELLENTHIN",
+    "country": "USA",
+    "order": 13,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 144,
+    "lastname": "MACHEFERT",
+    "country": "FRA",
+    "order": 14,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 145,
+    "lastname": "HROZEK",
+    "country": "GER",
+    "order": 15,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 146,
+    "lastname": "MOČNIK",
+    "country": "SLO",
+    "order": 16,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 147,
+    "lastname": "KUMAR",
+    "country": "IND",
+    "order": 17,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 148,
+    "lastname": "BUTLER",
+    "country": "USA",
+    "order": 18,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 149,
+    "lastname": "MAYFORTH",
+    "country": "USA",
+    "order": 19,
+    "group": "M-RP2",
+    "route": 2
+  },
+  {
+    "bib": 161,
+    "lastname": "BARENDRECHT",
+    "country": "NED",
+    "order": 1,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 162,
+    "lastname": "RYS",
+    "country": "CZE",
+    "order": 2,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 163,
+    "lastname": "SZMANDA",
+    "country": "POL",
+    "order": 3,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 164,
+    "lastname": "THOMAS",
+    "country": "FRA",
+    "order": 4,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 165,
+    "lastname": "HARŠÁNY",
+    "country": "SVK",
+    "order": 5,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 166,
+    "lastname": "YAMASHITA",
+    "country": "JPN",
+    "order": 6,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 167,
+    "lastname": "BÄRTSCHI",
+    "country": "SUI",
+    "order": 7,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 168,
+    "lastname": "SMITH",
+    "country": "GBR",
+    "order": 8,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 169,
+    "lastname": "TAKANO",
+    "country": "JPN",
+    "order": 9,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 170,
+    "lastname": "CAULIER",
+    "country": "BEL",
+    "order": 10,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 171,
+    "lastname": "BJERKAN",
+    "country": "NOR",
+    "order": 11,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 172,
+    "lastname": "FROLOV",
+    "country": "EST",
+    "order": 12,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 173,
+    "lastname": "KORNECKI",
+    "country": "POL",
+    "order": 13,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 174,
+    "lastname": "TIOZZO",
+    "country": "ITA",
+    "order": 14,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 175,
+    "lastname": "MICHAIL",
+    "country": "CYP",
+    "order": 15,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 176,
+    "lastname": "YOKOYAMA",
+    "country": "JPN",
+    "order": 16,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 177,
+    "lastname": "KEODARA",
+    "country": "FRA",
+    "order": 17,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 178,
+    "lastname": "BOLLORE",
+    "country": "FRA",
+    "order": 18,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 179,
+    "lastname": "NYGARD",
+    "country": "NOR",
+    "order": 19,
+    "group": "M-RP3",
+    "route": 1
+  },
+  {
+    "bib": 170,
+    "lastname": "CAULIER",
+    "country": "BEL",
+    "order": 1,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 171,
+    "lastname": "BJERKAN",
+    "country": "NOR",
+    "order": 2,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 172,
+    "lastname": "FROLOV",
+    "country": "EST",
+    "order": 3,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 173,
+    "lastname": "KORNECKI",
+    "country": "POL",
+    "order": 4,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 174,
+    "lastname": "TIOZZO",
+    "country": "ITA",
+    "order": 5,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 175,
+    "lastname": "MICHAIL",
+    "country": "CYP",
+    "order": 6,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 176,
+    "lastname": "YOKOYAMA",
+    "country": "JPN",
+    "order": 7,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 177,
+    "lastname": "KEODARA",
+    "country": "FRA",
+    "order": 8,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 178,
+    "lastname": "BOLLORE",
+    "country": "FRA",
+    "order": 9,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 179,
+    "lastname": "NYGARD",
+    "country": "NOR",
+    "order": 10,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 161,
+    "lastname": "BARENDRECHT",
+    "country": "NED",
+    "order": 11,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 162,
+    "lastname": "RYS",
+    "country": "CZE",
+    "order": 12,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 163,
+    "lastname": "SZMANDA",
+    "country": "POL",
+    "order": 13,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 164,
+    "lastname": "THOMAS",
+    "country": "FRA",
+    "order": 14,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 165,
+    "lastname": "HARŠÁNY",
+    "country": "SVK",
+    "order": 15,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 166,
+    "lastname": "YAMASHITA",
+    "country": "JPN",
+    "order": 16,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 167,
+    "lastname": "BÄRTSCHI",
+    "country": "SUI",
+    "order": 17,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 168,
+    "lastname": "SMITH",
+    "country": "GBR",
+    "order": 18,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 169,
+    "lastname": "TAKANO",
+    "country": "JPN",
+    "order": 19,
+    "group": "M-RP3",
+    "route": 2
+  },
+  {
+    "bib": 181,
+    "lastname": "WERTHMUELLER",
+    "country": "GER",
+    "order": 1,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 182,
+    "lastname": "RUIZ",
+    "country": "USA",
+    "order": 2,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 183,
+    "lastname": "YU",
+    "country": "USA",
+    "order": 3,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 184,
+    "lastname": "TUAF",
+    "country": "ISR",
+    "order": 4,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 185,
+    "lastname": "SÁNCHEZ APARICIO",
+    "country": "ESP",
+    "order": 5,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 186,
+    "lastname": "ZOOK",
+    "country": "USA",
+    "order": 6,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 187,
+    "lastname": "KEYWORTH",
+    "country": "GBR",
+    "order": 7,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 188,
+    "lastname": "MURATORI",
+    "country": "ITA",
+    "order": 8,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 189,
+    "lastname": "ROHNER",
+    "country": "SUI",
+    "order": 9,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 190,
+    "lastname": "STEWART",
+    "country": "USA",
+    "order": 10,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 191,
+    "lastname": "FAIST",
+    "country": "GER",
+    "order": 11,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 192,
+    "lastname": "SULLIVAN",
+    "country": "USA",
+    "order": 12,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 193,
+    "lastname": "HOLZE",
+    "country": "GER",
+    "order": 13,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 194,
+    "lastname": "METTAUER",
+    "country": "SUI",
+    "order": 14,
+    "group": "W-RP1",
+    "route": 1
+  },
+  {
+    "bib": 188,
+    "lastname": "MURATORI",
+    "country": "ITA",
+    "order": 1,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 189,
+    "lastname": "ROHNER",
+    "country": "SUI",
+    "order": 2,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 190,
+    "lastname": "STEWART",
+    "country": "USA",
+    "order": 3,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 191,
+    "lastname": "FAIST",
+    "country": "GER",
+    "order": 4,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 192,
+    "lastname": "SULLIVAN",
+    "country": "USA",
+    "order": 5,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 193,
+    "lastname": "HOLZE",
+    "country": "GER",
+    "order": 6,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 194,
+    "lastname": "METTAUER",
+    "country": "SUI",
+    "order": 7,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 181,
+    "lastname": "WERTHMUELLER",
+    "country": "GER",
+    "order": 8,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 182,
+    "lastname": "RUIZ",
+    "country": "USA",
+    "order": 9,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 183,
+    "lastname": "YU",
+    "country": "USA",
+    "order": 10,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 184,
+    "lastname": "TUAF",
+    "country": "ISR",
+    "order": 11,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 185,
+    "lastname": "SÁNCHEZ APARICIO",
+    "country": "ESP",
+    "order": 12,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 186,
+    "lastname": "ZOOK",
+    "country": "USA",
+    "order": 13,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 187,
+    "lastname": "KEYWORTH",
+    "country": "GBR",
+    "order": 14,
+    "group": "W-RP1",
+    "route": 2
+  },
+  {
+    "bib": 201,
+    "lastname": "ALBERTO",
+    "country": "ITA",
+    "order": 1,
+    "group": "W-RP2",
+    "route": 1
+  },
+  {
+    "bib": 202,
+    "lastname": "PLANK",
+    "country": "AUT",
+    "order": 2,
+    "group": "W-RP2",
+    "route": 1
+  },
+  {
+    "bib": 203,
+    "lastname": "EIVIK",
+    "country": "NOR",
+    "order": 3,
+    "group": "W-RP2",
+    "route": 1
+  },
+  {
+    "bib": 204,
+    "lastname": "CAVINA",
+    "country": "ITA",
+    "order": 4,
+    "group": "W-RP2",
+    "route": 1
+  },
+  {
+    "bib": 205,
+    "lastname": "DUSKOVA",
+    "country": "CZE",
+    "order": 5,
+    "group": "W-RP2",
+    "route": 1
+  },
+  {
+    "bib": 206,
+    "lastname": "LONGHI",
+    "country": "SUI",
+    "order": 6,
+    "group": "W-RP2",
+    "route": 1
+  },
+  {
+    "bib": 204,
+    "lastname": "CAVINA",
+    "country": "ITA",
+    "order": 1,
+    "group": "W-RP2",
+    "route": 2
+  },
+  {
+    "bib": 205,
+    "lastname": "DUSKOVA",
+    "country": "CZE",
+    "order": 2,
+    "group": "W-RP2",
+    "route": 2
+  },
+  {
+    "bib": 206,
+    "lastname": "LONGHI",
+    "country": "SUI",
+    "order": 3,
+    "group": "W-RP2",
+    "route": 2
+  },
+  {
+    "bib": 201,
+    "lastname": "ALBERTO",
+    "country": "ITA",
+    "order": 4,
+    "group": "W-RP2",
+    "route": 2
+  },
+  {
+    "bib": 202,
+    "lastname": "PLANK",
+    "country": "AUT",
+    "order": 5,
+    "group": "W-RP2",
+    "route": 2
+  },
+  {
+    "bib": 203,
+    "lastname": "EIVIK",
+    "country": "NOR",
+    "order": 6,
+    "group": "W-RP2",
+    "route": 2
+  },
+  {
+    "bib": 211,
+    "lastname": "GĄSIENICA-CHMIEL",
+    "country": "POL",
+    "order": 1,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 212,
+    "lastname": "MARTIN",
+    "country": "USA",
+    "order": 2,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 213,
+    "lastname": "ROBERTS",
+    "country": "USA",
+    "order": 3,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 214,
+    "lastname": "LIPINSKA",
+    "country": "POL",
+    "order": 4,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 215,
+    "lastname": "NESCIOBELLI",
+    "country": "GER",
+    "order": 5,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 216,
+    "lastname": "ANDREW",
+    "country": "GBR",
+    "order": 6,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 217,
+    "lastname": "SCHOELLIG",
+    "country": "GER",
+    "order": 7,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 218,
+    "lastname": "VOREL",
+    "country": "USA",
+    "order": 8,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 219,
+    "lastname": "MARTIN",
+    "country": "ITA",
+    "order": 9,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 220,
+    "lastname": "DIAS",
+    "country": "BRA",
+    "order": 10,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 221,
+    "lastname": "PURKART",
+    "country": "SLO",
+    "order": 11,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 222,
+    "lastname": "PIKULSKA",
+    "country": "POL",
+    "order": 12,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 223,
+    "lastname": "FUTAHASHI",
+    "country": "JPN",
+    "order": 13,
+    "group": "W-RP3",
+    "route": 1
+  },
+  {
+    "bib": 217,
+    "lastname": "SCHOELLIG",
+    "country": "GER",
+    "order": 1,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 218,
+    "lastname": "VOREL",
+    "country": "USA",
+    "order": 2,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 219,
+    "lastname": "MARTIN",
+    "country": "ITA",
+    "order": 3,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 220,
+    "lastname": "DIAS",
+    "country": "BRA",
+    "order": 4,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 221,
+    "lastname": "PURKART",
+    "country": "SLO",
+    "order": 5,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 222,
+    "lastname": "PIKULSKA",
+    "country": "POL",
+    "order": 6,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 223,
+    "lastname": "FUTAHASHI",
+    "country": "JPN",
+    "order": 7,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 211,
+    "lastname": "GĄSIENICA-CHMIEL",
+    "country": "POL",
+    "order": 8,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 212,
+    "lastname": "MARTIN",
+    "country": "USA",
+    "order": 9,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 213,
+    "lastname": "ROBERTS",
+    "country": "USA",
+    "order": 10,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 214,
+    "lastname": "LIPINSKA",
+    "country": "POL",
+    "order": 11,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 215,
+    "lastname": "NESCIOBELLI",
+    "country": "GER",
+    "order": 12,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 216,
+    "lastname": "ANDREW",
+    "country": "GBR",
+    "order": 13,
+    "group": "W-RP3",
+    "route": 2
+  },
+  {
+    "bib": 231,
+    "lastname": "GEISSELER",
+    "country": "SUI",
+    "order": 1,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 232,
+    "lastname": "LONGUET",
+    "country": "FRA",
+    "order": 2,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 233,
+    "lastname": "SAPIR",
+    "country": "ISR",
+    "order": 3,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 234,
+    "lastname": "MATEI",
+    "country": "ROU",
+    "order": 4,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 235,
+    "lastname": "YEON",
+    "country": "KOR",
+    "order": 5,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 236,
+    "lastname": "BETHKE",
+    "country": "GER",
+    "order": 6,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 237,
+    "lastname": "CLODIC",
+    "country": "FRA",
+    "order": 7,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 238,
+    "lastname": "VILHA DE OLIVEIRA SOFKA",
+    "country": "BRA",
+    "order": 8,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 239,
+    "lastname": "KEREKES",
+    "country": "HUN",
+    "order": 9,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 240,
+    "lastname": "ZALESKI",
+    "country": "POL",
+    "order": 10,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 241,
+    "lastname": "GOUIRIC",
+    "country": "ARG",
+    "order": 11,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 242,
+    "lastname": "MANNA",
+    "country": "IND",
+    "order": 12,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 243,
+    "lastname": "POVAZAN",
+    "country": "CZE",
+    "order": 13,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 244,
+    "lastname": "BROOKS",
+    "country": "USA",
+    "order": 14,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 245,
+    "lastname": "VALDES",
+    "country": "USA",
+    "order": 15,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 246,
+    "lastname": "IGLESIAS DE ISLA",
+    "country": "ESP",
+    "order": 16,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 247,
+    "lastname": "KÖSE",
+    "country": "TUR",
+    "order": 17,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 248,
+    "lastname": "MARTINEZ",
+    "country": "CHI",
+    "order": 18,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 249,
+    "lastname": "SREBAČIĆ",
+    "country": "CRO",
+    "order": 19,
+    "group": "M-AU3",
+    "route": 1
+  },
+  {
+    "bib": 240,
+    "lastname": "ZALESKI",
+    "country": "POL",
+    "order": 1,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 241,
+    "lastname": "GOUIRIC",
+    "country": "ARG",
+    "order": 2,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 242,
+    "lastname": "MANNA",
+    "country": "IND",
+    "order": 3,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 243,
+    "lastname": "POVAZAN",
+    "country": "CZE",
+    "order": 4,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 244,
+    "lastname": "BROOKS",
+    "country": "USA",
+    "order": 5,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 245,
+    "lastname": "VALDES",
+    "country": "USA",
+    "order": 6,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 246,
+    "lastname": "IGLESIAS DE ISLA",
+    "country": "ESP",
+    "order": 7,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 247,
+    "lastname": "KÖSE",
+    "country": "TUR",
+    "order": 8,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 248,
+    "lastname": "MARTINEZ",
+    "country": "CHI",
+    "order": 9,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 249,
+    "lastname": "SREBAČIĆ",
+    "country": "CRO",
+    "order": 10,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 231,
+    "lastname": "GEISSELER",
+    "country": "SUI",
+    "order": 11,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 232,
+    "lastname": "LONGUET",
+    "country": "FRA",
+    "order": 12,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 233,
+    "lastname": "SAPIR",
+    "country": "ISR",
+    "order": 13,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 234,
+    "lastname": "MATEI",
+    "country": "ROU",
+    "order": 14,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 235,
+    "lastname": "YEON",
+    "country": "KOR",
+    "order": 15,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 236,
+    "lastname": "BETHKE",
+    "country": "GER",
+    "order": 16,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 237,
+    "lastname": "CLODIC",
+    "country": "FRA",
+    "order": 17,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 238,
+    "lastname": "VILHA DE OLIVEIRA SOFKA",
+    "country": "BRA",
+    "order": 18,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 239,
+    "lastname": "KEREKES",
+    "country": "HUN",
+    "order": 19,
+    "group": "M-AU3",
+    "route": 2
+  },
+  {
+    "bib": 251,
+    "lastname": "GRINDEL",
+    "country": "GER",
+    "order": 1,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 252,
+    "lastname": "SCHAUPERT",
+    "country": "GER",
+    "order": 2,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 253,
+    "lastname": "SCHANBAUM",
+    "country": "USA",
+    "order": 3,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 254,
+    "lastname": "JANSSON",
+    "country": "NOR",
+    "order": 4,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 255,
+    "lastname": "BOLOMEY",
+    "country": "SUI",
+    "order": 5,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 256,
+    "lastname": "ILPIDE",
+    "country": "FRA",
+    "order": 6,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 257,
+    "lastname": "DE LA CALLE PIZARRO",
+    "country": "ESP",
+    "order": 7,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 258,
+    "lastname": "SMREKAR",
+    "country": "SLO",
+    "order": 8,
+    "group": "W-AU3",
+    "route": 1
+  },
+  {
+    "bib": 255,
+    "lastname": "BOLOMEY",
+    "country": "SUI",
+    "order": 1,
+    "group": "W-AU3",
+    "route": 2
+  },
+  {
+    "bib": 256,
+    "lastname": "ILPIDE",
+    "country": "FRA",
+    "order": 2,
+    "group": "W-AU3",
+    "route": 2
+  },
+  {
+    "bib": 257,
+    "lastname": "DE LA CALLE PIZARRO",
+    "country": "ESP",
+    "order": 3,
+    "group": "W-AU3",
+    "route": 2
+  },
+  {
+    "bib": 258,
+    "lastname": "SMREKAR",
+    "country": "SLO",
+    "order": 4,
+    "group": "W-AU3",
+    "route": 2
+  },
+  {
+    "bib": 251,
+    "lastname": "GRINDEL",
+    "country": "GER",
+    "order": 5,
+    "group": "W-AU3",
+    "route": 2
+  },
+  {
+    "bib": 252,
+    "lastname": "SCHAUPERT",
+    "country": "GER",
+    "order": 6,
+    "group": "W-AU3",
+    "route": 2
+  },
+  {
+    "bib": 253,
+    "lastname": "SCHANBAUM",
+    "country": "USA",
+    "order": 7,
+    "group": "W-AU3",
+    "route": 2
+  },
+  {
+    "bib": 254,
+    "lastname": "JANSSON",
+    "country": "NOR",
+    "order": 8,
+    "group": "W-AU3",
+    "route": 2
+  }
+]
