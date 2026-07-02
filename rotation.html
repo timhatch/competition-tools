@@ -287,9 +287,11 @@
       color: light-dark(#991b1b, #ffd5d5) !important;
       font-weight: 600
     }
+
     .bad-current {
       background: rgba(239, 68, 68, 0.2) !important
     }
+
     .bad-current input {
       background: transparent !important;
       color: var(--bad) !important;
@@ -616,7 +618,8 @@
         <h2>Import Start List</h2>
         <div id="importStatus" class="data-status empty">Drop <strong>.json</strong> or <strong>.csv</strong> here</div>
 
-        <h2 style="margin-top:18px"><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span></h2>
+        <h2 style="margin-top:18px"><span data-i18n="controlSheet"></span> <span class="hint" id="ctrlCount"></span>
+        </h2>
         <div class="scroll" style="max-height:55vh">
           <table id="ctrlTable">
             <thead>
@@ -747,7 +750,7 @@
     </section>
   </main>
 
-  <footer>© 2026 Tim Hatch. All rights reserved.</footer>
+  <footer></footer>
 
   <datalist id="climberList"></datalist>
 
@@ -1030,8 +1033,8 @@
       const lines = [];
       let cur = '', inQ = false;
       for (const ch of text) {
-        if (ch === '"') { inQ = !inQ; continue; }
-        if (ch === '\n' && !inQ) { lines.push(cur); cur = ''; continue; }
+        if (ch === '"') {inQ = !inQ; continue;}
+        if (ch === '\n' && !inQ) {lines.push(cur); cur = ''; continue;}
         if (ch === '\r') continue;
         cur += ch;
       }
@@ -1045,8 +1048,8 @@
         const values = [];
         let f = '', q = false;
         for (const ch of line) {
-          if (ch === '"') { q = !q; continue; }
-          if (ch === delim && !q) { values.push(f); f = ''; continue; }
+          if (ch === '"') {q = !q; continue;}
+          if (ch === delim && !q) {values.push(f); f = ''; continue;}
           f += ch;
         }
         values.push(f);
@@ -1384,7 +1387,7 @@
           '<td class="editable"><input class="ga-input" inputmode="numeric" value="' + escAttr(row.boulder) + '" data-i="' + i + '" data-f="boulder"></td>' +
           '<td class="num cell-orig"></td>' +
           '<td class="num cell-target"></td>' +
-           '<td class="editable cell-current"><input class="ga-input" inputmode="numeric" value="' + escAttr(row.current) + '" data-i="' + i + '" data-f="current"></td>' +
+          '<td class="editable cell-current"><input class="ga-input" inputmode="numeric" value="' + escAttr(row.current) + '" data-i="' + i + '" data-f="current"></td>' +
           '<td class="num cell-gap"></td>' +
           '<td class="num cell-restart"></td>' +
           '<td><button class="danger sm" data-delg="' + i + '">✕</button></td>';

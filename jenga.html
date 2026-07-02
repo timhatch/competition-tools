@@ -179,7 +179,8 @@
       color: #1e3a5f;
     }
 
-    .cleaning {
+    .cleaning,
+    .spacing {
       background: light-dark(#fef9c3, #2e260a);
       border: 1px solid light-dark(#facc15, #6a5a00);
       color: light-dark(#854d0e, #e6c35c);
@@ -310,16 +311,56 @@
     @media print {
       body {
         background: #fff !important;
+        padding: 0;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
       }
 
-      .btn-sm,
-      #dataStatus,
-      #pool {
-        display: none !important;
+      .section {
+        box-shadow: none;
+        border-radius: 0;
+        padding: 0;
+        margin-bottom: 0;
+      }
+
+      .section-header .btn-sm {
+        display: none;
+      }
+
+      #dataStatus {
+        display: none;
+      }
+
+      body>div:first-of-type {
+        display: none;
       }
 
       .scroll-area {
         overflow: visible;
+      }
+
+      .columns-row {
+        flex-wrap: wrap;
+      }
+
+      .column {
+        width: 200px;
+      }
+
+      .schedule-column-list {
+        max-height: none;
+        overflow: visible;
+        border: none;
+        font-size: 10px;
+      }
+
+      .count-badge {
+        display: none;
+      }
+
+      @page {
+        size: landscape;
+        margin: 8mm;
       }
     }
   </style>
@@ -331,6 +372,7 @@
       <span>Sport Classes & Routes</span>
       <span style="display:flex;align-items:center;gap:10px;">
         <button class="btn-sm" id="addCleaningBtn">+ Cleaning Break</button>
+        <button class="btn-sm" id="addSpacerBtn">+ Spacer</button>
         <span class="data-status empty" id="dataStatus">Drop JSON or CSV here</span>
       </span>
     </div>
@@ -342,7 +384,7 @@
       <span>Route Allocation</span>
       <span style="display:flex;align-items:center;gap:6px;">
         <button class="btn-sm" id="autoArrangeBtn">Auto-arrange</button>
-        <button class="btn-sm" id="addSpacingBtn">Add Spacing</button>
+        <button class="btn-sm" id="addSpacingBtn">Auto Spacing</button>
         <button class="btn-sm" id="printBtn">Print</button>
       </span>
     </div>
@@ -355,7 +397,7 @@
     </div>
   </div>
 
-  <footer>© 2026 Tim Hatch. All rights reserved.</footer>
+  <footer></footer>
 
   <script>
     const ROUTE_LABELS = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
@@ -386,8 +428,8 @@
       const lines = [];
       let cur = '', inQ = false;
       for (const ch of text) {
-        if (ch === '"') { inQ = !inQ; continue; }
-        if (ch === '\n' && !inQ) { lines.push(cur); cur = ''; continue; }
+        if (ch === '"') {inQ = !inQ; continue;}
+        if (ch === '\n' && !inQ) {lines.push(cur); cur = ''; continue;}
         if (ch === '\r') continue;
         cur += ch;
       }
@@ -401,8 +443,8 @@
         const values = [];
         let f = '', q = false;
         for (const ch of line) {
-          if (ch === '"') { q = !q; continue; }
-          if (ch === delim && !q) { values.push(f); f = ''; continue; }
+          if (ch === '"') {q = !q; continue;}
+          if (ch === delim && !q) {values.push(f); f = ''; continue;}
           f += ch;
         }
         values.push(f);
@@ -428,7 +470,7 @@
         const item = children[i];
         if (item.classList.contains('padding')) {
           t += parseInt(item.dataset.duration || 0);
-        } else if (item.classList.contains('cleaning')) {
+        } else if (item.classList.contains('spacing') || item.classList.contains('cleaning')) {
           t += GLOBAL_CLEAN;
         } else {
           const parsed = parseItem(item.textContent);
@@ -447,7 +489,7 @@
       const groupData = {};
       colLists.forEach((col, colIdx) => {
         Array.from(col.children).forEach(el => {
-          if (el.classList.contains('padding') || el.classList.contains('cleaning')) return;
+          if (el.classList.contains('padding') || el.classList.contains('cleaning') || el.classList.contains('spacing')) return;
           const parsed = parseItem(el.textContent);
           if (!parsed) return;
           if (!groupData[parsed.group]) {
@@ -458,7 +500,7 @@
         });
       });
 
-      const sortedGroups = Object.keys(groupData).sort((a, b) => groupData[a].count - groupData[b].count);
+      const sortedGroups = Object.keys(groupData).sort((a, b) => groupData[b].count - groupData[a].count);
       const colScheds = colLists.map(() => []);
 
       sortedGroups.forEach(group => {
@@ -496,6 +538,7 @@
     document.getElementById('addSpacingBtn').addEventListener('click', function () {
       if (!dataLoaded) return;
       const colLists = Array.from(document.querySelectorAll('.route-column-list'));
+      colLists.forEach(col => Array.from(col.querySelectorAll('.padding')).forEach(el => el.remove()));
       const groupInfo = {};
 
       colLists.forEach((col, colIdx) => {
@@ -550,6 +593,9 @@
             const d = parseInt(item.dataset.duration);
             sched.innerHTML += `<div class="schedule-cleaning">--- GAP ${d}m --- ${formatTime(curTime)}</div>`;
             curTime += d;
+          } else if (item.classList.contains('spacing')) {
+            sched.innerHTML += `<div class="schedule-cleaning">--- SPACING --- ${formatTime(curTime)}</div>`;
+            curTime += GLOBAL_CLEAN;
           } else if (item.classList.contains('cleaning')) {
             sched.innerHTML += `<div class="schedule-cleaning">--- CLEANING --- ${formatTime(curTime)}</div>`;
             curTime += GLOBAL_CLEAN;
@@ -609,6 +655,13 @@
       document.getElementById('pool').appendChild(el);
     };
 
+    document.getElementById('addSpacerBtn').onclick = () => {
+      const el = document.createElement('div');
+      el.className = 'pool-item spacing';
+      el.textContent = 'separator';
+      document.getElementById('pool').appendChild(el);
+    };
+
     [document.getElementById('pool'), ...document.querySelectorAll('.route-column-list')].forEach(el => {
       Sortable.create(el, {group: 'routes', animation: 150, onEnd: generateSchedule});
     });
@@ -635,7 +688,7 @@
           if (!Array.isArray(arr) || arr.length === 0) {
             throw new Error('File is empty or not an array');
           }
-          arr.forEach(item => { if (item.lastname != null) item.name = item.lastname; });
+          arr.forEach(item => {if (item.lastname != null) item.name = item.lastname;});
           if (!arr[0].group || !arr[0].route) {
             throw new Error('Missing "group" and/or "route" fields');
           }
