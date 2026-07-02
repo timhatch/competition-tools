@@ -103,7 +103,8 @@ Sample data files are in `testfiles/`:
 
 | File | Tool | Description |
 |------|------|-------------|
-| `ex-pr.json` | `schedule.html` | Para competition data — 24 groups, 2 routes each |
+| `inn.json` | `jenga.html` | Para competition data |
+| `slc.json` | `jenga.html` | Para competition data |
 | `ex-bd.json` | `rotation.html` | Boulder qualification start list — 24 athletes |
 | `ex-bd.csv` | `rotation.html` | Same data in CSV format |
 
