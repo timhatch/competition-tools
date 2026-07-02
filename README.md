@@ -41,11 +41,10 @@ Multi-language interface (EN / DE / FR).
 
 ### Features
 
-- **Setup & Start List** — configure phase values (start time, rotation interval, number of boulders, transit time, shuttle capacity) and import athlete start lists.
-- **Call Zone (CZ)** — live view of which athlete is on which boulder in each rotation. GAP slots and restarts are highlighted.
-- **Gap Assistant** — add restart requests by athlete and boulder; the tool calculates the earliest possible gap and restart rotation, detects conflicts, and merges restarts into shared gaps where possible.
+- **Setup & Start List** — configure phase values (start time, rotation interval, number of boulders) and import athlete start lists. In extremis, a startlist can be created manually (but don't)
+- **Call Zone (CZ)** — live view of which athlete is on which boulder in each rotation. Athlete restarts can be added by entering the athlete bib number and boulder - the tool calculates the earliest possible gap and restart rotation, detects conflicts, and merges restarts into shared gaps where possible. NOte that the "Decision Rotation" is a key driver for when any slot can be created.
+Alternatively, interruptions / pauses can be introduced to temporarily pause the round  — this holds the entire wall for a number of rotations (e.g. weather, repairs); all subsequent athletes and times shift accordingly.
 - **Transit Zone (TZ)** — shuttle schedule with departure times and CZ wait times, adjusted for gaps and pauses.
-- **Interruptions / Pauses** — hold the entire wall for a number of rotations (e.g. weather, repairs); all subsequent athletes and times shift accordingly.
 - **Print** — print the CZ and TZ schedules.
 
 ### How to use
